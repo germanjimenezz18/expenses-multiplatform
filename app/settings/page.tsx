@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import SideNavbar from "@/components/SideNav"
 import { ModeToggle } from "@/components/ModeToggle"
+import { ModeToggleButtons } from "@/components/ModeToggleButtons"
 
 export default function SettingsPage() {
     return (
@@ -40,9 +41,10 @@ export default function SettingsPage() {
                                 <CardDescription>
                                     Select between dark or light mode
                                 </CardDescription>
+                                <ModeToggleButtons/>
                             </CardHeader>
                             <CardContent>
-                            <ModeToggle/>
+                            {/* <ModeToggle/> */}
                                 {/* <form>
                                     <Input placeholder="Store Name" />
                                 </form> */}
