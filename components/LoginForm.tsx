@@ -1,17 +1,17 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import LoginGithubButton from "./LoginGithubButton"
-
- 
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import LoginGithubButton from "./LoginGithubButton";
+import LoginGoogleButton from "./LoginGoogleButton";
+import { Separator } from "./ui/separator";
 
 export function LoginForm() {
   return (
@@ -45,10 +45,9 @@ export function LoginForm() {
           <Button type="submit" className="w-full">
             Login
           </Button>
-          <Button variant="outline" className="w-full">
-            Login with Google
-          </Button>
-          <LoginGithubButton/>
+          <Separator />
+          <LoginGoogleButton />
+          <LoginGithubButton />
         </div>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
@@ -58,5 +57,5 @@ export function LoginForm() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
