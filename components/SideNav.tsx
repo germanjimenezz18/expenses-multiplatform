@@ -1,20 +1,24 @@
+"use client"
 import Link from "next/link";
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Home, LineChart, Package, Package2, Settings, ShoppingCart, Users2 } from "lucide-react";
 import NavigationButton from "./NavigationButton";
-
+import { usePathname } from "next/navigation";
 
 const routes = [
-    { name: "Dashboard", icon: Home, href: "dashboard" },
-    { name: "Orders", icon: ShoppingCart, href: "orders" },
+    { name: "Dashboard", icon: Home, href: "/dashboard" },
+    { name: "Orders", icon: ShoppingCart, href: "#" },
     { name: "Products", icon: Package, href: "#" },
     { name: "Customers", icon: Users2, href: "#" },
     { name: "Analytics", icon: LineChart, href: "#" },
 ]
-const settingRoute = { name: "Settings", icon: Settings, href: "settings" }
+const settingRoute = { name: "Settings", icon: Settings, href: "/settings" }
 const firstRoute = { name: "Expenses Multiplatform", href: "dashboard" }
 
 export default function SideNavbar() {
+    const pathname = usePathname()
+    console.log(pathname);
+
     return (
         <TooltipProvider>
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
@@ -25,18 +29,24 @@ export default function SideNavbar() {
                         <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
                         <span className="sr-only">{firstRoute.name}</span>
                     </Link>
-                    
+
                     {/* mainRoutes */}
                     {
                         routes.map((route, index) => (
-                            <NavigationButton key={index} {...route} />
+                            <NavigationButton key={index}
+                                href={route.href}
+                                name={route.name}
+                                icon={route.icon}
+                                isActive={pathname === route.href}
+                            />
                         ))
                     }
                 </nav>
 
                 {/* Settings */}
                 <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-                    <NavigationButton {...settingRoute} />
+                    <NavigationButton  {...settingRoute} isActive={pathname === settingRoute.href}
+                    />
                 </nav>
             </aside>
         </TooltipProvider>

@@ -2,6 +2,7 @@ import Link from "next/link"
 import {
   Home,
   LineChart,
+  Loader2,
   Package,
   Package2,
   PanelLeft,
@@ -20,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { UserButton } from "@clerk/nextjs"
+import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs"
 
 
 export default function Header() {
@@ -100,6 +101,12 @@ export default function Header() {
         />
       </div>
       {/* Clerk button */}
-      <UserButton afterSignOutUrl="/sign-in" />
+
+      <ClerkLoaded>
+        <UserButton afterSignOutUrl="/sign-in" />
+      </ClerkLoaded>
+      <ClerkLoading>
+        <Loader2 className="size-7 text-primary animate-spin" />
+      </ClerkLoading>
     </header>)
 }

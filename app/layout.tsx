@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Provider from "@/context/Provider";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import {
   ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
 } from '@clerk/nextjs'
+import { QueryProvider } from "@/providers/query-provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,19 +21,18 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-
       <html lang="en">
         <body className={inter.className + "bg-background"}>
-          <Provider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <QueryProvider>
               {children}
-            </ThemeProvider >
-          </Provider>
+            </QueryProvider>
+          </ThemeProvider >
         </body>
       </html>
     </ClerkProvider>
