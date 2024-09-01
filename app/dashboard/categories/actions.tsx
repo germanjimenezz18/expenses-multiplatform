@@ -21,7 +21,7 @@ export default function Actions({ id }: Props) {
   const deleteMutation = useDeleteCategory(id);
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
-    "You are about to delete this account."
+    "You are about to delete this category."
   );
   const handleDelete = async () => {
     const ok = await confirm();
