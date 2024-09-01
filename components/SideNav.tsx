@@ -7,11 +7,12 @@ import { usePathname } from "next/navigation";
 
 const routes = [
     { name: "Dashboard", icon: Home, href: "/dashboard" },
-    { name: "Orders", icon: ShoppingCart, href: "#" },
+    { name: "Accounts", icon: ShoppingCart, href: "/dashboard/accounts" },
     { name: "Products", icon: Package, href: "#" },
     { name: "Customers", icon: Users2, href: "#" },
     { name: "Analytics", icon: LineChart, href: "#" },
 ]
+
 const settingRoute = { name: "Settings", icon: Settings, href: "/settings" }
 const firstRoute = { name: "Expenses Multiplatform", href: "dashboard" }
 

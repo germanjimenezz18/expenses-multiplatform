@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { insertAccountSchema } from "@/db/schema";
+import { insertCategorySchema } from "@/db/schema";
 
 import {
   Form,
@@ -15,7 +15,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-const formSchema = insertAccountSchema.pick({
+const formSchema = insertCategorySchema.pick({
   name: true,
 });
 
@@ -29,7 +29,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export default function AccountForm({
+export default function CategoryForm({
   id,
   defaultValues,
   onSubmit,
@@ -61,14 +61,14 @@ export default function AccountForm({
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input disabled={disabled} placeholder="e.g. Cash" {...field} />
+                <Input disabled={disabled} placeholder="e.g. Food, Travel..." {...field} />
               </FormControl>
             </FormItem>
           )}
         />
 
         <Button className="w-full" disabled={disabled}>
-          {id ? "Save Changes" : "Create account"}
+          {id ? "Save Changes" : "Create category"}
         </Button>
         {!!id && (
           <Button
@@ -79,7 +79,7 @@ export default function AccountForm({
             variant={"outline"}
           >
             <Trash className="size-4 mr-2" />
-            Delete Account
+            Delete Category
           </Button>
         )}
       </form>
