@@ -5,18 +5,18 @@ import { client } from "@/lib/hono";
 
 // este tipo es inferido de la definición de la ruta en el servidor
 type ResponseType = InferResponseType<
-  (typeof client.api.accounts)[":id"]["$patch"]
+  (typeof client.api.transactions)[":id"]["$patch"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.accounts)[":id"]["$patch"]
+  (typeof client.api.transactions)[":id"]["$patch"]
 >["json"];
 
-export const useEditAccount = (id?: string) => {
+export const useEditTransaction = (id?: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.accounts[":id"].$patch({
+      const response = await client.api.transactions[":id"].$patch({
         param: { id },
         json,
       });
@@ -24,13 +24,14 @@ export const useEditAccount = (id?: string) => {
     },
 
     onSuccess: () => {
-      toast.success("Account updated");
-      queryClient.invalidateQueries({ queryKey: ["accounts", { id }] });
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      toast.success("Transaction updated");
+      queryClient.invalidateQueries({ queryKey: ["transaction", { id }] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      //invalidate summary
     },
     onError: (error) => {
       console.log(error);
-      toast.error("Error modding account");
+      toast.error("Error modding transaction");
     },
   });
 

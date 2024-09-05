@@ -4,25 +4,26 @@ import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
 // este tipo es inferido de la definición de la ruta en el servidor
-type ResponseType = InferResponseType<typeof client.api.accounts["bulk-delete"]["$post"]>;
-type RequestType = InferRequestType<typeof client.api.accounts["bulk-delete"]["$post"]>["json"];
+type ResponseType = InferResponseType<typeof client.api.transactions.$post>;
+type RequestType = InferRequestType<typeof client.api.transactions.$post>["json"];
 
-export const useBulkDeleteAccounts = () => {
+export const useCreateTransaction = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.accounts["bulk-delete"]["$post"]({ json });
+      const response = await client.api.transactions.$post({ json });
       return response.json();
     },
 
     onSuccess: () => {
-      toast.success("Accounts deleted");
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      toast.success("Transaction created");
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      //invalidate summary
     },
     onError: (error) => {
       console.log(error);
-      toast.error("Error delete accounts");
+      toast.error("Error creating transaction");
     },
   });
 
