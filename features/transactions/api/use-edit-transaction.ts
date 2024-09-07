@@ -13,6 +13,7 @@ type RequestType = InferRequestType<
 
 export const useEditTransaction = (id?: string) => {
   const queryClient = useQueryClient();
+  console.log({id});
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {

@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDeleteCategory } from "@/features/categories/api/use-delete-category";
@@ -44,6 +45,7 @@ export default function Actions({ id }: Props) {
             <Edit className="size-4 mr-2 text-primary" />
             Edit
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             disabled={deleteMutation.isPending}
             onClick={handleDelete}

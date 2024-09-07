@@ -157,7 +157,7 @@ const app = new Hono()
           }))
         )
         .returning();
-        return c.json({ data });
+      return c.json({ data });
     }
   )
   .post(
@@ -217,12 +217,11 @@ const app = new Hono()
       if (!auth?.userId) {
         return c.json({ error: "Unauthorized" }, 401);
       }
-
       const transactionToUpdate = db.$with("transactions_to_update").as(
         db
           .select({ id: transactions.id })
           .from(transactions)
-          .innerJoin(accounts, eq(accounts.id, transactions.accountId))
+          .innerJoin(accounts, eq(transactions.accountId, accounts.id))
           .where(and(eq(transactions.id, id), eq(accounts.userId, auth.userId)))
       );
 
@@ -231,7 +230,7 @@ const app = new Hono()
         .update(transactions)
         .set(values)
         .where(
-          inArray(transactions.id, sql`SELECT id FROM ${transactionToUpdate}`)
+          inArray(transactions.id, sql`(SELECT id FROM ${transactionToUpdate})`)
         )
         .returning();
 

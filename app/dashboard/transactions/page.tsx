@@ -1,26 +1,27 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
 import { Loader2, Plus } from "lucide-react";
 import { columns } from "./columns";
 import { DataTable } from "@/components/data-table";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
+import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transaction";
 
-export default function AccountsPage() {
-  const newAccount = useNewAccount();
-  const accountsQuery = useGetAccounts();
-  const deleteAccounts = useBulkDeleteAccounts();
-  const accounts = accountsQuery.data || [];
+export default function TransactionsPage() {
+  const newTransaction = useNewTransaction();
+  const transactionsQuery = useGetTransactions();
+  const deleteTransactions = useBulkDeleteTransactions();
+  const transactions = transactionsQuery.data || [];
 
-  const isDisabled = accountsQuery.isLoading || deleteAccounts.isPending;
+  const isDisabled =
+    transactionsQuery.isLoading || deleteTransactions.isPending;
 
-  if (accountsQuery.isLoading) {
+  if (transactionsQuery.isLoading) {
     return (
-      <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-        <div className="max-w-screen-2xl mx-auto w-full">
+      <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
+        <div className="max-w-screen-1xl  w-full">
           <Card className=" drop-shadow-sm">
             <CardHeader>
               <Skeleton className="h-8 w-48" />
@@ -37,25 +38,27 @@ export default function AccountsPage() {
   }
 
   return (
-    <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-      <div className="max-w-screen-2xl mx-auto w-full">
+    <div className="ggrid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
+      <div className="max-w-screen-1xl  w-full">
         <Card className=" drop-shadow-sm">
           <CardHeader className=" gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-            <CardTitle className="text-xl line-clamp-1">Accounts</CardTitle>
-            <Button size={"sm"} onClick={newAccount.onOpen}>
+            <CardTitle className="text-xl line-clamp-1">
+              Transactions History
+            </CardTitle>
+            <Button size={"sm"} onClick={newTransaction.onOpen}>
               <Plus className="size-4 mr-2" />
-              Add New
+              Add New Transaction
             </Button>
           </CardHeader>
           <CardContent>
             <DataTable
               columns={columns}
-              data={accounts}
-              filterKey="name"
+              data={transactions}
+              filterKey="payee"
               onDelete={(row) => {
                 const ids = row.map((r) => r.original.id);
                 console.log(ids);
-                deleteAccounts.mutate({ ids });
+                deleteTransactions.mutate({ ids });
               }}
               disabled={isDisabled}
             />

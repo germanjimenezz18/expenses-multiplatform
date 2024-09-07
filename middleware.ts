@@ -10,8 +10,10 @@ export default clerkMiddleware((auth, request) => {
     if (isProtectedRoute(request)) {
         auth().protect()
     }
-
-    return NextResponse.next()
+    const headers = new Headers(request.headers);
+    headers.set("x-current-path", request.nextUrl.pathname);
+    
+    return NextResponse.next({ headers });
 
 });
 

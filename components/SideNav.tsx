@@ -1,15 +1,15 @@
 "use client"
 import Link from "next/link";
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { Home, LineChart, Package, Package2, Settings, ShoppingCart, Users2 } from "lucide-react";
+import { ArrowLeftRight, ChartColumnStacked, Home, LineChart, Package, Package2, Settings, ShoppingCart, UserRound, Users2 } from "lucide-react";
 import NavigationButton from "./NavigationButton";
 import { usePathname } from "next/navigation";
 
 const routes = [
     { name: "Dashboard", icon: Home, href: "/dashboard" },
-    { name: "Accounts", icon: ShoppingCart, href: "/dashboard/accounts" },
-    { name: "Products", icon: Package, href: "#" },
-    { name: "Customers", icon: Users2, href: "#" },
+    { name: "Accounts", icon: UserRound, href: "/dashboard/accounts" },
+    { name: "Categories", icon: ChartColumnStacked, href: "/dashboard/categories" },
+    { name: "Transactions", icon: ArrowLeftRight, href: "/dashboard/transactions" },
     { name: "Analytics", icon: LineChart, href: "#" },
 ]
 

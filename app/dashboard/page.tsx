@@ -7,10 +7,10 @@ import {
   ListFilter,
   MoreVertical,
   Truck,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -18,7 +18,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -27,14 +27,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-} from "@/components/ui/pagination"
-import { Progress } from "@/components/ui/progress"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/pagination";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -42,21 +42,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import WelcomeCard from "@/components/WelcomeCard"
-import ButtonSheetNewAccount from "@/features/accounts/components/button-sheet-new-account"
-
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import WelcomeCard from "@/components/WelcomeCard";
+import ButtonSheetNewAccount from "@/features/accounts/components/button-sheet-new-account";
 
 export default async function Dashboard() {
-
   return (
-    <>
+    <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
         <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
           <WelcomeCard />
@@ -114,19 +107,11 @@ export default async function Dashboard() {
                   <DropdownMenuCheckboxItem checked>
                     Fulfilled
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem>
-                    Declined
-                  </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem>
-                    Refunded
-                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1 text-sm"
-              >
+              <Button size="sm" variant="outline" className="h-7 gap-1 text-sm">
                 <File className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only">Export</span>
               </Button>
@@ -326,16 +311,14 @@ export default async function Dashboard() {
         </Tabs>
       </div>
       <MoneyTracker />
-    </>
-  )
+    </div>
+  );
 }
 
 function MoneyTracker() {
   return (
     <div className="">
-      <Card
-        className="overflow-hidden" x-chunk="dashboard-05-chunk-4"
-      >
+      <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
         <CardHeader className="flex flex-row items-start bg-muted/50">
           <div className="grid gap-0.5">
             <CardTitle className="group flex items-center gap-2 text-lg">
@@ -349,14 +332,15 @@ function MoneyTracker() {
                 <span className="sr-only">Copy Order ID</span>
               </Button>
             </CardTitle>
-            <CardDescription>Date: {
-              new Date().toLocaleDateString("en-US", {
+            <CardDescription>
+              Date:{" "}
+              {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
                 month: "long",
                 day: "numeric",
-              })
-            }</CardDescription>
+              })}
+            </CardDescription>
           </div>
           <div className="ml-auto flex items-center gap-1">
             <Button size="sm" variant="outline" className="h-8 gap-1">
@@ -495,5 +479,5 @@ function MoneyTracker() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
