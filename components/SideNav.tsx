@@ -10,7 +10,7 @@ const routes = [
     { name: "Accounts", icon: UserRound, href: "/dashboard/accounts" },
     { name: "Categories", icon: ChartColumnStacked, href: "/dashboard/categories" },
     { name: "Transactions", icon: ArrowLeftRight, href: "/dashboard/transactions" },
-    { name: "Analytics", icon: LineChart, href: "#" },
+    { name: "Analytics", icon: LineChart, href: "/dashboard/analytics" },
 ]
 
 const settingRoute = { name: "Settings", icon: Settings, href: "/settings" }
