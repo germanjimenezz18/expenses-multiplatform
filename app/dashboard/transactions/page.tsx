@@ -11,6 +11,7 @@ import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-
 import { useState } from "react";
 import UploadButton from "./upload-button";
 import { set } from "date-fns";
+import ImportCard from "./import-card";
 
 enum VARIANTS {
   LIST = "LIST",
@@ -25,8 +26,15 @@ const INITIAL_IMPORT_RESULTS = {
 
 export default function TransactionsPage() {
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
+  const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
+
   const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
+    console.log({ results });
+    setImportResults(results);
     setVariant(VARIANTS.IMPORT);
+  };
+  const onCancelImport = () => {
+    setVariant(VARIANTS.LIST);
   };
   const newTransaction = useNewTransaction();
   const transactionsQuery = useGetTransactions();
@@ -56,11 +64,7 @@ export default function TransactionsPage() {
   }
 
   if (variant === VARIANTS.IMPORT) {
-    return (
-      <>
-        <div>This is a screen for import</div>
-      </>
-    );
+    return <ImportCard data={importResults} onCancel={onCancelImport} onSubmit={()=>{}}/>;
   }
   return (
     <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
