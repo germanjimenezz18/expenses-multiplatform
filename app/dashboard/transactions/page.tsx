@@ -10,7 +10,6 @@ import { useGetTransactions } from "@/features/transactions/api/use-get-transact
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transaction";
 import { useState } from "react";
 import UploadButton from "./upload-button";
-import { set } from "date-fns";
 import ImportCard from "./import-card";
 
 enum VARIANTS {
@@ -27,6 +26,8 @@ const INITIAL_IMPORT_RESULTS = {
 export default function TransactionsPage() {
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
+  console.log({importResults});
+  
 
   const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
     console.log({ results });
@@ -64,7 +65,15 @@ export default function TransactionsPage() {
   }
 
   if (variant === VARIANTS.IMPORT) {
-    return <ImportCard data={importResults} onCancel={onCancelImport} onSubmit={()=>{}}/>;
+    return (
+      <>
+        <ImportCard
+          data={importResults.data}
+          onCancel={onCancelImport}
+          onSubmit={() => {}}
+        />
+      </>
+    );
   }
   return (
     <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
@@ -74,8 +83,12 @@ export default function TransactionsPage() {
             <CardTitle className="text-xl line-clamp-1">
               Transactions History
             </CardTitle>
-            <div className="flex items-center gap-x-2">
-              <Button size={"sm"} onClick={newTransaction.onOpen}>
+            <div className="flex  flex-col lg:flex-row  items-center gap-x-2 gap-y-2">
+              <Button
+                className="w-full lg:w-auto"
+                size={"sm"}
+                onClick={newTransaction.onOpen}
+              >
                 <Plus className="size-4 mr-2" />
                 Add New Transaction
               </Button>
