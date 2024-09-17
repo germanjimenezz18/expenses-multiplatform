@@ -8,9 +8,14 @@ type Props = {
 export default function UploadButton({ onUpload }: Props) {
   const { CSVReader } = useCSVReader();
 
+  const logResult = (results: any) => {
+    console.log({ results });
+    onUpload(results);
+  }
+
   return (
     <>
-      <CSVReader onUploadAccepted={onUpload}>
+      <CSVReader onUploadAccepted={logResult}>
         {({ getRootProps }: any) => (
           <Button size="sm" className="w-full lg:w-auto" {...getRootProps()}>
             <Upload className="mr-2 size-4" />

@@ -26,6 +26,7 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
   );
   const headers = data[0];
   console.log( {headers});
+  console.log(data);
   
   const body = data.slice(1);
   console.log({body});
@@ -55,7 +56,6 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
   };
 
   const progress = Object.values(selectedColumns).filter(Boolean).length;
-  console.log({ progress });
 
   const handleContinue = () => {
     const getColumnIndex = (column: string) => {
@@ -81,7 +81,6 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
         .filter((row) => row.length > 0),
     };
 
-    console.log({ mappedData });
     const arrayOfData = mappedData.body.map((row) => {
       return row.reduce((acc: any, cell, index) => {
         const header = mappedData.header[index];
@@ -93,15 +92,13 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
       }, {});
     });
 
-    console.log({ arrayOfData });
-
     const formattedData = arrayOfData.map((item) => ({
       ...item,
       amount: convertAmountToMiliUnits(parseFloat(item.amount)),
       date: format(parse(item.date, dateFormat, new Date()), outputFormat),
     }));
 
-    console.log({ formattedData });
+    onSubmit(formattedData)
   };
 
   return (
