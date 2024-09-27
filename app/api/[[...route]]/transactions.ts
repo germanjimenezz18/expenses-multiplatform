@@ -46,8 +46,8 @@ const app = new Hono()
         ? parse(from, "yyyy-MM-dd", new Date())
         : defaultFrom;
       const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
-      console.log({startDate, endDate});
-      
+      console.log({ startDate, endDate });
+
       const data = await db
         .select({
           id: transactions.id,
@@ -66,14 +66,14 @@ const app = new Hono()
         .where(
           and(
             accountId ? eq(transactions.accountId, accountId) : undefined,
-            eq(accounts.userId, auth.userId),
+            eq(accounts.userId, auth.userId)
             // gte(transactions.date, startDate),
             // lte(transactions.date, endDate) -- No need to filter by end date
           )
         )
         .orderBy(desc(transactions.date));
-        console.log({data});
-        
+      console.log({ data });
+
       return c.json({ data });
     }
   )
