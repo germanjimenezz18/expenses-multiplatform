@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import CountUp from "react-countup";
 import {
@@ -10,6 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+
+import { Skeleton } from "./ui/skeleton";
+
 const boxVariant = cva("shrink-0 rounded-md p-3", {
   variants: {
     variant: {
@@ -46,6 +49,7 @@ interface DataCardProps extends BoxVariants, IconVariants {
   value?: number;
   dateRange: string;
   percentageChange?: number;
+  className?: string;
 }
 export default function DataCard({
   icon: Icon,
@@ -54,9 +58,10 @@ export default function DataCard({
   variant,
   dateRange,
   percentageChange = 0,
+  className,
 }: DataCardProps) {
   return (
-    <Card className="border-none drop-shadow-sm">
+    <Card className={`border-none drop-shadow-sm ${className}`}>
       <CardHeader className="flex flex-row items-center justify-between gap-x-4">
         <div className="space-y-2">
           <CardTitle className="text-2xl line-clamp-1">{title}</CardTitle>
@@ -80,7 +85,35 @@ export default function DataCard({
             formattingFn={formatCurrency}
           />
         </h1>
+        <p
+          className={cn(
+            "text-muted-foreground text-sm line-clamp-1",
+            percentageChange > 0 && "text-emerald-500",
+            percentageChange < 0 && "text-rose-500"
+          )}
+        >
+          {formatPercentage(percentageChange, { addPrefix: true })} from last
+          period
+        </p>
       </CardContent>
     </Card>
   );
 }
+
+export const DataCardLoading = () => {
+  return (
+    <Card className="border-none drop-shadow-sm h-[192px]">
+      <CardHeader className="flex flex-row items-center justify-between gap-x-4">
+        <div className="space-y-2">
+          <Skeleton className="h-6 w-24" />
+          <Skeleton className="h-4 w-40" />
+        </div>
+        <Skeleton className="size-12" />
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="shrink-0 h-10 w-24 mb-2" />
+        <Skeleton className="shrink-0 h-4 w-40 " />
+      </CardContent>
+    </Card>
+  );
+};
