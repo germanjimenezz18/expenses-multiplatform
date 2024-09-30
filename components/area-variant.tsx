@@ -22,11 +22,11 @@ export default function AreaVariant({ data }: Props) {
   return (
     <ResponsiveContainer width="100%" height={350}>
       <AreaChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="3 3" opacity={0.6}  />
         <defs>
           <linearGradient id="income" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="2%" stopColor="#2B6CB0" stopOpacity={0.8} />
-            <stop offset="98%" stopColor="#2B6CB0" stopOpacity={0} />
+            <stop offset="2%" stopColor="#5ec269" stopOpacity={0.8} />
+            <stop offset="98%" stopColor="#5ec269" stopOpacity={0} />
           </linearGradient>
           <linearGradient id="expenses" x1="0" y1="0" x2="0" y2="1">
             <stop offset="2%" stopColor="#f43f5e" stopOpacity={0.8} />
@@ -50,7 +50,7 @@ export default function AreaVariant({ data }: Props) {
           dataKey={"income"}
           stackId={"income"}
           strokeWidth={2}
-          stroke="#2B6CB0"
+          stroke="#5ec269"
           fill="url(#income)"
           className="drop-shadow-sm"
         />
