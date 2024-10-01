@@ -22,7 +22,7 @@ export function BarVariant({ data }: Props) {
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>
-        <CartesianGrid strokeDasharray={"3 3"} />
+        <CartesianGrid strokeDasharray={"3 3"} opacity={0.6}/>
         <XAxis
           axisLine={false}
           tickLine={false}
