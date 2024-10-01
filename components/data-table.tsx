@@ -104,8 +104,8 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <div className="rounded-md border">
-        <Table>
+      <div className="rounded-md border max-h-[500px] overflow-auto">
+        <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -124,6 +124,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (

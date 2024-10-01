@@ -19,7 +19,6 @@ import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-
 import UploadButton from "./upload-button";
 import ImportCard from "./import-card";
 
-
 enum VARIANTS {
   LIST = "LIST",
   IMPORT = "IMPORT",
@@ -32,7 +31,7 @@ const INITIAL_IMPORT_RESULTS = {
 };
 
 export default function TransactionsPage() {
-  const [AccountDialog, confirm] = useSelectAccount()
+  const [AccountDialog, confirm] = useSelectAccount();
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
   console.log({ importResults });
@@ -54,24 +53,25 @@ export default function TransactionsPage() {
   const isDisabled =
     transactionsQuery.isLoading || deleteTransactions.isPending;
 
-  const onSubmitImport = async (values: typeof transactionsSchema.$inferInsert[]) => {
-      const accountId = await confirm();
-      if (!accountId) {
-        return toast.error("Please select an account to continue.");
-      }
+  const onSubmitImport = async (
+    values: (typeof transactionsSchema.$inferInsert)[]
+  ) => {
+    const accountId = await confirm();
+    if (!accountId) {
+      return toast.error("Please select an account to continue.");
+    }
 
-      const data = values.map((value) => ({
-        ...value, 
-        accountId : accountId as string,
-      }))
+    const data = values.map((value) => ({
+      ...value,
+      accountId: accountId as string,
+    }));
 
-      //bulk mutation
-      createTransactions.mutate(data , {
-        onSuccess: () => {
-            onCancelImport()
-        }
-      })
-
+    //bulk mutation
+    createTransactions.mutate(data, {
+      onSuccess: () => {
+        onCancelImport();
+      },
+    });
   };
 
   if (transactionsQuery.isLoading) {
@@ -96,7 +96,7 @@ export default function TransactionsPage() {
   if (variant === VARIANTS.IMPORT) {
     return (
       <>
-      <AccountDialog />
+        <AccountDialog />
         <ImportCard
           data={importResults.data}
           onCancel={onCancelImport}
@@ -106,13 +106,13 @@ export default function TransactionsPage() {
     );
   }
   return (
-    <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
-      <div className="max-w-screen-1xl  w-full">
-        <Card className=" drop-shadow-sm">
-          <CardHeader className=" gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-            <CardTitle className="text-xl line-clamp-1">
-              Transactions History
-            </CardTitle>
+    <div className="flex lg:grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
+      <div className="w-full">
+        <Card className="drop-shadow-sm">
+          <CardHeader className="gap-y-2 flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <CardTitle className="text-xl line-clamp-1">
+          Transactions History
+        </CardTitle>
             <div className="flex  flex-col lg:flex-row  items-center gap-x-2 gap-y-2">
               <Button
                 className="w-full lg:w-auto"

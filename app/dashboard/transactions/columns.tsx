@@ -45,7 +45,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     accessorKey: "date",
     header: ({ column }) => {
       return (
-        <Button
+        <Button className="hidden md:flex"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -56,7 +56,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
     cell: ({ row }) => {
       const date = row.getValue("date") as Date;
-      return <span>{format(date, "dd/MM/yyyy")}</span>;
+      return <span className="hidden md:inline">{format(date, "dd/MM/yyyy")}</span>;
     },
   },
   {
@@ -91,9 +91,9 @@ export const columns: ColumnDef<ResponseType>[] = [
       return (
         <Badge
           variant={amount < 0 ? "destructive" : "primary"}
-          className="text-xs font-medium px-3.5 py-2.5"
+          className={`text-xs font-medium  ${amount < 0 ? "font-bold" : ""}`}
         >
-          {formatCurrency(amount, "EUR")}
+          {formatCurrency(amount)}
         </Badge>
       );
     },
@@ -103,6 +103,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="hidden md:flex"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -126,6 +127,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="hidden md:flex"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >

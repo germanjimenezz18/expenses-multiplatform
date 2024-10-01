@@ -1,5 +1,7 @@
-import Link from "next/link"
+import Link from "next/link";
 import {
+  CircleGaugeIcon,
+  Globe,
   Home,
   LineChart,
   Loader2,
@@ -9,24 +11,19 @@ import {
   Search,
   ShoppingCart,
   Users2,
-} from "lucide-react"
+} from "lucide-react";
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs"
-
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
+import BreadcrumbLoco from "./breadcrumb";
+import { Badge } from "./ui/badge";
+import Filters from "./filters";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <header className=" sticky top-0 z-30 flex h-14 items-center gap-4 bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6  ">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
@@ -81,17 +78,9 @@ export default function Header() {
           </nav>
         </SheetContent>
       </Sheet>
-      <Breadcrumb className="hidden md:flex">
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="#">Dashboard</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
+      <BreadcrumbLoco />
 
-        </BreadcrumbList>
-      </Breadcrumb>
+     
       <div className="relative ml-auto flex-1 md:grow-0">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
@@ -100,13 +89,26 @@ export default function Header() {
           className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
         />
       </div>
-      {/* Clerk button */}
 
+      {/* Clerk button */}
       <ClerkLoaded>
         <UserButton afterSignOutUrl="/sign-in" />
       </ClerkLoaded>
       <ClerkLoading>
         <Loader2 className="size-7 text-primary animate-spin" />
       </ClerkLoading>
-    </header>)
+      <Filters />
+
+      <div className=" hidden lg:flex absolute left-1/2 top-5  -translate-x-1/2 -translate-y-1/2">
+        <Badge
+          variant="outline"
+          className="text-muted-foreground select-none hover:text-primary/60 hover:border-primary/50 whitespace-nowrap"
+        >
+          Expenses
+          <Globe className="size-5 mx-1" />
+          Multiplatform
+        </Badge>
+      </div>
+    </header>
+  );
 }

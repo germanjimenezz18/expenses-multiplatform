@@ -1,13 +1,12 @@
 import {
-  Cell,
   Legend,
-  Pie,
-  PieChart,
+  RadialBar,
+  RadialBarChart,
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
 
-import { formatPercentage } from "@/lib/utils";
+import { formatCurrency, formatPercentage } from "@/lib/utils";
 import CategoryTooltip from "./category-tooltip";
 
 const COLORS = ["#0088FE", "#00C49F", "#FF8042", "#ff5b00"];
@@ -19,10 +18,25 @@ type Props = {
   }[];
 };
 
-export function PieVariant({ data = [] }: Props) {
+export function RadialVariant({ data = [] }: Props) {
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <PieChart>
+    <ResponsiveContainer width="100%" height={350}>
+      <RadialBarChart
+        cx="50%"
+        cy="30%"
+        barSize={10}
+        innerRadius={"90%"}
+        outerRadius={"40%"}
+        data={data.map((item, index) => ({
+          ...item,
+          fill: COLORS[index % COLORS.length],
+        }))}
+      >
+        <RadialBar
+          background
+          dataKey={"value"}
+          label={{ fill: "#fff", position: "insideStart", fontSize: "12px" }}
+        />
         <Legend
           layout="horizontal"
           verticalAlign="bottom"
@@ -45,7 +59,7 @@ export function PieVariant({ data = [] }: Props) {
                         {entry.value}
                       </span>
                       <span className="text-sm">
-                        {formatPercentage(entry.payload.percent * 100)}
+                        {formatCurrency(entry.payload.value )}
                       </span>
                     </div>
                   </li>
@@ -54,30 +68,7 @@ export function PieVariant({ data = [] }: Props) {
             );
           }}
         />
-        <Tooltip content={<CategoryTooltip/>} />
-        <Pie
-          data={data}
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={90}
-          fill="#8884d8"
-          paddingAngle={2}
-          dataKey="value"
-          labelLine={false}
-        >
-          {data.map((_entry, index) => {
-            console.log({ data });
-            return (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            );
-          })}
-        </Pie>
-        <Tooltip formatter={(value: number) => formatPercentage(value)} />
-      </PieChart>
+      </RadialBarChart>
     </ResponsiveContainer>
   );
 }

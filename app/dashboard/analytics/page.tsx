@@ -1,5 +1,6 @@
 import DataCharts from "@/components/data-charts";
 import DataGrid from "@/components/data-grid";
+import Filters from "@/components/filters";
 
 export default function AnaliticsPage() {
   return (

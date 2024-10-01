@@ -25,7 +25,7 @@ export default function CategoryColumn({ id, categoryId, category }: Props) {
     <div
       onClick={onClick}
       className={cn(
-        "flex items-center cursor-pointer hover:underline",
+        "hidden md:flex items-center cursor-pointer hover:underline",
         !category && "text-rose-500"
       )}
     >

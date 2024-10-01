@@ -16,7 +16,7 @@ export default function AccountColumn({ accountId, account }: Props) {
   return (
     <div
       onClick={onClick}
-      className="flex items-center cursor-pointer hover:underline"
+      className="hidden md:flex items-center cursor-pointer hover:underline"
     >
       {account}
     </div>
