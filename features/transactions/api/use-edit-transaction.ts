@@ -28,7 +28,7 @@ export const useEditTransaction = (id?: string) => {
       toast.success("Transaction updated");
       queryClient.invalidateQueries({ queryKey: ["transaction", { id }] });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      //invalidate summary
+      queryClient.invalidateQueries({ queryKey: ["sumary"] });
     },
     onError: (error) => {
       console.log(error);

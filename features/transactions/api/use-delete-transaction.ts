@@ -16,13 +16,14 @@ export const useDeleteTransaction = (id?: string) => {
       const response = await client.api.transactions[":id"].$delete({
         param: { id },
       });
-      return response.json();
+      return await response.json();
     },
 
     onSuccess: () => {
       toast.success("Transaction deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["transaction", { id }] });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
     onError: (error) => {
       console.log(error);
