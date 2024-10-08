@@ -173,8 +173,9 @@ export default function LandingPage() {
               <Card>
                 <CardContent className="pt-4">
                   <p className="mb-4">
-                    "Expenses Multiplatform has revolutionized how I manage my
-                    finances. The cross-platform sync is a game-changer!"
+                    &ldquo;Expenses Multiplatform has revolutionized how I
+                    manage my finances. The cross-platform sync is a
+                    game-changer!&ldquo;
                   </p>
                   <p className="font-semibold">
                     - Sarah J., Small Business Owner
@@ -184,8 +185,9 @@ export default function LandingPage() {
               <Card>
                 <CardContent className="pt-4">
                   <p className="mb-4">
-                    "The custom reports have given me insights into my spending
-                    habits that I never had before. Highly recommended!"
+                    &ldquo;The custom reports have given me insights into my
+                    spending habits that I never had before. Highly
+                    recommended!&ldquo;
                   </p>
                   <p className="font-semibold">- Mark T., Freelancer</p>
                 </CardContent>
