@@ -3,6 +3,7 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/c
 import { Button } from './ui/button'
 import { useUser } from '@clerk/nextjs'
 import ButtonSheetNewAccount from '@/features/accounts/components/button-sheet-new-account'
+import ButtonSheetNewTransaction from '@/features/transactions/components/button-sheet-new-transaction'
 
 export default function WelcomeCard() {
     const {user ,isLoaded} = useUser()
@@ -16,8 +17,8 @@ export default function WelcomeCard() {
         This is yout Financial Overview Report
       </CardDescription>
     </CardHeader>
-    <CardFooter>
-      <Button className='mr-2'>Create New Order</Button>
+    <CardFooter className='flex gap-x-2'>
+      <ButtonSheetNewTransaction/>
       <ButtonSheetNewAccount />
     </CardFooter>
   </Card>
