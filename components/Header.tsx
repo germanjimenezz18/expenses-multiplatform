@@ -1,27 +1,50 @@
 import Link from "next/link";
 import {
-  CircleGaugeIcon,
+  ArrowLeftRight,
+  ChartColumnStacked,
   Globe,
   Home,
   LineChart,
   Loader2,
   Package,
-  Package2,
   PanelLeft,
   Search,
+  Settings,
   ShoppingCart,
-  Users2,
+  UserRound,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import BreadcrumbLoco from "./breadcrumb";
 import { Badge } from "./ui/badge";
 import Filters from "./filters";
 
 export default function Header() {
+  const routes = [
+    { name: "Dashboard", icon: Home, href: "/dashboard" },
+    { name: "Accounts", icon: UserRound, href: "/dashboard/accounts" },
+    {
+      name: "Categories",
+      icon: ChartColumnStacked,
+      href: "/dashboard/categories",
+    },
+    {
+      name: "Transactions",
+      icon: ArrowLeftRight,
+      href: "/dashboard/transactions",
+    },
+    { name: "Analytics", icon: LineChart, href: "/dashboard/analytics" },
+    { name: "Settings", icon: Settings, href: "/settings" },
+  ];
+
   return (
     <header className=" sticky top-0 z-30 flex h-14 items-center gap-4 bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6  ">
       <Sheet>
@@ -37,50 +60,26 @@ export default function Header() {
               href="#"
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
-              <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
+              <Globe className="h-5 w-5 transition-all group-hover:scale-110" />
               <span className="sr-only">Acme Inc</span>
             </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Home className="h-5 w-5" />
-              Dashboard
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-4 px-2.5 text-foreground"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              Orders
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Package className="h-5 w-5" />
-              Products
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Users2 className="h-5 w-5" />
-              Customers
-            </Link>
-            <Link
-              href="settings"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <LineChart className="h-5 w-5" />
-              Settings
-            </Link>
+
+            {routes.map((route: any) => (
+              <SheetClose asChild key={route.name}>
+                <Link
+                  href={route.href}
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                >
+                  <route.icon className="h-5 w-5" />
+                  {route.name}
+                </Link>
+              </SheetClose>
+            ))}
           </nav>
         </SheetContent>
       </Sheet>
       <BreadcrumbLoco />
 
-     
       <div className="relative ml-auto flex-1 md:grow-0">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
