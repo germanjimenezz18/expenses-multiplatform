@@ -9,13 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 
-import { Input } from "@/components/ui/input";
 import SideNavbar from "@/components/SideNav";
-import { ModeToggle } from "@/components/ModeToggle";
 import { ModeToggleButtons } from "@/components/ModeToggleButtons";
 import Header from "@/components/Header";
+import ButtonConnectToBank from "@/components/button-connect-to-bank";
 
 export default function SettingsPage() {
   return (
@@ -48,32 +46,17 @@ export default function SettingsPage() {
                     </CardDescription>
                     <ModeToggleButtons />
                   </CardHeader>
-                  <CardContent>tedst</CardContent>
                 </Card>
                 <Card x-chunk="dashboard-04-chunk-2">
                   <CardHeader>
-                    <CardTitle>Plugins Directory</CardTitle>
+                    <CardTitle>Integrations</CardTitle>
                     <CardDescription>
-                      The directory within your project, in which your plugins
-                      are located.
+                      Manage third-party bank integrations
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <form className="flex flex-col gap-4">
-                      <Input
-                        placeholder="Project Name"
-                        defaultValue="/content/plugins"
-                      />
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="include" defaultChecked />
-                        <label
-                          htmlFor="include"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Allow administrators to change the directory.
-                        </label>
-                      </div>
-                    </form>
+                    <ButtonConnectToBank />
+
                   </CardContent>
                   <CardFooter className="border-t px-6 py-4">
                     <Button>Save</Button>

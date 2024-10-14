@@ -21,16 +21,14 @@ export default function BreadcrumbLoco() {
           const href = "/" + pathnames.slice(0, index + 1).join("/");
           const isLast = index === pathnames.length - 1;
           return (
-            <>
             <BreadcrumbItem key={href}>
               <BreadcrumbLink asChild>
                 <Link href={href}>
                   {value.charAt(0).toUpperCase() + value.slice(1)}
                 </Link>
               </BreadcrumbLink>
-            </BreadcrumbItem>
               {!isLast && <BreadcrumbSeparator />}
-            </>
+            </BreadcrumbItem>
           );
         })}
       </BreadcrumbList>

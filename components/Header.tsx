@@ -78,6 +78,16 @@ export default function Header() {
           </nav>
         </SheetContent>
       </Sheet>
+      <div className=" hidden lg:flex ">
+        <Badge
+          variant="outline"
+          className="text-muted-foreground select-none hover:text-primary/60 hover:border-primary/50 whitespace-nowrap"
+        >
+          Expenses
+          <Globe className="size-5 mx-1" />
+          Multiplatform
+        </Badge>
+      </div>
       <BreadcrumbLoco />
 
       <div className="relative ml-auto flex-1 md:grow-0">
@@ -98,16 +108,7 @@ export default function Header() {
       </ClerkLoading>
       <Filters />
 
-      <div className=" hidden lg:flex absolute left-1/2 top-5  -translate-x-1/2 -translate-y-1/2">
-        <Badge
-          variant="outline"
-          className="text-muted-foreground select-none hover:text-primary/60 hover:border-primary/50 whitespace-nowrap"
-        >
-          Expenses
-          <Globe className="size-5 mx-1" />
-          Multiplatform
-        </Badge>
-      </div>
+
     </header>
   );
 }

@@ -4,6 +4,7 @@ import accounts from "./accounts";
 import categories from "./categories";
 import transactions from "./transactions";
 import summary from "./summary";
+import test from "./test";
 
 export const runtime = "edge";
 
@@ -12,7 +13,8 @@ const routes = app
   .route("/accounts", accounts)
   .route("/categories", categories)
   .route("/transactions", transactions)
-  .route("/summary", summary);
+  .route("/summary", summary)
+  .route("/test", test);
 
 export const GET = handle(app);
 export const POST = handle(app);
