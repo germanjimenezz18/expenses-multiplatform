@@ -89,6 +89,9 @@ export default function Header() {
         </Badge>
       </div>
       <BreadcrumbLoco />
+      
+      
+      <Filters className="hidden md:flex relative ml-auto  " />
 
       <div className="relative ml-auto flex-1 md:grow-0">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -106,7 +109,6 @@ export default function Header() {
       <ClerkLoading>
         <Loader2 className="size-7 text-primary animate-spin" />
       </ClerkLoading>
-      <Filters />
 
 
     </header>

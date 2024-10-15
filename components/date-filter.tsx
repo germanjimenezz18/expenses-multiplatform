@@ -62,8 +62,8 @@ export default function DateFilter() {
           disabled={false}
           size={"sm"}
           variant={"outline"}
-          className="lg:w-auto w-full h-9 rounded-md px-3 font-normal bg-muted 
-      hover:bg-secondary border-none focus:ring-offset-0 focus:ring-transparent outline-none transition"
+          className="lg:w-auto w-full h-9 rounded-md px-3 font-normal bg-transparent 
+      hover:bg-secondary border focus:ring-offset-0 focus:ring-transparent outline-none transition"
         >
           <span>{formatDateRange(paramState)}</span>
           <ChevronDown className="ml-2 size-4  opacity-50" />

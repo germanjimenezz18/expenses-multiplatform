@@ -16,13 +16,16 @@ export function convertAmountFromMiliUnits(amount: number) {
 
 // export function formatCurrency(value: number, currencyType: CurrencyType) {
 export function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "EUR",
-    currencyDisplay: "symbol",
+  let currencySymbol = "€";
+  let formatted =  new Intl.NumberFormat("en-IN", {
+    // style: "currency",
+    // currency: "EUR",
+    // currencyDisplay: "symbol",
     notation: "standard",
     minimumFractionDigits: 2,
   }).format(value);
+  return `${currencySymbol} ${formatted}`;
+  
 }
 
 export function calculatePercentageChange(current: number, previous: number) {

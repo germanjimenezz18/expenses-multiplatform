@@ -25,9 +25,9 @@ export default function DataGrid() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
+    <div className=" grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
       <DataCard
-        className="border border-red-500"
+        className=""
         title="Remaining"
         value={data?.remainingAmount}
         percentageChange={data?.remainingChange}
@@ -45,7 +45,7 @@ export default function DataGrid() {
       />
       <DataCard
         title="Expenses"
-        value={data?.expensesAmount}
+        value={(data?.expensesAmount ?? 0) * -1}
         percentageChange={data?.expensesChange}
         icon={FaArrowTrendDown}
         variant="danger"

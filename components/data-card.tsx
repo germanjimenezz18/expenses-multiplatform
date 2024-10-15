@@ -13,20 +13,20 @@ import {
 
 import { Skeleton } from "./ui/skeleton";
 
-const boxVariant = cva("shrink-0 rounded-md p-3", {
+const boxVariant = cva("shrink-0 border rounded-md p-2 transition-colors duration-200", {
   variants: {
     variant: {
-      default: "bg-blue-500/20",
-      success: "bg-emerald-500/20",
-      danger: "bg-rose-500/20",
-      warning: "bg-yellow-500/20",
+      default: "bg-blue-500/20 border-blue-500/20 hover:bg-blue-500/30",
+      success: "bg-emerald-500/20 border-emerald-500/20 hover:bg-emerald-500/30",
+      danger: "bg-rose-500/20 border-rose-500/20 hover:bg-rose-500/30",
+      warning: "bg-yellow-500/20 border-yellow-500/20 hover:bg-yellow-500/30",
     },
     defaultVariants: {
       variant: "default",
     },
   },
 });
-const iconVariant = cva("size-6", {
+const iconVariant = cva("size-5", {
   variants: {
     variant: {
       default: "fill-blue-500",
@@ -61,9 +61,9 @@ export default function DataCard({
   className,
 }: DataCardProps) {
   return (
-    <Card className={`border-none drop-shadow-sm ${className}`}>
+    <Card className={` drop-shadow-sm ${className}`}>
       <CardHeader className="flex flex-row items-center justify-between gap-x-4">
-        <div className="space-y-2">
+        <div className="">
           <CardTitle className="text-2xl line-clamp-1">{title}</CardTitle>
           <CardDescription className="line-clamp-1">
             {dateRange}
@@ -83,7 +83,7 @@ export default function DataCard({
             decimals={2}
             decimalPlaces={2}
             formattingFn={formatCurrency}
-          />
+          /> 
         </h1>
         <p
           className={cn(
@@ -102,13 +102,13 @@ export default function DataCard({
 
 export const DataCardLoading = () => {
   return (
-    <Card className="border-none drop-shadow-sm h-[192px]">
+    <Card className=" drop-shadow-sm h-[186px]">
       <CardHeader className="flex flex-row items-center justify-between gap-x-4">
         <div className="space-y-2">
           <Skeleton className="h-6 w-24" />
           <Skeleton className="h-4 w-40" />
         </div>
-        <Skeleton className="size-12" />
+        <Skeleton className="size-5" />
       </CardHeader>
       <CardContent>
         <Skeleton className="shrink-0 h-10 w-24 mb-2" />
