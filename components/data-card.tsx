@@ -62,7 +62,7 @@ export default function DataCard({
 }: DataCardProps) {
   return (
     <Card className={` drop-shadow-sm ${className}`}>
-      <CardHeader className="flex flex-row items-center justify-between gap-x-4">
+      <CardHeader className="flex flex-row items-center justify-between gap-x-4 bg-muted/50">
         <div className="">
           <CardTitle className="text-2xl line-clamp-1">{title}</CardTitle>
           <CardDescription className="line-clamp-1">

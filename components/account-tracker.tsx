@@ -51,7 +51,7 @@ export default function AccountTracker() {
               </Button>
             </CardTitle>
             <CardDescription>
-              Date:{" "}
+              {" "}
               {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
@@ -90,16 +90,30 @@ export default function AccountTracker() {
           <div className="grid gap-3">
             <div className="font-semibold">Accounts Details</div>
             <ul className="grid gap-3">
-
-                {accounts.map( (account,index) =>  (
-                  <li key={index} className="flex items-center justify-between">
-                    <span className="text-muted-foreground">
-                      {account.name} </span>
-                    {/* <span>{account.balance} €</span> */}
-                    <span>{(Math.random() * 1000).toFixed(2)} €</span>
-                  </li>
-                ))}
-            
+              {accounts.length === 0 ? (
+                <div className="flex justify-center items-center">
+                  <Button
+                    variant="destructive"
+                    onClick={() => (window.location.href = "/create-account")}
+                  >
+                    Create Account
+                  </Button>
+                </div>
+              ) : (
+                <ul className="grid gap-3">
+                  {accounts.map((account, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-muted-foreground">
+                        {account.name}
+                      </span>
+                      <span>{(Math.random() * 1000).toFixed(2)} €</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </ul>
             <Separator className="my-2" />
             <ul className="grid gap-3">
@@ -140,7 +154,7 @@ export default function AccountTracker() {
           </div> */}
           <Separator className="my-4" />
           <div className="grid gap-3">
-            <div className="font-semibold">Customer Information</div>
+            <div className="font-semibold">Accounts Information</div>
             <dl className="grid gap-3">
               <div className="flex items-center justify-between">
                 <dt className="text-muted-foreground">Customer</dt>
@@ -160,7 +174,7 @@ export default function AccountTracker() {
               </div>
             </dl>
           </div>
-          <Separator className="my-4" />
+          {/* <Separator className="my-4" />
           <div className="grid gap-3">
             <div className="font-semibold">Payment Information</div>
             <dl className="grid gap-3">
@@ -172,7 +186,7 @@ export default function AccountTracker() {
                 <dd>**** **** **** 4532</dd>
               </div>
             </dl>
-          </div>
+          </div> */}
         </CardContent>
         <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
           <div className="text-xs text-muted-foreground">
@@ -183,13 +197,13 @@ export default function AccountTracker() {
               <PaginationItem>
                 <Button size="icon" variant="outline" className="h-6 w-6">
                   <ChevronLeft className="h-3.5 w-3.5" />
-                  <span className="sr-only">Previous Order</span>
+                  <span className="sr-only">Previous </span>
                 </Button>
               </PaginationItem>
               <PaginationItem>
                 <Button size="icon" variant="outline" className="h-6 w-6">
                   <ChevronRight className="h-3.5 w-3.5" />
-                  <span className="sr-only">Next Order</span>
+                  <span className="sr-only">Next </span>
                 </Button>
               </PaginationItem>
             </PaginationContent>
