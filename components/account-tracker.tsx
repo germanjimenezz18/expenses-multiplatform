@@ -28,11 +28,32 @@ import {
 } from "./ui/dropdown-menu";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
+import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { transactions } from "../db/schema";
+import { convertAmountFromMiliUnits } from "@/lib/utils";
 
 export default function AccountTracker() {
   const accountsQuery = useGetAccounts();
-  const accounts = accountsQuery.data || [];
+  const transactionsQuery = useGetTransactions();
 
+  const accounts = accountsQuery.data || [];
+  const transactions = transactionsQuery.data || [];
+
+  const accountsWithBalance = accounts.map((account) => {
+    const balance = transactions
+      .filter((transaction) => transaction.accountId === account.id)
+      .reduce((acc, curr) => acc + curr.amount, 0);
+    return { ...account, balance };
+  });
+
+  const totalAccountsBalance = accountsWithBalance.reduce(
+    (acc, curr) => acc + curr.balance,
+    0
+  );
+
+  console.log({ accountsWithBalance });
+
+  console.log(accounts);
   console.log({ accounts });
   return (
     <div className="">
@@ -90,7 +111,7 @@ export default function AccountTracker() {
           <div className="grid gap-3">
             <div className="font-semibold">Accounts Details</div>
             <ul className="grid gap-3">
-              {accounts.length === 0 ? (
+              {!accountsWithBalance ? (
                 <div className="flex justify-center items-center">
                   <Button
                     variant="destructive"
@@ -101,7 +122,7 @@ export default function AccountTracker() {
                 </div>
               ) : (
                 <ul className="grid gap-3">
-                  {accounts.map((account, index) => (
+                  {accountsWithBalance.map((account, index) => (
                     <li
                       key={index}
                       className="flex items-center justify-between"
@@ -109,7 +130,7 @@ export default function AccountTracker() {
                       <span className="text-muted-foreground">
                         {account.name}
                       </span>
-                      <span>{(Math.random() * 1000).toFixed(2)} €</span>
+                      <span>{account.balance} €</span>
                     </li>
                   ))}
                 </ul>
@@ -117,10 +138,10 @@ export default function AccountTracker() {
             </ul>
             <Separator className="my-2" />
             <ul className="grid gap-3">
-              <li className="flex items-center justify-between">
+              {/* <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Subtotal</span>
                 <span>$299.00</span>
-              </li>
+              </li> */}
               {/* <li className="flex items-center justify-between">
                 <span className="text-muted-foreground">Shipping</span>
                 <span>$5.00</span>
@@ -131,7 +152,7 @@ export default function AccountTracker() {
               </li> */}
               <li className="flex items-center justify-between font-semibold">
                 <span className="text-muted-foreground">Total</span>
-                <span>$329.00</span>
+                <span>{totalAccountsBalance} €</span>
               </li>
             </ul>
           </div>
@@ -152,7 +173,7 @@ export default function AccountTracker() {
               </div>
             </div>
           </div> */}
-          <Separator className="my-4" />
+          {/* <Separator className="my-4" />
           <div className="grid gap-3">
             <div className="font-semibold">Accounts Information</div>
             <dl className="grid gap-3">
@@ -173,7 +194,7 @@ export default function AccountTracker() {
                 </dd>
               </div>
             </dl>
-          </div>
+          </div> */}
           {/* <Separator className="my-4" />
           <div className="grid gap-3">
             <div className="font-semibold">Payment Information</div>

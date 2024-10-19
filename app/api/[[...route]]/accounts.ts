@@ -1,13 +1,13 @@
 // authors.ts
 import { db } from "@/db/drizzle";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray, sum } from "drizzle-orm";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
-import { accounts, insertAccountSchema } from "@/db/schema";
+import { accounts, insertAccountSchema, transactions } from "@/db/schema";
 
 const app = new Hono()
   .get("/", clerkMiddleware(), async (c) => {
@@ -21,9 +21,12 @@ const app = new Hono()
       .select({
         id: accounts.id,
         name: accounts.name,
+        balance: sum(transactions.amount).mapWith(Number)
       })
       .from(accounts)
-      .where(eq(accounts.userId, auth.userId));
+      .leftJoin(transactions, eq(transactions.accountId, accounts.id))
+      .where(eq(accounts.userId, auth.userId))
+      .groupBy(accounts.id, accounts.name);
 
     return c.json({ data });
   })

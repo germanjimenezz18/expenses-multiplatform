@@ -58,9 +58,19 @@ export default function SettingsPage() {
                     <ButtonConnectToBank />
 
                   </CardContent>
-                  <CardFooter className="border-t px-6 py-4">
-                    <Button>Save</Button>
-                  </CardFooter>
+                </Card>
+                <Card x-chunk="dashboard-04-chunk-3">
+                  <CardHeader>
+                    <CardTitle>Support</CardTitle>
+                    <CardDescription>
+                      Get help  from our support team
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                      <Button variant={'destructive'}>
+                        Reset Account Data
+                      </Button>
+                  </CardContent>
                 </Card>
               </div>
             </div>
