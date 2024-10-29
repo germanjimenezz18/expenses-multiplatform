@@ -31,6 +31,7 @@ import Link from "next/link";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
 import { transactions } from "../db/schema";
 import { convertAmountFromMiliUnits } from "@/lib/utils";
+import { format } from "path";
 
 export default function AccountTracker() {
   const accountsQuery = useGetAccounts();
@@ -51,10 +52,6 @@ export default function AccountTracker() {
     0
   );
 
-  console.log({ accountsWithBalance });
-
-  console.log(accounts);
-  console.log({ accounts });
   return (
     <div className="">
       <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
@@ -130,7 +127,7 @@ export default function AccountTracker() {
                       <span className="text-muted-foreground">
                         {account.name}
                       </span>
-                      <span>{account.balance} €</span>
+                      <span>{account.balance.toFixed(2)} €</span>
                     </li>
                   ))}
                 </ul>
@@ -152,7 +149,7 @@ export default function AccountTracker() {
               </li> */}
               <li className="flex items-center justify-between font-semibold">
                 <span className="text-muted-foreground">Total</span>
-                <span>{totalAccountsBalance} €</span>
+                <span>{totalAccountsBalance.toFixed(2)} €</span>
               </li>
             </ul>
           </div>
@@ -210,8 +207,9 @@ export default function AccountTracker() {
           </div> */}
         </CardContent>
         <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+
           <div className="text-xs text-muted-foreground">
-            Updated <time dateTime="2023-11-23">November 23, 2023</time>
+            Updated <time dateTime="2023-11-23"> Now</time>
           </div>
           <Pagination className="ml-auto mr-0 w-auto">
             <PaginationContent>

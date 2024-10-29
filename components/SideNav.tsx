@@ -14,7 +14,7 @@ const routes = [
 ]
 
 const settingRoute = { name: "Settings", icon: Settings, href: "/settings" }
-const firstRoute = { name: "Expenses Multiplatform", href: "dashboard" }
+const firstRoute = { name: "Expenses Multiplatform", href: "/dashboard" }
 
 export default function SideNavbar() {
     const pathname = usePathname()

@@ -56,14 +56,12 @@ export default function TransactionForm({
   onCreateAccount,
   onCreateCategory,
 }: Props) {
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
-  });
-
+  const form = useForm<FormValues>({ resolver: zodResolver(formSchema), defaultValues: defaultValues,});
+  
   const handleSubmit = (values: FormValues) => {
     const amount = parseFloat(values.amount);
     const amountInMiliUnits = convertAmountToMiliUnits(amount);
+  console.log('llega aca');
 
     onSubmit({ ...values, amount: amountInMiliUnits });
   };
@@ -85,7 +83,7 @@ export default function TransactionForm({
             <FormItem>
               <FormControl>
                 <DatePicker
-                  value={field.value}
+                  value={field.value ?? new Date()}
                   onChange={field.onChange}
                   disabled={disabled}
                 />

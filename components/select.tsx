@@ -31,16 +31,44 @@ export const Select = ({
 
   return (
     <CreatableSelect
-      className="text-sm h-10"
+      className="text-sm h-10 "
       styles={{
         control: (base) => ({
           ...base,
-          borderColor: "#e2e8f0",
-          ":hover": { borderColor: "#e2e8f0" },
+          borderColor: "border-primary",
+          backgroundColor: "Background",
+          color: "text-primary",
+          ":hover": { borderColor: "green", 
+           },
+           ":focus": { borderColor: "border-primary",}
         }),
+        
+        menu: (base) => ({
+          ...base,
+          color:  "text-primary",
+          backgroundColor: "Background",
+
+
+        }),
+        option: (base, { isFocused }) => ({
+          ...base,
+          backgroundColor: isFocused ? "ButtonFace" : "Background",
+          color: "text-primary",
+        }),
+
+    
       }}
       value={formattedValue}
       onChange={onSelect}
+      theme={(theme) => ({
+        ...theme,
+        borderRadius: 10,
+        colors: {
+          ...theme.colors,
+          primary: 'black',
+          background: 'Background',
+        },
+      })}
       options={options}
       onCreateOption={onCreate}
       placeholder={placeholder}
