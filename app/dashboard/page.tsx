@@ -81,7 +81,7 @@ function TransactionTabs() {
       <TabsContent value="week">
         <Card x-chunk="dashboard-05-chunk-3">
           <CardHeader className="px-7">
-            <CardTitle>Transactions</CardTitle>
+            <CardTitle className="text-xl">Transactions</CardTitle>
             <CardDescription>
               Recent transactions from your accounts.
             </CardDescription>

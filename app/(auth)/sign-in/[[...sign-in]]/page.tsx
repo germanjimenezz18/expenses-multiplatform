@@ -1,13 +1,17 @@
 import { SignIn, ClerkLoading, ClerkLoaded } from "@clerk/nextjs"
-import { Loader2 } from "lucide-react"
+import { Globe, Loader2 } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 function page() {
     return (
         <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
             <div className="h-full  lg:flex flex-col items-center justify-start px-4">
+                <div className="bg-white">
+                    <Link href={'/'}>Volver Atras</Link>
+                </div>
                 <div className="text-center space-y-4 pt-16">
-                    <h1 className="font-bold text-3xl text-green-300">Welcome Back!</h1>
+                    <h1 className=" text-xl text-primary">Welcome!</h1>
                 </div>
 
                 <div className="flex items-center justify-center mt-8">
@@ -24,7 +28,9 @@ function page() {
             </div>
 
             <div className="h-full bg-green-950 hidden lg:flex items-center justify-center">
-                <Image src={'/logo.svg'} alt="logo" width={200} height={200} />
+
+                {/* <Image src={'/logo.svg'} alt="logo" width={200} height={200} /> */}
+                <Globe className="h-6 w-6 text-foreground" />
             </div>
         </div>
     )

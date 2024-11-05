@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import {
   ArrowLeftRight,
@@ -6,11 +7,9 @@ import {
   Home,
   LineChart,
   Loader2,
-  Package,
   PanelLeft,
   Search,
   Settings,
-  ShoppingCart,
   UserRound,
 } from "lucide-react";
 
