@@ -33,26 +33,7 @@ export default function LandingPage() {
         </Link>
       </header>
       <main className="flex-1">
-      {features.map((feature, index) => (
-            <div
-              key={index}
-              className="absolute flex items-center justify-center flex-col  p-2 rounded-sm drop-shadow-md"
-              style={{
-                top: `${
-                  50 + 35 * Math.sin((index * 2 * Math.PI) / features.length)
-                }%`,
-                left: `${
-                  50 + 35 * Math.cos((index * 2 * Math.PI) / features.length)
-                }%`,
-                transform: "translate(-50%, -300%)",
-              }}
-            >
-              {/* <span className=" font-semibold text-sm z-10">{feature}</span> */}
-              <Badge variant="outline" className="text-primary text-lg bg-white ">
-                <span>{feature}</span>
-              </Badge>
-            </div>
-          ))}
+   
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
