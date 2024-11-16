@@ -33,6 +33,7 @@ interface DataTableProps<TData, TValue> {
   filterKey: string;
   onDelete: (rows: Row<TData>[]) => void;
   disabled?: boolean;
+  hideSearch?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -41,6 +42,7 @@ export function DataTable<TData, TValue>({
   filterKey,
   onDelete,
   disabled,
+  hideSearch = false,
 }: DataTableProps<TData, TValue>) {
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
@@ -63,7 +65,6 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
-
     state: {
       sorting,
       columnFilters,
@@ -74,15 +75,19 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <ConfirmDialog />
-      <div className="flex items-center py-4">
-        <Input
-          placeholder={`Filter ${filterKey}...`}
-          value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn(filterKey)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+      <div className="flex items-center">
+        {!hideSearch && (
+          <Input
+            placeholder={`Filter ${filterKey}...`}
+            value={
+              (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(filterKey)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
 
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <Button
@@ -104,7 +109,7 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <div className="rounded-md border max-h-[500px] overflow-auto">
+      <div className="rounded-md border">
         <Table className="">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
