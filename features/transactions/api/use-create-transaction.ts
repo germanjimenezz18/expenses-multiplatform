@@ -15,7 +15,6 @@ export const useCreateTransaction = () => {
       const response = await client.api.transactions.$post({ json });
       return response.json();
     },
-
     onSuccess: () => {
       toast.success("Transaction created");
       queryClient.invalidateQueries({ queryKey: ["transactions"] });

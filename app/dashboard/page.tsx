@@ -14,15 +14,22 @@ import AccountTracker from "@/components/account-tracker";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import SpendingPie from "@/components/spending-pie";
+import { useGetSummary } from "@/features/summary/api/use-get-summary";
 
 export default function Dashboard() {
+  const { data, isLoading } = useGetSummary();
+
   return (
     <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3 ">
       <div className="grid auto-rows-max items-start  lg:col-span-2">
         <DataGrid />
         <TransactionTabs />
       </div>
-      <AccountTracker />
+      <div className="flex flex-col gap-8">
+        <SpendingPie data={data?.categories} />
+        <AccountTracker />
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 import { formatDateRange } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import DataCard, { DataCardLoading } from "./data-card";
+import SpendingPie from "./spending-pie";
 
 export default function DataGrid() {
   const { data, isLoading } = useGetSummary();
@@ -51,6 +52,8 @@ export default function DataGrid() {
         variant="danger"
         dateRange={dateRangeLabel}
       />
+
+
     </div>
   );
 }
