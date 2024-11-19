@@ -1,3 +1,5 @@
+[![Deployment pipeline](https://github.com/germanjimenezz18/expenses-multiplatform/actions/workflows/pipeline.yml/badge.svg)](https://github.com/germanjimenezz18/expenses-multiplatform/actions/workflows/pipeline.yml)
+
 ## Getting Started
 
 First, run the development server:
