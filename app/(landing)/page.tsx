@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { Circle, Globe } from "lucide-react";
+import { Circle, Globe, ArrowLeftRight, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AnimatedTabs } from '../../components/AnimatedTabs';
+import { TextGenerateEffectExample } from '../../components/text-generate-effect';
 
 export default function LandingPage() {
   const features = [
@@ -16,8 +18,8 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      
-      <header className="px-4 lg:px-6 h-14 flex items-center justify-end  w-full gap-x-6 ">
+
+      <header className="px-4 lg:px-6 h-14 flex items-center justify-end  w-full gap-x-6 bg-white dark:bg-background bo">
         <Link className="flex items-center justify-center " href="#">
           <span className="sr-only ">Expenses Multiplatform</span>
         </Link>
@@ -33,7 +35,7 @@ export default function LandingPage() {
         </Link>
       </header>
       <main className="flex-1">
-   
+
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -52,19 +54,28 @@ export default function LandingPage() {
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
                   Simplify Your Finances
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Track your expenses, manage your budget, and gain insights
-                </p>
+                  <TextGenerateEffectExample/>
+                {/* <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-200">
+                  Open Source Track your expenses, manage your budget, and gain insights
+                </p> */}
               </div>
-              <div className="space-x-4">
-                <Button>
-                  <a href={"dashboard"}>Start now</a>
-                </Button>
+              <div className="space-x-4 items-center flex justify-center flex-col gap-y-6 ">
+                <Link href={"dashboard"} className="">
+                  <button className="group relative grid overflow-hidden rounded-xl px-4 py-2 shadow-[0_1000px_0_0_hsl(0_0%_20%)_inset] transition-colors duration-200">
+                    <span>
+                      <span className="spark mask-gradient absolute inset-0 h-[100%] w-[100%] animate-flip overflow-hidden rounded-xl [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:animate-rotate before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]" />
+                    </span>
+                    <span className="backdrop absolute inset-px rounded-[11px] bg-neutral-950 transition-colors duration-200 group-hover:bg-neutral-900" />
+                    <span className="z-10 text-sm font-medium text-neutral-400 flex items-center">Get Started <ArrowRight className="ml-1 size-4"/></span>
+                  </button>
+                </Link>
+
+                <AnimatedTabs />
               </div>
             </div>
           </div>
 
-    
+
         </section>
 
         <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">
