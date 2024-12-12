@@ -60,7 +60,7 @@ export default function LandingPage() {
                 </p> */}
               </div>
               <div className="space-x-4 items-center flex justify-center flex-col gap-y-6 ">
-                <Link href={"dashboard"} className="">
+                <Link href={"dashboard"} className="mt-6">
                   <button className="group relative grid overflow-hidden rounded-xl px-4 py-2 shadow-[0_1000px_0_0_hsl(0_0%_20%)_inset] transition-colors duration-200">
                     <span>
                       <span className="spark mask-gradient absolute inset-0 h-[100%] w-[100%] animate-flip overflow-hidden rounded-xl [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:animate-rotate before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]" />
@@ -77,7 +77,7 @@ export default function LandingPage() {
 
 
         </section>
-
+{/* 
         <section id="pricing" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12 ">
@@ -157,9 +157,9 @@ export default function LandingPage() {
               </Card>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-white dark:bg-background">
         <p className="text-xs text-gray-500 dark:text-gray-400">
           © 2024 Expenses Multiplatform. All rights reserved.
         </p>
