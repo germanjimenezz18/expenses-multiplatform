@@ -1,43 +1,49 @@
 "use client"
+import LogoBadge from "@/components/logo-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SignIn, ClerkLoading, ClerkLoaded } from "@clerk/nextjs";
-import { Loader2, BanknoteIcon } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { FaBackward } from "react-icons/fa";
 
-function page() {
+function Page() {
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
-      <div className="h-full lg:flex flex-col items-center justify-start px-4">
-          <Link href={"/"} className="w-full text-primary flex flex-row items-center gap-x-2 mt-4 ">
-            <FaBackward /> Go Back
+    <div className="flex flex-col min-h-screen">
+      <div className="mt-6">
+        <LogoBadge href={'/'} />
+      </div>
+      <div className="flex items-center justify-center  flex-1">
+        <ClerkLoaded>
+          <SignIn path="/sign-in" />
+        </ClerkLoaded>
+        <ClerkLoading>
+          <Loader2 className="w-12 h-12 text-white animate-spin" />
+        </ClerkLoading>
+      </div>
+      <footer className="border-2 flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-white dark:bg-background">
+        <p className="text-xs text-gray-500 dark:text-gray-400">
+          © 2024 Expenses Multiplatform. All rights reserved.
+        </p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/terms-of-service"
+          >
+            Terms of Service
           </Link>
-
-        <div className="flex items-center justify-center mt-8">
-          <ClerkLoaded>
-            <SignIn  path="/sign-in" />
-          </ClerkLoaded>
-          <ClerkLoading>
-            <Skeleton className="w-full h-full flex flex-col items-center justify-center">
-                <Loader2 size={128} />
-                <h1 className="text-2xl mt-4">Loading...</h1>
-            </Skeleton>
-
-          </ClerkLoading>
-        </div>
-      </div>
-
-      <div className="h-full  hidden lg:flex items-center justify-center animated-background">
-        <video autoPlay loop muted className="h-full w-full object-cover">
-          <source src="https://videocdn.cdnpk.net/videos/1c3d22b8-9921-41b7-a719-284b4f940da1/horizontal/previews/clear/large.mp4?token=exp=1731787324~hmac=fd2b3b2126abb599d79eb67d97b1288713516e1b3a727f3cd133d81899b445aa" type="video/webm" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
+          <Link
+            className="text-xs hover:underline underline-offset-4"
+            href="/privacy"
+          >
+            Privacy
+          </Link>
+        </nav>
+      </footer>
     </div>
   );
 }
 
-export default page;
+
+export default Page;
 
 <style jsx>{`
   @keyframes gradientBackground {
