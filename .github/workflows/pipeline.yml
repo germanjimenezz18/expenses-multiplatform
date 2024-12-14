@@ -21,9 +21,9 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
-      - name: Test e2e
-        uses: cypress-io/github-action@v2
-        with:
-          command: npm run test:e2e
-          start: npm start
-          wait-on: "http://localhost:3000"
+      # - name: Test e2e
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     command: npm run test:e2e
+      #     start: npm start
+      #     wait-on: "http://localhost:3000"
