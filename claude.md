@@ -1298,6 +1298,78 @@ bun run test:e2e     # Run E2E tests in headless mode
 
 ---
 
+## 12.1 Package Manager
+
+**CRITICAL**: This project uses **Bun** as the package manager, NOT npm or yarn.
+
+### Why Bun?
+
+- **Faster installation and execution**: Bun is significantly faster than npm/yarn
+- **Native TypeScript support**: No additional configuration needed
+- **Better monorepo support**: Improved workspace handling
+- **Compatible with npm packages**: Works with the entire npm ecosystem
+- **Built-in bundler and test runner**: All-in-one tooling
+
+### Bun Commands
+
+```bash
+# Install dependencies
+bun install
+
+# Add a package
+bun add <package-name>
+
+# Add a dev dependency
+bun add -d <package-name>
+
+# Remove a package
+bun remove <package-name>
+
+# Update packages
+bun update
+
+# Update specific package to latest
+bun add <package-name>@latest
+
+# Check for outdated packages
+bun outdated
+
+# Run scripts from package.json
+bun run <script-name>
+# or simply
+bun <script-name>
+
+# Examples
+bun dev                  # Same as: bun run dev
+bun run build           # Build the project
+bun run db:generate     # Generate migrations
+```
+
+### DO NOT USE
+
+❌ `npm install` - Use `bun install` instead
+❌ `npm run dev` - Use `bun dev` or `bun run dev` instead
+❌ `npm add` - Use `bun add` instead
+❌ `yarn add` - Use `bun add` instead
+❌ `pnpm add` - Use `bun add` instead
+
+### ALWAYS USE
+
+✅ `bun install` - Install all dependencies
+✅ `bun add <package>` - Add a new package
+✅ `bun dev` or `bun run dev` - Run development server
+✅ `bun run <script>` - Run any package.json script
+✅ `bun outdated` - Check for package updates
+
+### Important Notes
+
+- **Lock file**: The project uses `bun.lock` instead of `package-lock.json` or `yarn.lock`
+- **Scripts**: All scripts in `package.json` should be run with `bun run` or directly with `bun`
+- **Compatibility**: Bun is compatible with Node.js APIs and npm packages
+- **Performance**: Expect significantly faster install times compared to npm/yarn
+
+---
+
 ## 13. Additional Context
 
 ### 13.1 Utility Functions
