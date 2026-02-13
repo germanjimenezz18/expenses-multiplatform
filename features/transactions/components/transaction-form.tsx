@@ -56,8 +56,13 @@ export default function TransactionForm({
   onCreateAccount,
   onCreateCategory,
 }: Props) {
-  const form = useForm<FormValues>({ resolver: zodResolver(formSchema), defaultValues: defaultValues,});
-  form.setValue('date', defaultValues?.date ?? new Date());
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      ...defaultValues,
+      date: defaultValues?.date ?? new Date(),
+    },
+  });
   const handleSubmit = (values: FormValues) => {
     console.log('llega a submit');
     console.log({values})
