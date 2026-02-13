@@ -97,7 +97,7 @@ The project includes a GitHub Actions pipeline for automated deployment:
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
-- `npm run lint` - Run ESLint
+- `npm run lint` - Run Biome
 - `npm run db:generate` - Generate Drizzle migrations
 - `npm run db:migrate` - Run database migrations
 - `npm run db:studio` - Open Drizzle Studio

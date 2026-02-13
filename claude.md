@@ -1284,7 +1284,7 @@ bun run db:studio      # Open Drizzle Studio
 # Development
 bun dev              # Start dev server (http://localhost:3000)
 bun run build        # Production build
-bun run lint         # Run ESLint
+bun run lint         # Run Biome
 
 # Database
 bun run db:generate  # Generate migration from schema changes
