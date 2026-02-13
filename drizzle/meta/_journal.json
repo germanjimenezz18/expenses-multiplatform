@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1725129794198,
-      "tag": "0000_lush_scarlet_witch",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1725130459054,
-      "tag": "0001_handy_grim_reaper",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1725212605362,
-      "tag": "0002_noisy_starfox",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1725219498450,
-      "tag": "0003_dry_ser_duncan",
+      "when": 1771011857776,
+      "tag": "0000_calm_sue_storm",
       "breakpoints": true
     }
   ]
