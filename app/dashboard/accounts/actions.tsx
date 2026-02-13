@@ -13,9 +13,9 @@ import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
 import { useConfirm } from "@/hooks/use-confirm";
 
-type Props = {
+interface Props {
   id: string;
-};
+}
 
 export default function Actions({ id }: Props) {
   const { onOpen } = useOpenAccount();
