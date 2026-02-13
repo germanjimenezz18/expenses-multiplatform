@@ -4,6 +4,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { migrate } from "drizzle-orm/neon-http/migrator";
 
 config({ path: ".env" });
+// biome-ignore lint/style/noNonNullAssertion: TODO: add t3env support
 const sql = neon(process.env.DB_CONNECTION_URL!);
 const db = drizzle(sql);
 

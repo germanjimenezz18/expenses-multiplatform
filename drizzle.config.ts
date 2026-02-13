@@ -7,6 +7,7 @@ export default defineConfig({
   schema: "./db/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
+    // biome-ignore lint/style/noNonNullAssertion: TODO: add t3env support
     url: process.env.DB_CONNECTION_URL!,
   },
   verbose: true,

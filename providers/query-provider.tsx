@@ -35,9 +35,9 @@ function getQueryClient() {
   return browserQueryClient;
 }
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 export function QueryProvider({ children }: Props) {
   // NOTE: Avoid useState when initializing the query client if you don't
   //       have a suspense boundary between this and the code that may

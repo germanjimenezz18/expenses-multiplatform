@@ -30,7 +30,7 @@ export const useSelectAccount = (): [
   }));
 
   const confirm = () =>
-    new Promise((resolve, reject) => {
+    new Promise((resolve, _reject) => {
       setPromise({ resolve });
     });
 
@@ -61,7 +61,9 @@ export const useSelectAccount = (): [
 
           <Select
             disabled={accountMutation.isPending || accountQuery.isLoading}
-            onChange={(value) => (selectValue.current = value)}
+            onChange={(value) => {
+              selectValue.current = value;
+            }}
             onCreate={onCreateAccount}
             options={accountOptions}
             placeholder="Select an account"

@@ -16,7 +16,7 @@ export const useBulkDeleteAccounts = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.accounts["bulk-delete"]["$post"]({
+      const response = await client.api.accounts["bulk-delete"].$post({
         json,
       });
       return response.json();
