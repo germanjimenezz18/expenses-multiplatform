@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
 import { columns } from "./transactions/columns";
 import { DataTable } from "@/components/data-table";
@@ -16,22 +17,36 @@ import { Button } from "@/components/ui/button";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
 import SpendingPie from "@/components/spending-pie";
 import { useGetSummary } from "@/features/summary/api/use-get-summary";
+import { DataCardLoading } from "@/components/data-card";
+import { SpendingPieLoading } from "@/components/spending-pie";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
-  const { data, isLoading } = useGetSummary();
-
   return (
     <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3 ">
       <div className="grid auto-rows-max items-start  lg:col-span-2">
-        <DataGrid />
-        <TransactionTabs />
+        <Suspense fallback={<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8"><DataCardLoading /><DataCardLoading /><DataCardLoading /></div>}>
+          <DataGrid />
+        </Suspense>
+        <Suspense fallback={<Card><CardHeader><Skeleton className="h-8 w-48" /></CardHeader><CardContent><Skeleton className="h-[300px] w-full" /></CardContent></Card>}>
+          <TransactionTabs />
+        </Suspense>
       </div>
       <div className="flex flex-col gap-8">
-        <SpendingPie data={data?.categories} />
-        <AccountTracker />
+        <Suspense fallback={<SpendingPieLoading />}>
+          <DashboardSpendingPie />
+        </Suspense>
+        <Suspense fallback={<Card><CardHeader><Skeleton className="h-8 w-48" /></CardHeader><CardContent><Skeleton className="h-[400px] w-full" /></CardContent></Card>}>
+          <AccountTracker />
+        </Suspense>
       </div>
     </div>
   );
+}
+
+function DashboardSpendingPie() {
+  const { data } = useGetSummary();
+  return <SpendingPie data={data?.categories} />;
 }
 
 function TransactionTabs() {

@@ -13,14 +13,14 @@ import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useCreateAccount } from "@/features/accounts/api/use-create-account";
 
 export const useSelectAccount = (): [
-  () => JSX.Element,
+  () => React.ReactElement,
   () => Promise<unknown>
 ] => {
   const [promise, setPromise] = useState<{
     resolve: (value: string | undefined) => void;
   } | null>(null);
 
-  const selectValue = useRef<string>();
+  const selectValue = useRef<string | undefined>(undefined);
   const accountQuery = useGetAccounts();
   const accountMutation = useCreateAccount();
   const onCreateAccount = (name: string) => accountMutation.mutate({ name });

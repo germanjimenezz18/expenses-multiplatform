@@ -84,7 +84,7 @@ export default function TransactionForm({
             <FormItem>
               <FormControl>
                 <DatePicker
-                  value={field.value }
+                  value={field.value as Date | undefined}
                   onChange={field.onChange}
                   disabled={disabled}
                 />

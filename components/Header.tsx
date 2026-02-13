@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link";
+import { Suspense } from "react";
 import {
   ArrowLeftRight,
   ChartColumnStacked,
@@ -90,7 +91,9 @@ export default function Header() {
           </Badge>
         </div>
 
-        <Filters className="hidden md:flex relative ml-auto  " />
+        <Suspense fallback={<div className="hidden md:flex relative ml-auto w-[200px]"><Loader2 className="size-4 animate-spin text-muted-foreground" /></div>}>
+          <Filters className="hidden md:flex relative ml-auto  " />
+        </Suspense>
 
         <div className="relative ml-auto flex-1 md:grow-0">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

@@ -76,7 +76,7 @@ export function PieVariant({ data = [] }: Props) {
             );
           })}
         </Pie>
-        <Tooltip formatter={(value: number) => formatPercentage(value)} />
+        <Tooltip formatter={(value: number | undefined) => value !== undefined ? formatPercentage(value) : ''} />
       </PieChart>
     </ResponsiveContainer>
   );
