@@ -20,13 +20,13 @@ import {
 } from "./ui/select";
 import { Skeleton } from "./ui/skeleton";
 
-type Props = {
+interface Props {
   data?: {
     date: string;
     income: number;
     expenses: number;
   }[];
-};
+}
 
 export default function Chart({ data = [] }: Props) {
   const [chartType, setChartType] = useState("area");

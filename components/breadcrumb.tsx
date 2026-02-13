@@ -19,7 +19,7 @@ export default function BreadcrumbLoco() {
     <Breadcrumb className="hidden md:flex">
       <BreadcrumbList>
         {pathnames.map((value, index) => {
-          const href = "/" + pathnames.slice(0, index + 1).join("/");
+          const href = `/${pathnames.slice(0, index + 1).join("/")}`;
           const isLast = index === pathnames.length - 1;
           return (
             <Fragment key={href}>

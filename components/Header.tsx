@@ -42,7 +42,7 @@ export default function Header() {
     },
     { name: "Analytics", icon: LineChart, href: "/dashboard/analytics" },
     { name: "Settings", icon: Settings, href: "/settings" },
-  ];
+  ] as const;
 
   return (
     <>
@@ -64,7 +64,7 @@ export default function Header() {
                 <span className="sr-only">Acme Inc</span>
               </Link>
 
-              {routes.map((route: any) => (
+              {routes.map((route) => (
                 <SheetClose asChild key={route.name}>
                   <Link
                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"

@@ -26,10 +26,10 @@ export function AnimatedTabs() {
         const clipLeft = offsetLeft;
         const clipRight = offsetLeft + offsetWidth;
 
-        container.style.clipPath = `inset(0 ${Number(100 - (clipRight / container.offsetWidth) * 100).toFixed()}% 0 ${Number((clipLeft / container.offsetWidth) * 100).toFixed()}% round 17px)`;
+        container.style.clipPath = `inset(0 ${Number(100 - (clipRight / container.offsetWidth) * 100).toFixed(0)}% 0 ${Number((clipLeft / container.offsetWidth) * 100).toFixed(0)}% round 17px)`;
       }
     }
-  }, [activeTab, activeTabRef, containerRef]);
+  }, [activeTab]);
 
   return (
     <div className="relative mx-auto flex w-fit flex-col items-center rounded-full">
@@ -44,6 +44,7 @@ export function AnimatedTabs() {
               key={index}
               onClick={() => setActiveTab(tab.label)}
               tabIndex={-1}
+              type="button"
             >
               {tab.label}
             </button>
@@ -60,6 +61,7 @@ export function AnimatedTabs() {
               key={index}
               onClick={() => setActiveTab(tab.label)}
               ref={isActive ? activeTabRef : null}
+              type="button"
             >
               {tab.label}
             </button>

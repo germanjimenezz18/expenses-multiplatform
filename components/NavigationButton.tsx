@@ -6,12 +6,12 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-type Props = {
+interface Props {
   name: string;
   icon: React.ElementType;
   href: string;
   isActive?: boolean;
-};
+}
 export default function NavigationButton({
   name,
   icon,

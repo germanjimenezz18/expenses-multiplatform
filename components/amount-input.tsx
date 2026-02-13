@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-type Props = {
+interface Props {
   value: string;
   onChange: (value: string | undefined) => void;
   placeholder?: string;
   disabled?: boolean;
-};
+}
 
 export const AmountInput = ({
   value,

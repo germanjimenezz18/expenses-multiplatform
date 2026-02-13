@@ -7,7 +7,7 @@ export default function LoginGithubButton() {
     <Button
       className="w-full"
       onClick={async () => {
-        const result = await signIn("github", {
+        await signIn("github", {
           callbackUrl: "http://localhost:3000/dashboard",
         });
       }}

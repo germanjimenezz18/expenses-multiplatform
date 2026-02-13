@@ -7,7 +7,7 @@ export default function LoginGoogleButton() {
     <Button
       className="inline-flex w-full items-center justify-center rounded-lg bg-[#4285F4] px-5 py-2.5 text-center font-medium text-sm text-white hover:bg-[#4285F4]/90 focus:outline-none focus:ring-4 focus:ring-[#4285F4]/50"
       onClick={async () => {
-        const result = await signIn("google", {
+        await signIn("google", {
           callbackUrl: "http://localhost:3000/dashboard",
         });
       }}

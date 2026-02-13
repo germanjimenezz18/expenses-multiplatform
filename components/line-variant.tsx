@@ -10,13 +10,13 @@ import {
 } from "recharts";
 import CustomTooltip from "./custom-tooltip";
 
-type Props = {
+interface Props {
   data?: {
     date: string;
     income: number;
     expenses: number;
   }[];
-};
+}
 
 export function LineVariant({ data }: Props) {
   return (
