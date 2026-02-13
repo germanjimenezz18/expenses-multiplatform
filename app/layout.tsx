@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/providers/theme-provider";
-import {
-  ClerkProvider,
-} from '@clerk/nextjs'
-import { QueryProvider } from "@/providers/query-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { QueryProvider } from "@/providers/query-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,18 +22,17 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className + ""}>
-
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
-            enableSystem
             disableTransitionOnChange
+            enableSystem
           >
             <QueryProvider>
-            <Toaster />
+              <Toaster />
               {children}
             </QueryProvider>
-          </ThemeProvider >
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

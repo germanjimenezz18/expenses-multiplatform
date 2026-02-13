@@ -1,3 +1,4 @@
+import type { z } from "zod";
 import {
   Sheet,
   SheetContent,
@@ -5,12 +6,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { z } from "zod";
-
-import { useNewCategory } from "@/features/categories/hooks/use-new-categorie";
-import { useCreateCategory } from "@/features/categories/api/use-create-category";
 import { insertCategorySchema } from "@/db/schema";
+import { useCreateCategory } from "@/features/categories/api/use-create-category";
 import CategoryForm from "@/features/categories/components/category-form";
+import { useNewCategory } from "@/features/categories/hooks/use-new-categorie";
 
 const formSchema = insertCategorySchema.pick({ name: true });
 type FormValues = z.input<typeof formSchema>;
@@ -28,7 +27,7 @@ export default function NewCategorySheet() {
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
+    <Sheet onOpenChange={onClose} open={isOpen}>
       <SheetContent className="space-y-4">
         <SheetHeader>
           <SheetTitle>New Category</SheetTitle>
@@ -37,9 +36,9 @@ export default function NewCategorySheet() {
           </SheetDescription>
         </SheetHeader>
         <CategoryForm
-          onSubmit={onSubmit}
-          disabled={mutation.isPending}
           defaultValues={{ name: "" }}
+          disabled={mutation.isPending}
+          onSubmit={onSubmit}
         />
       </SheetContent>
     </Sheet>

@@ -1,9 +1,8 @@
 "use client";
-import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
-import { SelectSingleEventHandler } from "react-day-picker";
+import type { SelectSingleEventHandler } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
@@ -20,24 +19,24 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          disabled={disabled}
-          variant={"outline"}
           className={cn(
-            "w-full justify-start text-left, font-normal",
+            "w-full justify-start font-normal text-left,",
             !value && "text-muted-foreground"
           )}
+          disabled={disabled}
+          variant={"outline"}
         >
-          <CalendarIcon className="size-4 mr-2" />
+          <CalendarIcon className="mr-2 size-4" />
           {value ? format(value, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <Calendar
-          mode="single"
-          selected={value}
-          onSelect={onChange}
           disabled={disabled}
           initialFocus
+          mode="single"
+          onSelect={onChange}
+          selected={value}
         />
       </PopoverContent>
     </Popover>

@@ -1,6 +1,5 @@
-"use client"
-import Link from "next/link";
-import { Suspense } from "react";
+"use client";
+import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import {
   ArrowLeftRight,
   ChartColumnStacked,
@@ -13,7 +12,8 @@ import {
   Settings,
   UserRound,
 } from "lucide-react";
-
+import Link from "next/link";
+import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,10 +22,9 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import BreadcrumbLoco from "./breadcrumb";
-import { Badge } from "./ui/badge";
 import Filters from "./filters";
+import { Badge } from "./ui/badge";
 
 export default function Header() {
   const routes = [
@@ -47,20 +46,19 @@ export default function Header() {
 
   return (
     <>
-
-      <header className=" sticky top-0 z-30 flex h-14 items-center gap-4 bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6  ">
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-4 bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         <Sheet>
           <SheetTrigger asChild>
-            <Button size="icon" variant="outline" className="sm:hidden">
+            <Button className="sm:hidden" size="icon" variant="outline">
               <PanelLeft className="h-5 w-5" />
               <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="sm:max-w-xs">
-            <nav className="grid gap-6 text-lg font-medium">
+          <SheetContent className="sm:max-w-xs" side="left">
+            <nav className="grid gap-6 font-medium text-lg">
               <Link
+                className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary font-semibold text-lg text-primary-foreground md:text-base"
                 href="#"
-                className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
               >
                 <Globe className="h-5 w-5 transition-all group-hover:scale-110" />
                 <span className="sr-only">Acme Inc</span>
@@ -69,8 +67,8 @@ export default function Header() {
               {routes.map((route: any) => (
                 <SheetClose asChild key={route.name}>
                   <Link
-                    href={route.href}
                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    href={route.href}
                   >
                     <route.icon className="h-5 w-5" />
                     {route.name}
@@ -80,27 +78,33 @@ export default function Header() {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className=" hidden lg:flex ">
+        <div className="hidden lg:flex">
           <Badge
+            className="select-none whitespace-nowrap text-muted-foreground hover:border-primary/50 hover:text-primary/60"
             variant="outline"
-            className="text-muted-foreground select-none hover:text-primary/60 hover:border-primary/50 whitespace-nowrap"
           >
             Expenses
-            <Globe className="size-5 mx-1" />
+            <Globe className="mx-1 size-5" />
             Multiplatform
           </Badge>
         </div>
 
-        <Suspense fallback={<div className="hidden md:flex relative ml-auto w-[200px]"><Loader2 className="size-4 animate-spin text-muted-foreground" /></div>}>
-          <Filters className="hidden md:flex relative ml-auto  " />
+        <Suspense
+          fallback={
+            <div className="relative ml-auto hidden w-[200px] md:flex">
+              <Loader2 className="size-4 animate-spin text-muted-foreground" />
+            </div>
+          }
+        >
+          <Filters className="relative ml-auto hidden md:flex" />
         </Suspense>
 
         <div className="relative ml-auto flex-1 md:grow-0">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            type="search"
-            placeholder="Search..."
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+            placeholder="Search..."
+            type="search"
           />
         </div>
 
@@ -109,11 +113,11 @@ export default function Header() {
           <UserButton afterSignOutUrl="/sign-in" />
         </ClerkLoaded>
         <ClerkLoading>
-          <Loader2 className="size-7 text-primary animate-spin" />
+          <Loader2 className="size-7 animate-spin text-primary" />
         </ClerkLoading>
       </header>
 
-      <div className="  sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6  ">
+      <div className="sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         <BreadcrumbLoco />
       </div>
     </>

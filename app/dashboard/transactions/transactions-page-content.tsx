@@ -1,23 +1,21 @@
 "use client";
+import { Loader2, Plus } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Plus } from "lucide-react";
-import { columns } from "./columns";
-import { DataTable } from "@/components/data-table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
 
-import { transactions as transactionsSchema } from "@/db/schema";
-
-import { useState } from "react";
+import type { transactions as transactionsSchema } from "@/db/schema";
 import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
-import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
-import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
-import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transaction";
 import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transaction";
-
-import UploadButton from "./upload-button";
+import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transaction";
+import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import { columns } from "./columns";
 import ImportCard from "./import-card";
+import UploadButton from "./upload-button";
 
 enum VARIANTS {
   LIST = "LIST",
@@ -77,14 +75,14 @@ export default function TransactionsPageContent() {
   if (transactionsQuery.isLoading) {
     return (
       <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
-        <div className="max-w-screen-1xl  w-full">
-          <Card className=" drop-shadow-sm">
+        <div className="w-full max-w-screen-1xl">
+          <Card className="drop-shadow-sm">
             <CardHeader>
               <Skeleton className="h-8 w-48" />
             </CardHeader>
             <CardContent>
-              <div className="h-[500px] w-full flex items-center justify-center">
-                <Loader2 className="size-6 text-slate-300 animate-spin" />
+              <div className="flex h-[500px] w-full items-center justify-center">
+                <Loader2 className="size-6 animate-spin text-slate-300" />
               </div>
             </CardContent>
           </Card>
@@ -106,20 +104,20 @@ export default function TransactionsPageContent() {
     );
   }
   return (
-    <div className="flex lg:grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
+    <div className="flex flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid lg:grid-cols-1 xl:grid-cols-1">
       <div className="w-full">
         <Card className="drop-shadow-sm">
-          <CardHeader className="gap-y-2 flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <CardTitle className="text-xl line-clamp-1">
-          Transactions History
-        </CardTitle>
-            <div className="flex  flex-col lg:flex-row  items-center gap-x-2 gap-y-2">
+          <CardHeader className="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+            <CardTitle className="line-clamp-1 text-xl">
+              Transactions History
+            </CardTitle>
+            <div className="flex flex-col items-center gap-x-2 gap-y-2 lg:flex-row">
               <Button
                 className="w-full lg:w-auto"
-                size={"sm"}
                 onClick={newTransaction.onOpen}
+                size={"sm"}
               >
-                <Plus className="size-4 mr-2" />
+                <Plus className="mr-2 size-4" />
                 Add New Transaction
               </Button>
               <UploadButton onUpload={onUpload} />
@@ -130,13 +128,13 @@ export default function TransactionsPageContent() {
             <DataTable
               columns={columns}
               data={transactions}
+              disabled={isDisabled}
               filterKey="payee"
               onDelete={(row) => {
                 const ids = row.map((r) => r.original.id);
                 console.log(ids);
                 deleteTransactions.mutate({ ids });
               }}
-              disabled={isDisabled}
             />
           </CardContent>
         </Card>

@@ -1,11 +1,12 @@
 // authors.ts
-import { db } from "@/db/drizzle";
+
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
-import { and, eq, inArray } from "drizzle-orm";
-import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
+import { and, eq, inArray } from "drizzle-orm";
+import { Hono } from "hono";
 import { z } from "zod";
+import { db } from "@/db/drizzle";
 
 import { categories, insertCategorySchema } from "@/db/schema";
 

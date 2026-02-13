@@ -1,12 +1,12 @@
 import { format } from "date-fns";
 
 import {
-  Tooltip,
-  XAxis,
   Bar,
   BarChart,
-  ResponsiveContainer,
   CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
 } from "recharts";
 import CustomTooltip from "./custom-tooltip";
 
@@ -20,27 +20,22 @@ type Props = {
 
 export function BarVariant({ data }: Props) {
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer height={350} width="100%">
       <BarChart data={data}>
-        <CartesianGrid strokeDasharray={"3 3"} opacity={0.6}/>
+        <CartesianGrid opacity={0.6} strokeDasharray={"3 3"} />
         <XAxis
           axisLine={false}
-          tickLine={false}
           dataKey="date"
-          tickFormatter={(date) => format(date, "dd MMM")}
           style={{ fontSize: "12px" }}
+          tickFormatter={(date) => format(date, "dd MMM")}
+          tickLine={false}
           tickMargin={16}
         />
-      <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomTooltip />} />
 
-      <Bar dataKey='income' fill="#5ec269" className="drop-shadow-sm"/>
-      <Bar dataKey='expenses' fill="#f43f5e" className="drop-shadow-sm"/>
-
-      
+        <Bar className="drop-shadow-sm" dataKey="income" fill="#5ec269" />
+        <Bar className="drop-shadow-sm" dataKey="expenses" fill="#f43f5e" />
       </BarChart>
-
-
-
     </ResponsiveContainer>
   );
 }

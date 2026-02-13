@@ -1,33 +1,29 @@
-import Link from "next/link";
 import { Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export default function TermsOfServicePage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center justify-center  w-full gap-x-6 ">
+    <div className="flex min-h-screen flex-col">
+      <header className="flex h-14 w-full items-center justify-center gap-x-6 px-4 lg:px-6">
         <Link className="flex items-center justify-center" href="/">
           <Badge
+            className="select-none whitespace-nowrap text-muted-foreground hover:border-primary/50 hover:text-primary/60"
             variant="outline"
-            className="text-muted-foreground select-none hover:text-primary/60 hover:border-primary/50 whitespace-nowrap"
           >
             Expenses
-            <Globe className="size-5 mx-1" />
+            <Globe className="mx-1 size-5" />
             Multiplatform
           </Badge>
           <span className="sr-only">Expenses Multiplatform</span>
         </Link>
       </header>
       {/* Main Content */}
-      <main className="w-full flex items-center justify-center flex-col">
-        <div className="md:max-w-[700px] p-20">
-          <h2 className="text-xl font-semibold mb-4">
-            Terms of service
-          </h2>
-          <p className=" mb-4">Last Updated: 29/10/2024</p>
-          <p className=" mb-6">
+      <main className="flex w-full flex-col items-center justify-center">
+        <div className="p-20 md:max-w-[700px]">
+          <h2 className="mb-4 font-semibold text-xl">Terms of service</h2>
+          <p className="mb-4">Last Updated: 29/10/2024</p>
+          <p className="mb-6">
             By accessing or using our expense tracking application Expenses
             Multiplatform, you agree to comply with and be bound by these Terms
             of Service . If you do not agree, please do not use our Service.
@@ -36,7 +32,7 @@ export default function TermsOfServicePage() {
           {/* Sections */}
           <div className="space-y-6">
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 1. Acceptance of Terms
               </h3>
               <p className="">
@@ -48,7 +44,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 2. Eligibility
               </h3>
               <p className="">
@@ -59,7 +55,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 3. Account Registration
               </h3>
               <p className="">
@@ -70,7 +66,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 4. Use of the Service
               </h3>
               <p className="">
@@ -81,7 +77,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 5. Data Privacy and Security
               </h3>
               <p className="">
@@ -92,7 +88,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 6. Intellectual Property
               </h3>
               <p className="">
@@ -103,7 +99,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 7. Modifications to the Service
               </h3>
               <p className="">
@@ -113,7 +109,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 8. Disclaimer of Warranties
               </h3>
               <p className="">
@@ -124,7 +120,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 9. Limitation of Liability
               </h3>
               <p className="">
@@ -135,7 +131,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 10. Termination
               </h3>
               <p className="">
@@ -146,7 +142,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 11. Governing Law
               </h3>
               <p className="">
@@ -155,7 +151,7 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h3 className="text-lg font-semibold text-primary">
+              <h3 className="font-semibold text-lg text-primary">
                 12. Contact Us
               </h3>
               <p className="">
@@ -166,19 +162,19 @@ export default function TermsOfServicePage() {
           </div>
         </div>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">
+      <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t px-4 py-6 sm:flex-row md:px-6">
+        <p className="text-gray-500 text-xs dark:text-gray-400">
           © 2024 Expenses Multiplatform. All rights reserved.
         </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+        <nav className="flex gap-4 sm:ml-auto sm:gap-6">
           <Link
-            className="text-xs hover:underline underline-offset-4"
+            className="text-xs underline-offset-4 hover:underline"
             href="terms-of-service"
           >
             Terms of Service
           </Link>
           <Link
-            className="text-xs hover:underline underline-offset-4"
+            className="text-xs underline-offset-4 hover:underline"
             href="privacy"
           >
             Privacy

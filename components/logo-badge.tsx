@@ -1,23 +1,23 @@
-import Link from 'next/link'
-import { Badge } from './ui/badge'
-import { Globe } from 'lucide-react'
+import { Globe } from "lucide-react";
+import Link from "next/link";
+import { Badge } from "./ui/badge";
 
 interface Props {
-  href: string
+  href: string;
 }
 
 export default function LogoBadge({ href }: Props) {
   return (
     <Link className="flex items-center justify-center" href={href}>
       <Badge
+        className="select-none whitespace-nowrap text-muted-foreground hover:border-primary/50 hover:text-primary/60"
         variant="outline"
-        className="text-muted-foreground select-none hover:text-primary/60 hover:border-primary/50 whitespace-nowrap"
       >
         Expenses
-        <Globe className="size-5 mx-1" />
+        <Globe className="mx-1 size-5" />
         Multiplatform
       </Badge>
       <span className="sr-only">Expenses Multiplatform</span>
     </Link>
-  )
+  );
 }

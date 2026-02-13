@@ -1,14 +1,13 @@
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
-import { z } from "zod";
 import { Hono } from "hono";
-import { accounts, categories, transactions } from "@/db/schema";
 import {
-  AuthGetRequest,
+  type AuthGetRequest,
   Configuration,
   PlaidApi,
   PlaidEnvironments,
 } from "plaid";
+import { z } from "zod";
 
 const configuration = new Configuration({
   basePath: PlaidEnvironments.sandbox,
@@ -64,9 +63,8 @@ const app = new Hono()
     };
 
     try {
-      const createTokenResponse = await plaidClient.linkTokenCreate(
-        plaidRequest
-      );
+      const createTokenResponse =
+        await plaidClient.linkTokenCreate(plaidRequest);
       return c.json(createTokenResponse.data);
     } catch (error) {
       console.log(error);
@@ -76,7 +74,7 @@ const app = new Hono()
   .post(
     "/exchange_public_token",
     zValidator("json", z.object({ publicToken: z.string() })),
-    async function (c) {
+    async (c) => {
       console.log(c.body);
       const { publicToken } = c.req.valid("json");
       try {

@@ -2,9 +2,9 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableRow,
-  TableHeader,
   TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import TableHeadSelect from "./table-head-select";
 
@@ -22,7 +22,7 @@ export default function ImportTable({
   onTableHeadSelectChange,
 }: Props) {
   return (
-    <div className="rounded-md border overflow-hidden">
+    <div className="overflow-hidden rounded-md border">
       <Table>
         <TableHeader className="bg-muted">
           <TableRow>
@@ -30,8 +30,8 @@ export default function ImportTable({
               <TableHead key={index}>
                 <TableHeadSelect
                   columnIndex={index}
-                  selectedColumns={selectedColumns}
                   onChange={onTableHeadSelectChange}
+                  selectedColumns={selectedColumns}
                 />
               </TableHead>
             ))}

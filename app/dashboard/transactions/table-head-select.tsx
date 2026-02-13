@@ -24,12 +24,12 @@ export default function TableHeadSelect({
 
   return (
     <Select
-      value={currentSelection || ""}
       onValueChange={(value) => onChange(columnIndex, value)}
+      value={currentSelection || ""}
     >
       <SelectTrigger
         className={cn(
-          "focus:ring-offset-0 focus:ring-transparent outline-none border-none bg-transparent capitalize",
+          "border-none bg-transparent capitalize outline-none focus:ring-transparent focus:ring-offset-0",
           currentSelection && "text-emerald-500"
         )}
       >
@@ -44,10 +44,10 @@ export default function TableHeadSelect({
 
           return (
             <SelectItem
+              className="capitalize"
+              disabled={disabled}
               key={index}
               value={option}
-              disabled={disabled}
-              className="capitalize"
             >
               {option}
             </SelectItem>

@@ -1,5 +1,4 @@
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
-import { cn } from "@/lib/utils";
 
 type Props = {
   account: string;
@@ -15,8 +14,8 @@ export default function AccountColumn({ accountId, account }: Props) {
 
   return (
     <div
+      className="hidden cursor-pointer items-center hover:underline md:flex"
       onClick={onClick}
-      className="hidden md:flex items-center cursor-pointer hover:underline"
     >
       {account}
     </div>

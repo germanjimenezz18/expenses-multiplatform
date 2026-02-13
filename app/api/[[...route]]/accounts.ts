@@ -1,11 +1,12 @@
 // authors.ts
-import { db } from "@/db/drizzle";
+
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
-import { and, eq, inArray, sum } from "drizzle-orm";
-import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
+import { and, eq, inArray, sum } from "drizzle-orm";
+import { Hono } from "hono";
 import { z } from "zod";
+import { db } from "@/db/drizzle";
 
 import { accounts, insertAccountSchema, transactions } from "@/db/schema";
 
@@ -21,7 +22,7 @@ const app = new Hono()
       .select({
         id: accounts.id,
         name: accounts.name,
-        balance: sum(transactions.amount).mapWith(Number)
+        balance: sum(transactions.amount).mapWith(Number),
       })
       .from(accounts)
       .leftJoin(transactions, eq(transactions.accountId, accounts.id))

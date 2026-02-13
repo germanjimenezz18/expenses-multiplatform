@@ -1,6 +1,7 @@
 "use client";
-import { Fragment } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Fragment } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,7 +9,6 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "./ui/breadcrumb";
-import Link from "next/link";
 
 export default function BreadcrumbLoco() {
   const pathname = usePathname();

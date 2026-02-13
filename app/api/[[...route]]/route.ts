@@ -2,9 +2,9 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import accounts from "./accounts";
 import categories from "./categories";
-import transactions from "./transactions";
 import summary from "./summary";
 import test from "./test";
+import transactions from "./transactions";
 
 export const runtime = "edge";
 

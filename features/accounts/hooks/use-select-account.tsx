@@ -1,5 +1,6 @@
+import { useRef, useState } from "react";
+import { Select } from "@/components/select";
 import { Button } from "@/components/ui/button";
-import { Select } from '@/components/select';
 import {
   Dialog,
   DialogContent,
@@ -8,13 +9,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useRef, useState } from "react";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 
 export const useSelectAccount = (): [
   () => React.ReactElement,
-  () => Promise<unknown>
+  () => Promise<unknown>,
 ] => {
   const [promise, setPromise] = useState<{
     resolve: (value: string | undefined) => void;
@@ -53,23 +53,22 @@ export const useSelectAccount = (): [
       <Dialog open={promise != null}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>
-              Select an account
-            </DialogTitle>
+            <DialogTitle>Select an account</DialogTitle>
             <DialogDescription>
               Please select an account to continue.
             </DialogDescription>
           </DialogHeader>
 
-          <Select placeholder="Select an account" 
-          options={accountOptions}
-          onCreate={onCreateAccount}
-          onChange={(value) => selectValue.current = value}
-          disabled={accountMutation.isPending || accountQuery.isLoading} 
+          <Select
+            disabled={accountMutation.isPending || accountQuery.isLoading}
+            onChange={(value) => (selectValue.current = value)}
+            onCreate={onCreateAccount}
+            options={accountOptions}
+            placeholder="Select an account"
           />
 
           <DialogFooter>
-            <Button variant={"outline"} onClick={handleCancel}>
+            <Button onClick={handleCancel} variant={"outline"}>
               Cancel
             </Button>
             <Button onClick={handleConfirm}>Confirm</Button>

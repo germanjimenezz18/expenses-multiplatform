@@ -1,3 +1,5 @@
+import { Loader2 } from "lucide-react";
+import type { z } from "zod";
 import {
   Sheet,
   SheetContent,
@@ -5,16 +7,14 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Loader2 } from "lucide-react";
-import { z } from "zod";
 
 import { insertCategorySchema } from "@/db/schema";
+import { useDeleteCategory } from "@/features/categories/api/use-delete-category";
+import { useEditCategory } from "@/features/categories/api/use-edit-category";
+import { useGetCategory } from "@/features/categories/api/use-get-category";
+import CategoryForm from "@/features/categories/components/category-form";
 import { useOpenCategory } from "@/features/categories/hooks/use-open-categorie";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useGetCategory } from "@/features/categories/api/use-get-category";
-import { useEditCategory } from "@/features/categories/api/use-edit-category";
-import { useDeleteCategory } from "@/features/categories/api/use-delete-category";
-import CategoryForm from "@/features/categories/components/category-form";
 
 const formSchema = insertCategorySchema.pick({ name: true });
 type FormValues = z.input<typeof formSchema>;
@@ -63,7 +63,7 @@ export default function EditCategorySheet() {
   return (
     <>
       <ConfirmDialog />
-      <Sheet open={isOpen} onOpenChange={onClose}>
+      <Sheet onOpenChange={onClose} open={isOpen}>
         <SheetContent className="space-y-4">
           <SheetHeader>
             <SheetTitle>Edit Category</SheetTitle>
@@ -74,15 +74,15 @@ export default function EditCategorySheet() {
 
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
-              <Loader2 className="size-4 text-muted-foreground animate-spin" />
+              <Loader2 className="size-4 animate-spin text-muted-foreground" />
             </div>
           ) : (
             <CategoryForm
-              id={id}
-              onSubmit={onSubmit}
-              disabled={isPending}
               defaultValues={defaultValues}
+              disabled={isPending}
+              id={id}
               onDelete={onDelete}
+              onSubmit={onSubmit}
             />
           )}
         </SheetContent>

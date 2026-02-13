@@ -1,13 +1,11 @@
-import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
-import { db } from "@/db/drizzle";
-
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
-import { z } from "zod";
-import { subDays, parse, differenceInDays } from "date-fns";
+import { differenceInDays, parse, subDays } from "date-fns";
+import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
 import { Hono } from "hono";
+import { z } from "zod";
+import { db } from "@/db/drizzle";
 import { accounts, categories, transactions } from "@/db/schema";
-import { log } from "console";
 import fillMissingDays, { calculatePercentageChange } from "../../../lib/utils";
 
 const app = new Hono().get(

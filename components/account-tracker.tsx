@@ -1,14 +1,16 @@
 "use client";
 
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import {
-  Copy,
-  Settings2,
-  MoreVertical,
-  CreditCard,
   ChevronLeft,
   ChevronRight,
+  Copy,
+  MoreVertical,
+  Settings2,
 } from "lucide-react";
+import Link from "next/link";
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
+import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { Button } from "./ui/button";
 import {
   Card,
   CardContent,
@@ -17,8 +19,6 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Pagination, PaginationContent, PaginationItem } from "./ui/pagination";
-import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,12 +26,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Pagination, PaginationContent, PaginationItem } from "./ui/pagination";
 import { Separator } from "./ui/separator";
-import Link from "next/link";
-import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
-import { transactions } from "../db/schema";
-import { convertAmountFromMiliUnits } from "@/lib/utils";
-import { format } from "path";
 
 export default function AccountTracker() {
   const accountsQuery = useGetAccounts();
@@ -60,9 +56,9 @@ export default function AccountTracker() {
             <CardTitle className="group flex items-center gap-2 text-lg">
               Account Tracker
               <Button
+                className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
                 size="icon"
                 variant="outline"
-                className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
               >
                 <Copy className="h-3 w-3" />
                 <span className="sr-only">Copy Account Resume</span>
@@ -79,7 +75,7 @@ export default function AccountTracker() {
             </CardDescription>
           </div>
           <div className="ml-auto flex items-center gap-1">
-            <Button size="sm" variant="outline" className="h-8 gap-1">
+            <Button className="h-8 gap-1" size="sm" variant="outline">
               <Settings2 className="h-3.5 w-3.5" />
               <Link href="dashboard/accounts">
                 <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
@@ -89,7 +85,7 @@ export default function AccountTracker() {
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="outline" className="h-8 w-8">
+                <Button className="h-8 w-8" size="icon" variant="outline">
                   <MoreVertical className="h-3.5 w-3.5" />
                   <span className="sr-only">More</span>
                 </Button>
@@ -108,21 +104,12 @@ export default function AccountTracker() {
           <div className="grid gap-3">
             <div className="font-semibold">Accounts Details</div>
             <ul className="grid gap-3">
-              {!accountsWithBalance ? (
-                <div className="flex justify-center items-center">
-                  <Button
-                    variant="destructive"
-                    onClick={() => (window.location.href = "/create-account")}
-                  >
-                    Create Account
-                  </Button>
-                </div>
-              ) : (
+              {accountsWithBalance ? (
                 <ul className="grid gap-3">
                   {accountsWithBalance.map((account, index) => (
                     <li
-                      key={index}
                       className="flex items-center justify-between"
+                      key={index}
                     >
                       <span className="text-muted-foreground">
                         {account.name}
@@ -131,6 +118,15 @@ export default function AccountTracker() {
                     </li>
                   ))}
                 </ul>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <Button
+                    onClick={() => (window.location.href = "/create-account")}
+                    variant="destructive"
+                  >
+                    Create Account
+                  </Button>
+                </div>
               )}
             </ul>
             <Separator className="my-2" />
@@ -207,20 +203,19 @@ export default function AccountTracker() {
           </div> */}
         </CardContent>
         <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
-
-          <div className="text-xs text-muted-foreground">
+          <div className="text-muted-foreground text-xs">
             Updated <time dateTime="2023-11-23"> Now</time>
           </div>
-          <Pagination className="ml-auto mr-0 w-auto">
+          <Pagination className="mr-0 ml-auto w-auto">
             <PaginationContent>
               <PaginationItem>
-                <Button size="icon" variant="outline" className="h-6 w-6">
+                <Button className="h-6 w-6" size="icon" variant="outline">
                   <ChevronLeft className="h-3.5 w-3.5" />
                   <span className="sr-only">Previous </span>
                 </Button>
               </PaginationItem>
               <PaginationItem>
-                <Button size="icon" variant="outline" className="h-6 w-6">
+                <Button className="h-6 w-6" size="icon" variant="outline">
                   <ChevronRight className="h-3.5 w-3.5" />
                   <span className="sr-only">Next </span>
                 </Button>

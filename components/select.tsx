@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { SingleValue } from "react-select";
+import type { SingleValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
 
 type Props = {
@@ -21,7 +21,7 @@ export const Select = ({
   disabled,
   placeholder,
 }: Props) => {
-  const onSelect = (option: SingleValue<{ label: string, value: string }>) => {
+  const onSelect = (option: SingleValue<{ label: string; value: string }>) => {
     onChange(option?.value);
   };
 
@@ -31,48 +31,43 @@ export const Select = ({
 
   return (
     <CreatableSelect
-      className="text-sm h-10 "
+      className="h-10 text-sm"
+      isDisabled={disabled}
+      onChange={onSelect}
+      onCreateOption={onCreate}
+      options={options}
+      placeholder={placeholder}
       styles={{
         control: (base) => ({
           ...base,
           borderColor: "border-primary",
           backgroundColor: "Background",
           color: "text-primary",
-          ":hover": { borderColor: "green", 
-           },
-           ":focus": { borderColor: "border-primary",}
+          ":hover": { borderColor: "green" },
+          ":focus": { borderColor: "border-primary" },
         }),
-        
+
         menu: (base) => ({
           ...base,
-          color:  "text-primary",
+          color: "text-primary",
           backgroundColor: "Background",
-
-
         }),
         option: (base, { isFocused }) => ({
           ...base,
           backgroundColor: isFocused ? "ButtonFace" : "Background",
           color: "text-primary",
         }),
-
-    
       }}
-      value={formattedValue}
-      onChange={onSelect}
       theme={(theme) => ({
         ...theme,
         borderRadius: 10,
         colors: {
           ...theme.colors,
-          primary: 'black',
-          background: 'Background',
+          primary: "black",
+          background: "Background",
         },
       })}
-      options={options}
-      onCreateOption={onCreate}
-      placeholder={placeholder}
-      isDisabled={disabled}
+      value={formattedValue}
     />
   );
 };

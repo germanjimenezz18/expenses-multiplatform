@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { InferRequestType, InferResponseType } from "hono";
+import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
 // este tipo es inferido de la definición de la ruta en el servidor
 type ResponseType = InferResponseType<typeof client.api.transactions.$post>;
-type RequestType = InferRequestType<typeof client.api.transactions.$post>["json"];
+type RequestType = InferRequestType<
+  typeof client.api.transactions.$post
+>["json"];
 
 export const useCreateTransaction = () => {
   const queryClient = useQueryClient();
@@ -26,5 +28,5 @@ export const useCreateTransaction = () => {
     },
   });
 
-  return mutation
+  return mutation;
 };

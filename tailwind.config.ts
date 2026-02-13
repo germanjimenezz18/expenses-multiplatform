@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: "class",
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -67,35 +67,35 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "flip": {
+        flip: {
           to: {
-            transform: "rotate(360deg)"
-          }
+            transform: "rotate(360deg)",
+          },
         },
-        "rotate": {
+        rotate: {
           to: {
-            transform: "rotate(90deg)"
-          }
+            transform: "rotate(90deg)",
+          },
         },
-        "shine": {
+        shine: {
           from: {
-            backgroundPosition: "0 0"
+            backgroundPosition: "0 0",
           },
           to: {
-            backgroundPosition: "-400% 0"
-          }
-        }
+            backgroundPosition: "-400% 0",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "flip": "flip 6s infinite steps(2, end)",
-        "rotate": "rotate 3s linear infinite both",
-        "shine": "shine 6s linear infinite"
+        flip: "flip 6s infinite steps(2, end)",
+        rotate: "rotate 3s linear infinite both",
+        shine: "shine 6s linear infinite",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

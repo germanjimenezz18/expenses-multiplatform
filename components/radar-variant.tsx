@@ -16,16 +16,16 @@ type Props = {
 
 export const RadarVariant = ({ data = [] }: Props) => {
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <RadarChart cx="50%" cy="50%" outerRadius="60%" data={data}>
+    <ResponsiveContainer height={350} width="100%">
+      <RadarChart cx="50%" cy="50%" data={data} outerRadius="60%">
         <PolarGrid />
-        <PolarAngleAxis style={{ fontSize: "12px" }} dataKey={"name"} />
+        <PolarAngleAxis dataKey={"name"} style={{ fontSize: "12px" }} />
         <PolarRadiusAxis style={{ fontSize: "12px" }} />
         <Radar
           dataKey={"value"}
-          stroke="#8884d8"
           fill="#8884d8"
           fillOpacity={0.6}
+          stroke="#8884d8"
         />
       </RadarChart>
     </ResponsiveContainer>

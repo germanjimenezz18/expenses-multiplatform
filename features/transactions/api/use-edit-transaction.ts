@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { InferRequestType, InferResponseType } from "hono";
+import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
@@ -13,7 +13,7 @@ type RequestType = InferRequestType<
 
 export const useEditTransaction = (id?: string) => {
   const queryClient = useQueryClient();
-  console.log({id});
+  console.log({ id });
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {

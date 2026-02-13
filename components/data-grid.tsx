@@ -1,12 +1,11 @@
 "use client";
 
-import { useGetSummary } from "@/features/summary/api/use-get-summary";
-import { FaPiggyBank } from "react-icons/fa";
-import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
-import { formatDateRange } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
+import { FaPiggyBank } from "react-icons/fa";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import { useGetSummary } from "@/features/summary/api/use-get-summary";
+import { formatDateRange } from "@/lib/utils";
 import DataCard, { DataCardLoading } from "./data-card";
-import SpendingPie from "./spending-pie";
 
 export default function DataGrid() {
   const { data, isLoading } = useGetSummary();
@@ -17,7 +16,7 @@ export default function DataGrid() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
+      <div className="mb-8 grid grid-cols-1 gap-8 pb-2 lg:grid-cols-3">
         <DataCardLoading />
         <DataCardLoading />
         <DataCardLoading />
@@ -26,34 +25,32 @@ export default function DataGrid() {
   }
 
   return (
-    <div className=" grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
+    <div className="mb-8 grid grid-cols-1 gap-8 pb-2 lg:grid-cols-3">
       <DataCard
         className=""
+        dateRange={dateRangeLabel}
+        icon={FaPiggyBank}
+        percentageChange={data?.remainingChange}
         title="Remaining"
         value={data?.remainingAmount}
-        percentageChange={data?.remainingChange}
-        icon={FaPiggyBank}
         variant="default"
-        dateRange={dateRangeLabel}
       />
       <DataCard
+        dateRange={dateRangeLabel}
+        icon={FaArrowTrendUp}
+        percentageChange={data?.incomeChange}
         title="Income"
         value={data?.incomeAmount}
-        percentageChange={data?.incomeChange}
-        icon={FaArrowTrendUp}
         variant="success"
-        dateRange={dateRangeLabel}
       />
       <DataCard
+        dateRange={dateRangeLabel}
+        icon={FaArrowTrendDown}
+        percentageChange={data?.expensesChange}
         title="Expenses"
         value={(data?.expensesAmount ?? 0) * -1}
-        percentageChange={data?.expensesChange}
-        icon={FaArrowTrendDown}
         variant="danger"
-        dateRange={dateRangeLabel}
       />
-
-
     </div>
   );
 }

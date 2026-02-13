@@ -1,3 +1,5 @@
+import { Loader2 } from "lucide-react";
+import type { z } from "zod";
 import {
   Sheet,
   SheetContent,
@@ -5,20 +7,17 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Loader2 } from "lucide-react";
-import { z } from "zod";
-
-import { useConfirm } from "@/hooks/use-confirm";
-import { useOpenTransaction } from "../hooks/use-open-transaction";
-import { useGetTransaction } from "../api/use-get-transaction";
-import { useEditTransaction } from "../api/use-edit-transaction";
-import { useDeleteTransaction } from "../api/use-delete-transaction";
-import TransactionForm from "./transaction-form";
 import { insertTransactionSchema } from "@/db/schema";
-import { useGetCategories } from "@/features/categories/api/use-get-categories";
-import { useCreateCategory } from "@/features/categories/api/use-create-category";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
+import { useCreateCategory } from "@/features/categories/api/use-create-category";
+import { useGetCategories } from "@/features/categories/api/use-get-categories";
+import { useConfirm } from "@/hooks/use-confirm";
+import { useDeleteTransaction } from "../api/use-delete-transaction";
+import { useEditTransaction } from "../api/use-edit-transaction";
+import { useGetTransaction } from "../api/use-get-transaction";
+import { useOpenTransaction } from "../hooks/use-open-transaction";
+import TransactionForm from "./transaction-form";
 
 const formSchema = insertTransactionSchema.omit({ id: true });
 type FormValues = z.input<typeof formSchema>;
@@ -105,7 +104,7 @@ export default function EditTransactionSheet() {
   return (
     <>
       <ConfirmDialog />
-      <Sheet open={isOpen} onOpenChange={onClose}>
+      <Sheet onOpenChange={onClose} open={isOpen}>
         <SheetContent className="space-y-4">
           <SheetHeader>
             <SheetTitle>Edit Transaction</SheetTitle>
@@ -116,19 +115,19 @@ export default function EditTransactionSheet() {
 
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
-              <Loader2 className="size-4 text-muted-foreground animate-spin" />
+              <Loader2 className="size-4 animate-spin text-muted-foreground" />
             </div>
           ) : (
             <TransactionForm
-              id={id}
-              onSubmit={onSubmit}
-              onDelete={onDelete}
-              disabled={isPending}
-              categoryOptions={categoryOptions}
-              onCreateCategory={onCreateCategory}
               accountOptions={accountOptions}
-              onCreateAccount={onCreateAccount}
+              categoryOptions={categoryOptions}
               defaultValues={defaultValues}
+              disabled={isPending}
+              id={id}
+              onCreateAccount={onCreateAccount}
+              onCreateCategory={onCreateCategory}
+              onDelete={onDelete}
+              onSubmit={onSubmit}
             />
           )}
         </SheetContent>

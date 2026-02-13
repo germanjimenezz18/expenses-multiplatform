@@ -1,12 +1,12 @@
 import { format } from "date-fns";
 
 import {
-  Tooltip,
-  XAxis,
+  CartesianGrid,
   Line,
   LineChart,
   ResponsiveContainer,
-  CartesianGrid,
+  Tooltip,
+  XAxis,
 } from "recharts";
 import CustomTooltip from "./custom-tooltip";
 
@@ -20,31 +20,31 @@ type Props = {
 
 export function LineVariant({ data }: Props) {
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer height={350} width="100%">
       <LineChart data={data}>
-        <CartesianGrid strokeDasharray={"3 3"} opacity={0.6}/>
+        <CartesianGrid opacity={0.6} strokeDasharray={"3 3"} />
         <XAxis
           axisLine={false}
-          tickLine={false}
           dataKey="date"
-          tickFormatter={(date) => format(date, "dd MMM")}
           style={{ fontSize: "12px" }}
+          tickFormatter={(date) => format(date, "dd MMM")}
+          tickLine={false}
           tickMargin={16}
         />
         <Tooltip content={<CustomTooltip />} />
 
         <Line
-          dot={false}
+          className="drop-shadow-sm"
           dataKey="income"
+          dot={false}
           stroke="#5ec269"
           strokeWidth={2}
-          className="drop-shadow-sm"
         />
         <Line
-          dot={false}
-          dataKey="expenses"
-          stroke="#f43f5e"
           className="drop-shadow-sm"
+          dataKey="expenses"
+          dot={false}
+          stroke="#f43f5e"
         />
       </LineChart>
     </ResponsiveContainer>

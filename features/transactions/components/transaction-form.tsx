@@ -1,11 +1,11 @@
-import { Trash } from "lucide-react";
-import { z } from "zod";
-
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
+import { z } from "zod";
+import { AmountInput } from "@/components/amount-input";
+import { DatePicker } from "@/components/date-picker";
+import { Select } from "@/components/select";
 import { Button } from "@/components/ui/button";
-
 import {
   Form,
   FormControl,
@@ -13,11 +13,9 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { insertTransactionSchema } from "@/db/schema";
-import { Select } from "@/components/select";
-import { DatePicker } from "@/components/date-picker";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { AmountInput } from "@/components/amount-input";
+import { insertTransactionSchema } from "@/db/schema";
 import { convertAmountToMiliUnits } from "@/lib/utils";
 
 const formSchema = z.object({
@@ -64,9 +62,9 @@ export default function TransactionForm({
     },
   });
   const handleSubmit = (values: FormValues) => {
-    console.log('llega a submit');
-    console.log({values})
-    const amount = parseFloat(values.amount);
+    console.log("llega a submit");
+    console.log({ values });
+    const amount = Number.parseFloat(values.amount);
     const amountInMiliUnits = convertAmountToMiliUnits(amount);
 
     onSubmit({ ...values, amount: amountInMiliUnits });
@@ -79,65 +77,65 @@ export default function TransactionForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
+        onSubmit={form.handleSubmit(handleSubmit)}
       >
         <FormField
-          name="date"
           control={form.control}
+          name="date"
           render={({ field }) => (
             <FormItem>
               <FormControl>
                 <DatePicker
-                  value={field.value as Date | undefined}
-                  onChange={field.onChange}
                   disabled={disabled}
+                  onChange={field.onChange}
+                  value={field.value as Date | undefined}
                 />
               </FormControl>
             </FormItem>
           )}
         />
         <FormField
-          name="accountId"
           control={form.control}
+          name="accountId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Account</FormLabel>
               <FormControl>
                 <Select
-                  placeholder="Select an account"
-                  options={accountOptions}
-                  value={field.value}
+                  disabled={disabled}
                   onChange={field.onChange}
                   onCreate={onCreateAccount}
-                  disabled={disabled}
+                  options={accountOptions}
+                  placeholder="Select an account"
+                  value={field.value}
                 />
               </FormControl>
             </FormItem>
           )}
         />
         <FormField
-          name="categoryId"
           control={form.control}
+          name="categoryId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
               <FormControl>
                 <Select
-                  placeholder="Select category"
-                  options={categoryOptions}
-                  value={field.value}
+                  disabled={disabled}
                   onChange={field.onChange}
                   onCreate={onCreateCategory}
-                  disabled={disabled}
+                  options={categoryOptions}
+                  placeholder="Select category"
+                  value={field.value}
                 />
               </FormControl>
             </FormItem>
           )}
         />
         <FormField
-          name="payee"
           control={form.control}
+          name="payee"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Payee</FormLabel>
@@ -152,8 +150,8 @@ export default function TransactionForm({
           )}
         />
         <FormField
-          name="amount"
           control={form.control}
+          name="amount"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Amount</FormLabel>
@@ -168,17 +166,17 @@ export default function TransactionForm({
           )}
         />
         <FormField
-          name="notes"
           control={form.control}
+          name="notes"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Notes</FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
-                  value={field.value ?? ""}
                   disabled={disabled}
                   placeholder="Add notes"
+                  value={field.value ?? ""}
                 />
               </FormControl>
             </FormItem>
@@ -190,13 +188,13 @@ export default function TransactionForm({
         </Button>
         {!!id && (
           <Button
-            type="button"
             className="w-full"
             disabled={disabled}
             onClick={handleDelete}
+            type="button"
             variant={"outline"}
           >
-            <Trash className="size-4 mr-2" />
+            <Trash className="mr-2 size-4" />
             Delete Transaction
           </Button>
         )}

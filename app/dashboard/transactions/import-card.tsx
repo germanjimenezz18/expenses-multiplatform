@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { format, parse } from "date-fns";
 import { DoorClosed } from "lucide-react";
 import { useState } from "react";
-import ImportTable from "./import-table";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { convertAmountToMiliUnits } from "@/lib/utils";
-import { format, parse } from "date-fns";
+import ImportTable from "./import-table";
 
 const dateFormat = "yyyy-MM-dd HH:mm:ss";
 const outputFormat = "yyyy-MM-dd";
@@ -25,13 +25,12 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
     {}
   );
   const headers = data[0];
-  console.log( {headers});
+  console.log({ headers });
   console.log(data);
-  
+
   const body = data.slice(1);
-  console.log({body});
-  console.log({data});
-  
+  console.log({ body });
+  console.log({ data });
 
   const onTableHeadSelectChange = (
     columnIndex: number,
@@ -94,35 +93,35 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
 
     const formattedData = arrayOfData.map((item) => ({
       ...item,
-      amount: convertAmountToMiliUnits(parseFloat(item.amount)),
+      amount: convertAmountToMiliUnits(Number.parseFloat(item.amount)),
       date: format(parse(item.date, dateFormat, new Date()), outputFormat),
     }));
 
-    onSubmit(formattedData)
+    onSubmit(formattedData);
   };
 
   return (
     <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-1 xl:grid-cols-1">
-      <div className="max-w-screen-1xl  w-full">
-        <Card className=" drop-shadow-sm">
-          <CardHeader className=" gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-            <CardTitle className="text-xl line-clamp-1">
+      <div className="w-full max-w-screen-1xl">
+        <Card className="drop-shadow-sm">
+          <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+            <CardTitle className="line-clamp-1 text-xl">
               Import Transaction
             </CardTitle>
-            <div className="flex flex-col lg:flex-row gap-y-2 items-center gap-x-2">
+            <div className="flex flex-col items-center gap-x-2 gap-y-2 lg:flex-row">
               <Button
-                size={"sm"}
-                onClick={onCancel}
                 className="w-full lg:w-auto"
+                onClick={onCancel}
+                size={"sm"}
               >
-                <DoorClosed className="size-4 mr-2" />
+                <DoorClosed className="mr-2 size-4" />
                 Cancel
               </Button>
               <Button
                 className="w-full lg:w-auto"
-                size={"sm"}
                 disabled={progress < requiredOptions.length}
                 onClick={handleContinue}
+                size={"sm"}
               >
                 Continue ({progress} / {requiredOptions.length})
               </Button>
@@ -130,10 +129,10 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
           </CardHeader>
           <CardContent>
             <ImportTable
-              headers={headers}
               body={body}
-              selectedColumns={selectedColumns}
+              headers={headers}
               onTableHeadSelectChange={onTableHeadSelectChange}
+              selectedColumns={selectedColumns}
             />
           </CardContent>
         </Card>

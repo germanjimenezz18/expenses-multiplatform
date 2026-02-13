@@ -1,19 +1,20 @@
 "use client";
-import * as React from "react";
 
 import {
-  ColumnDef,
+  type ColumnDef,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  SortingState,
-  getSortedRowModel,
-  getPaginationRowModel,
   getFilteredRowModel,
-  ColumnFiltersState,
+  getPaginationRowModel,
+  getSortedRowModel,
+  type Row,
+  type SortingState,
   useReactTable,
-  Row,
 } from "@tanstack/react-table";
-
+import { Trash } from "lucide-react";
+import * as React from "react";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -22,10 +23,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "./ui/button";
-import { Input } from "@/components/ui/input";
-import { Trash } from "lucide-react";
 import { useConfirm } from "@/hooks/use-confirm";
+import { Button } from "./ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -78,19 +77,21 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center">
         {!hideSearch && (
           <Input
+            className="max-w-sm"
+            onChange={(event) =>
+              table.getColumn(filterKey)?.setFilterValue(event.target.value)
+            }
             placeholder={`Filter ${filterKey}...`}
             value={
               (table.getColumn(filterKey)?.getFilterValue() as string) ?? ""
             }
-            onChange={(event) =>
-              table.getColumn(filterKey)?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
           />
         )}
 
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <Button
+            className="ml-auto font-normal text-xs"
+            disabled={disabled}
             onClick={async () => {
               const ok = await confirm();
               if (ok) {
@@ -98,12 +99,10 @@ export function DataTable<TData, TValue>({
                 table.resetRowSelection();
               }
             }}
-            disabled={disabled}
             size={"sm"}
             variant={"destructive"}
-            className="ml-auto font-normal text-xs"
           >
-            <Trash className="size-4 mr-2" />
+            <Trash className="mr-2 size-4" />
             Delete ({table.getFilteredSelectedRowModel().rows.length})
           </Button>
         )}
@@ -134,8 +133,8 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -150,8 +149,8 @@ export function DataTable<TData, TValue>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
                   className="h-24 text-center"
+                  colSpan={columns.length}
                 >
                   No results.
                 </TableCell>
@@ -162,23 +161,23 @@ export function DataTable<TData, TValue>({
       </div>
 
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className="flex-1 text-muted-foreground text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
         <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          onClick={() => table.previousPage()}
+          size="sm"
+          variant="outline"
         >
           Previous
         </Button>
         <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          onClick={() => table.nextPage()}
+          size="sm"
+          variant="outline"
         >
           Next
         </Button>

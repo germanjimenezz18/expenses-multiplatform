@@ -1,18 +1,16 @@
 "use client";
 
+import type { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
+import type { InferResponseType } from "hono";
+import { ArrowUpDown } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-
-import { InferResponseType } from "hono";
-import { client } from "@/lib/hono";
-import Actions from "./actions";
-import { format } from "date-fns";
+import type { client } from "@/lib/hono";
 import { formatCurrency } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import AccountColumn from "./account-column";
+import Actions from "./actions";
 import CategoryColumn from "./category-column";
 
 export type ResponseType = InferResponseType<
@@ -25,19 +23,19 @@ export const columns: ColumnDef<ResponseType>[] = [
     id: "select",
     header: ({ table }) => (
       <Checkbox
+        aria-label="Select all"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
+        aria-label="Select row"
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
       />
     ),
   },
@@ -45,9 +43,10 @@ export const columns: ColumnDef<ResponseType>[] = [
     accessorKey: "date",
     header: ({ column }) => {
       return (
-        <Button className="hidden md:flex"
-          variant="ghost"
+        <Button
+          className="hidden md:flex"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="ghost"
         >
           Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -56,7 +55,9 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
     cell: ({ row }) => {
       const date = row.getValue("date") as Date;
-      return <span className="hidden md:inline">{format(date, "dd/MM/yyyy")}</span>;
+      return (
+        <span className="hidden md:inline">{format(date, "dd/MM/yyyy")}</span>
+      );
     },
   },
   {
@@ -64,8 +65,8 @@ export const columns: ColumnDef<ResponseType>[] = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="ghost"
         >
           Payee
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -78,8 +79,8 @@ export const columns: ColumnDef<ResponseType>[] = [
     header: ({ column }) => {
       return (
         <Button
-          variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="ghost"
         >
           Amount
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -87,11 +88,11 @@ export const columns: ColumnDef<ResponseType>[] = [
       );
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount = Number.parseFloat(row.getValue("amount"));
       return (
         <Badge
+          className={`font-medium text-xs ${amount < 0 ? "font-bold" : ""}`}
           variant={amount < 0 ? "destructive" : "primary"}
-          className={`text-xs font-medium  ${amount < 0 ? "font-bold" : ""}`}
         >
           {formatCurrency(amount)}
         </Badge>
@@ -104,8 +105,8 @@ export const columns: ColumnDef<ResponseType>[] = [
       return (
         <Button
           className="hidden md:flex"
-          variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="ghost"
         >
           Category
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -115,9 +116,9 @@ export const columns: ColumnDef<ResponseType>[] = [
     cell: ({ row }) => {
       return (
         <CategoryColumn
-          id={row.original.id}
-          categoryId={row.original.categoryId}
           category={row.original.category}
+          categoryId={row.original.categoryId}
+          id={row.original.id}
         />
       );
     },
@@ -128,8 +129,8 @@ export const columns: ColumnDef<ResponseType>[] = [
       return (
         <Button
           className="hidden md:flex"
-          variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="ghost"
         >
           Account
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -139,8 +140,8 @@ export const columns: ColumnDef<ResponseType>[] = [
     cell: ({ row }) => {
       return (
         <AccountColumn
-          accountId={row.original.accountId}
           account={row.original.account}
+          accountId={row.original.accountId}
         />
       );
     },

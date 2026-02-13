@@ -1,3 +1,5 @@
+import { Loader2 } from "lucide-react";
+import type { z } from "zod";
 import {
   Sheet,
   SheetContent,
@@ -5,15 +7,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Loader2 } from "lucide-react";
-import { z } from "zod";
-
-import AccountForm from "@/features/accounts/components/account-form";
 import { insertAccountSchema } from "@/db/schema";
-import { useGetAccount } from "@/features/accounts/api/use-get-account";
-import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
-import { useEditAccount } from "@/features/accounts/api/use-edit-account";
 import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
+import { useEditAccount } from "@/features/accounts/api/use-edit-account";
+import { useGetAccount } from "@/features/accounts/api/use-get-account";
+import AccountForm from "@/features/accounts/components/account-form";
+import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
 import { useConfirm } from "@/hooks/use-confirm";
 
 const formSchema = insertAccountSchema.pick({ name: true });
@@ -63,7 +62,7 @@ export default function EditAccountSheet() {
   return (
     <>
       <ConfirmDialog />
-      <Sheet open={isOpen} onOpenChange={onClose}>
+      <Sheet onOpenChange={onClose} open={isOpen}>
         <SheetContent className="space-y-4">
           <SheetHeader>
             <SheetTitle>Edit Account</SheetTitle>
@@ -74,15 +73,15 @@ export default function EditAccountSheet() {
 
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
-              <Loader2 className="size-4 text-muted-foreground animate-spin" />
+              <Loader2 className="size-4 animate-spin text-muted-foreground" />
             </div>
           ) : (
             <AccountForm
-              id={id}
-              onSubmit={onSubmit}
-              disabled={isPending}
               defaultValues={defaultValues}
+              disabled={isPending}
+              id={id}
               onDelete={onDelete}
+              onSubmit={onSubmit}
             />
           )}
         </SheetContent>

@@ -1,19 +1,16 @@
 import Link from "next/link";
-
+import ButtonConnectToBank from "@/components/button-connect-to-bank";
+import Header from "@/components/Header";
+import { ModeToggleButtons } from "@/components/ModeToggleButtons";
+import SideNavbar from "@/components/SideNav";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import SideNavbar from "@/components/SideNav";
-import { ModeToggleButtons } from "@/components/ModeToggleButtons";
-import Header from "@/components/Header";
-import ButtonConnectToBank from "@/components/button-connect-to-bank";
 
 export default function SettingsPage() {
   return (
@@ -24,14 +21,14 @@ export default function SettingsPage() {
           <Header />
           <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
             <div className="mx-auto grid w-full max-w-6xl gap-2">
-              <h1 className="text-3xl font-semibold">Settings</h1>
+              <h1 className="font-semibold text-3xl">Settings</h1>
             </div>
             <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
               <nav
-                className="grid gap-4 text-sm text-muted-foreground"
+                className="grid gap-4 text-muted-foreground text-sm"
                 x-chunk="dashboard-04-chunk-0"
               >
-                <Link href="#" className="font-semibold text-primary">
+                <Link className="font-semibold text-primary" href="#">
                   General
                 </Link>
                 <Link href="#">Integrations</Link>
@@ -56,20 +53,17 @@ export default function SettingsPage() {
                   </CardHeader>
                   <CardContent>
                     <ButtonConnectToBank />
-
                   </CardContent>
                 </Card>
                 <Card x-chunk="dashboard-04-chunk-3">
                   <CardHeader>
                     <CardTitle>Support</CardTitle>
                     <CardDescription>
-                      Get help  from our support team
+                      Get help from our support team
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                      <Button variant={'destructive'}>
-                        Reset Account Data
-                      </Button>
+                    <Button variant={"destructive"}>Reset Account Data</Button>
                   </CardContent>
                 </Card>
               </div>

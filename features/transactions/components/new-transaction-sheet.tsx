@@ -1,3 +1,5 @@
+import { Loader2 } from "lucide-react";
+import type { z } from "zod";
 import {
   Sheet,
   SheetContent,
@@ -5,17 +7,14 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { z } from "zod";
-
-import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
-import { useCreateTransaction } from "@/features/transactions/api/use-create-transaction";
-import TransactionForm from "./transaction-form";
 import { insertTransactionSchema } from "@/db/schema";
+import { useCreateAccount } from "@/features/accounts/api/use-create-account";
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useCreateCategory } from "@/features/categories/api/use-create-category";
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
-import { useCreateAccount } from "@/features/accounts/api/use-create-account";
-import { Loader2 } from "lucide-react";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
+import { useCreateTransaction } from "@/features/transactions/api/use-create-transaction";
+import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import TransactionForm from "./transaction-form";
 
 const formSchema = insertTransactionSchema.omit({ id: true });
 type FormValues = z.input<typeof formSchema>;
@@ -57,7 +56,7 @@ export default function NewTransactionSheet() {
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
+    <Sheet onOpenChange={onClose} open={isOpen}>
       <SheetContent className="space-y-4">
         <SheetHeader>
           <SheetTitle>Add a new Transaction</SheetTitle>
@@ -67,17 +66,17 @@ export default function NewTransactionSheet() {
         </SheetHeader>
 
         {isLoading ? (
-          <div className="absolute intset-0 flex items-center justify-center">
-            <Loader2 className="size-4 text-primary animate-spin" />
+          <div className="intset-0 absolute flex items-center justify-center">
+            <Loader2 className="size-4 animate-spin text-primary" />
           </div>
         ) : (
           <TransactionForm
-            onSubmit={onSubmit}
-            disabled={isPending}
-            categoryOptions={categoryOptions}
-            onCreateCategory={onCreateCategory}
             accountOptions={accountOptions}
+            categoryOptions={categoryOptions}
+            disabled={isPending}
             onCreateAccount={onCreateAccount}
+            onCreateCategory={onCreateCategory}
+            onSubmit={onSubmit}
           />
         )}
       </SheetContent>

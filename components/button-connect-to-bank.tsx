@@ -1,11 +1,10 @@
 "use client";
-import React, { useCallback, useState } from "react";
-
-import { usePlaidLink, PlaidLinkOnSuccess } from "react-plaid-link";
-import { Button } from "./ui/button";
 import { BanknoteIcon, PiggyBankIcon } from "lucide-react";
 import Image from "next/image";
+import React, { useCallback, useState } from "react";
+import { type PlaidLinkOnSuccess, usePlaidLink } from "react-plaid-link";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 function PlaidAuth({ public_token }: { public_token: string }) {
   const [account, setAccount] = useState<any>(null);
@@ -38,32 +37,34 @@ function PlaidAuth({ public_token }: { public_token: string }) {
 
   return account ? (
     <div className="flex flex-col items-start">
-      <div className="flex gap-x-2  border rounded-full">
+      <div className="flex gap-x-2 rounded-full border">
         <Image
-          className="ml-2"
-          src="/bank_logos/bbva-logo.png"
           alt="Connected"
-          width={40}
+          className="ml-2"
           height={30}
+          src="/bank_logos/bbva-logo.png"
+          width={40}
         />
         <Badge variant={"primary"}>Connected</Badge>
       </div>
 
-      <div className="border rounded-xl p-2 mt-2">
+      <div className="mt-2 rounded-xl border p-2">
         <div className="mb-2 text-center">
           <span>Accounts</span>
         </div>
         <ul className="grid gap-2">
           {account.accounts.map((account: any) => (
             <li
+              className="flex cursor-pointer gap-4 rounded-xl border hover:bg-muted/20"
               key={account.account_id}
-              className="flex gap-4 border rounded-xl hover:bg-muted/20 cursor-pointer"
             >
-              <div className="flex items-center p-2  gap-4 ">
-                <BanknoteIcon className="size-4 ml-2 text-primary" />
-                <div className="flex flex-col gap-x-2 px-2 ">
+              <div className="flex items-center gap-4 p-2">
+                <BanknoteIcon className="ml-2 size-4 text-primary" />
+                <div className="flex flex-col gap-x-2 px-2">
                   <span className="text-sm">{account.name}</span>
-                  <span className="text-xs text-primary">EUR {account?.balances?.current} </span>
+                  <span className="text-primary text-xs">
+                    EUR {account?.balances?.current}{" "}
+                  </span>
                 </div>
               </div>
             </li>
@@ -112,10 +113,10 @@ const ButtonConnectToBank = () => {
     <PlaidAuth public_token={publicToken} />
   ) : (
     <Button
-      onClick={() => open()}
-      disabled={!ready}
-      variant={"secondary"}
       className="flex items-center justify-center"
+      disabled={!ready}
+      onClick={() => open()}
+      variant={"secondary"}
     >
       <PiggyBankIcon className="mr-3 size-4" />
       Connect a bank account

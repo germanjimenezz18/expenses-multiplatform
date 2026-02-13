@@ -3,11 +3,9 @@ import {
   RadialBar,
   RadialBarChart,
   ResponsiveContainer,
-  Tooltip,
 } from "recharts";
 
-import { formatCurrency, formatPercentage } from "@/lib/utils";
-import CategoryTooltip from "./category-tooltip";
+import { formatCurrency } from "@/lib/utils";
 
 const COLORS = ["#0088FE", "#00C49F", "#FF8042", "#ff5b00"];
 
@@ -20,17 +18,17 @@ type Props = {
 
 export function RadialVariant({ data = [] }: Props) {
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer height={350} width="100%">
       <RadialBarChart
+        barSize={10}
         cx="50%"
         cy="30%"
-        barSize={10}
-        innerRadius={"90%"}
-        outerRadius={"40%"}
         data={data.map((item, index) => ({
           ...item,
           fill: COLORS[index % COLORS.length],
         }))}
+        innerRadius={"90%"}
+        outerRadius={"40%"}
       >
         <RadialBar
           background
@@ -38,28 +36,25 @@ export function RadialVariant({ data = [] }: Props) {
           label={{ fill: "#fff", position: "insideStart", fontSize: "12px" }}
         />
         <Legend
-          layout="horizontal"
-          verticalAlign="bottom"
           align="right"
-          iconType="circle"
           content={({ payload }: any) => {
             return (
               <ul className="flex flex-col space-y-2">
                 {payload.map((entry: any, index: number) => (
                   <li
+                    className="flex items-center space-x-2"
                     key={`item-${index}`}
-                    className="flex items-center space-x-2 "
                   >
                     <span
-                      className=" size-2  rounded-full"
+                      className="size-2 rounded-full"
                       style={{ backgroundColor: entry.color }}
                     />
                     <div className="space-x-1">
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-muted-foreground text-sm">
                         {entry.value}
                       </span>
                       <span className="text-sm">
-                        {formatCurrency(entry.payload.value )}
+                        {formatCurrency(entry.payload.value)}
                       </span>
                     </div>
                   </li>
@@ -67,6 +62,9 @@ export function RadialVariant({ data = [] }: Props) {
               </ul>
             );
           }}
+          iconType="circle"
+          layout="horizontal"
+          verticalAlign="bottom"
         />
       </RadialBarChart>
     </ResponsiveContainer>

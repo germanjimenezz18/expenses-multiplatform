@@ -1,20 +1,18 @@
-import Link from "next/link";
 import { Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export default function PrivacyPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center justify-center  w-full gap-x-6 ">
+    <div className="flex min-h-screen flex-col">
+      <header className="flex h-14 w-full items-center justify-center gap-x-6 px-4 lg:px-6">
         <Link className="flex items-center justify-center" href="/">
           <Badge
+            className="select-none whitespace-nowrap text-muted-foreground hover:border-primary/50 hover:text-primary/60"
             variant="outline"
-            className="text-muted-foreground select-none hover:text-primary/60 hover:border-primary/50 whitespace-nowrap"
           >
             Expenses
-            <Globe className="size-5 mx-1" />
+            <Globe className="mx-1 size-5" />
             Multiplatform
           </Badge>
           <span className="sr-only">Expenses Multiplatform</span>
@@ -27,18 +25,18 @@ export default function PrivacyPage() {
           </div>
         </section>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">
+      <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t px-4 py-6 sm:flex-row md:px-6">
+        <p className="text-gray-500 text-xs dark:text-gray-400">
           © 2024 Expenses Multiplatform. All rights reserved.
         </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+        <nav className="flex gap-4 sm:ml-auto sm:gap-6">
           <Link
-            className="text-xs hover:underline underline-offset-4"
+            className="text-xs underline-offset-4 hover:underline"
             href="terms-of-service"
           >
             Terms of Service
           </Link>
-          <Link className="text-xs hover:underline underline-offset-4" href="#">
+          <Link className="text-xs underline-offset-4 hover:underline" href="#">
             Privacy
           </Link>
         </nav>

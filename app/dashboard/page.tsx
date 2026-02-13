@@ -1,8 +1,12 @@
 "use client";
+import { Plus } from "lucide-react";
 import { Suspense } from "react";
-import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
-import { columns } from "./transactions/columns";
+import AccountTracker from "@/components/account-tracker";
+import { DataCardLoading } from "@/components/data-card";
+import DataGrid from "@/components/data-grid";
 import { DataTable } from "@/components/data-table";
+import SpendingPie, { SpendingPieLoading } from "@/components/spending-pie";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,25 +14,39 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import DataGrid from "@/components/data-grid";
-import AccountTracker from "@/components/account-tracker";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
-import SpendingPie from "@/components/spending-pie";
-import { useGetSummary } from "@/features/summary/api/use-get-summary";
-import { DataCardLoading } from "@/components/data-card";
-import { SpendingPieLoading } from "@/components/spending-pie";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetSummary } from "@/features/summary/api/use-get-summary";
+import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import { columns } from "./transactions/columns";
 
 export default function Dashboard() {
   return (
-    <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3 ">
-      <div className="grid auto-rows-max items-start  lg:col-span-2">
-        <Suspense fallback={<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8"><DataCardLoading /><DataCardLoading /><DataCardLoading /></div>}>
+    <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
+      <div className="grid auto-rows-max items-start lg:col-span-2">
+        <Suspense
+          fallback={
+            <div className="mb-8 grid grid-cols-1 gap-8 pb-2 lg:grid-cols-3">
+              <DataCardLoading />
+              <DataCardLoading />
+              <DataCardLoading />
+            </div>
+          }
+        >
           <DataGrid />
         </Suspense>
-        <Suspense fallback={<Card><CardHeader><Skeleton className="h-8 w-48" /></CardHeader><CardContent><Skeleton className="h-[300px] w-full" /></CardContent></Card>}>
+        <Suspense
+          fallback={
+            <Card>
+              <CardHeader>
+                <Skeleton className="h-8 w-48" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-[300px] w-full" />
+              </CardContent>
+            </Card>
+          }
+        >
           <TransactionTabs />
         </Suspense>
       </div>
@@ -36,7 +54,18 @@ export default function Dashboard() {
         <Suspense fallback={<SpendingPieLoading />}>
           <DashboardSpendingPie />
         </Suspense>
-        <Suspense fallback={<Card><CardHeader><Skeleton className="h-8 w-48" /></CardHeader><CardContent><Skeleton className="h-[400px] w-full" /></CardContent></Card>}>
+        <Suspense
+          fallback={
+            <Card>
+              <CardHeader>
+                <Skeleton className="h-8 w-48" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-[400px] w-full" />
+              </CardContent>
+            </Card>
+          }
+        >
           <AccountTracker />
         </Suspense>
       </div>
@@ -57,7 +86,7 @@ function TransactionTabs() {
 
   return (
     <Card>
-      <CardHeader className="px-7  gap-y-2 flex flex-col lg:flex-row lg:items-center lg:justify-between">
+      <CardHeader className="flex flex-col gap-y-2 px-7 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <CardTitle className="text-xl">Transactions</CardTitle>
           <CardDescription>
@@ -71,14 +100,14 @@ function TransactionTabs() {
           </CardDescription>
         </div>
 
-        <div className="flex  flex-col lg:flex-row  items-center gap-x-2 gap-y-2">
+        <div className="flex flex-col items-center gap-x-2 gap-y-2 lg:flex-row">
           <Button
             className="w-full lg:w-auto"
+            onClick={newTransaction.onOpen}
             size={"sm"}
             variant={"outline"}
-            onClick={newTransaction.onOpen}
           >
-            <Plus className="size-4 mr-2" />
+            <Plus className="mr-2 size-4" />
             Add New Transaction
           </Button>
         </div>
@@ -87,12 +116,12 @@ function TransactionTabs() {
         <DataTable
           columns={columns}
           data={transactions}
+          disabled={isDisabled}
           filterKey="payee"
+          hideSearch={true}
           onDelete={(row) => {
             console.log(row);
           }}
-          hideSearch={true}
-          disabled={isDisabled}
         />
       </CardContent>
     </Card>

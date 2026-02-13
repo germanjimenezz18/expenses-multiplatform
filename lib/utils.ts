@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,8 +16,8 @@ export function convertAmountFromMiliUnits(amount: number) {
 
 // export function formatCurrency(value: number, currencyType: CurrencyType) {
 export function formatCurrency(value: number) {
-  let currencySymbol = "€";
-  let formatted =  new Intl.NumberFormat("en-IN", {
+  const currencySymbol = "€";
+  const formatted = new Intl.NumberFormat("en-IN", {
     // style: "currency",
     // currency: "EUR",
     // currencyDisplay: "symbol",
@@ -25,7 +25,6 @@ export function formatCurrency(value: number) {
     minimumFractionDigits: 2,
   }).format(value);
   return `${currencySymbol} ${formatted}`;
-  
 }
 
 export function calculatePercentageChange(current: number, previous: number) {
@@ -56,13 +55,12 @@ export default function fillMissingDays(
     const found = activeDays.find((d) => isSameDay(d.date, day));
     if (found) {
       return found;
-    } else {
-      return {
-        date: day,
-        income: 0,
-        expenses: 0,
-      };
     }
+    return {
+      date: day,
+      income: 0,
+      expenses: 0,
+    };
   });
   return transactionsByDay;
 }

@@ -28,21 +28,21 @@ export function LoginForm() {
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
-              type="email"
               placeholder="m@example.com"
               required
+              type="email"
             />
           </div>
           <div className="grid gap-2">
             <div className="flex items-center">
               <Label htmlFor="password">Password</Label>
-              <Link href="#" className="ml-auto inline-block text-sm underline">
+              <Link className="ml-auto inline-block text-sm underline" href="#">
                 Forgot your password?
               </Link>
             </div>
-            <Input id="password" type="password" required />
+            <Input id="password" required type="password" />
           </div>
-          <Button type="submit" className="w-full">
+          <Button className="w-full" type="submit">
             Login
           </Button>
           <Separator />
@@ -51,7 +51,7 @@ export function LoginForm() {
         </div>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="#" className="underline">
+          <Link className="underline" href="#">
             Sign up
           </Link>
         </div>

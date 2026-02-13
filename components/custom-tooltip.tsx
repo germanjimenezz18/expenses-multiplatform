@@ -1,5 +1,5 @@
-import { formatCurrency } from "@/lib/utils";
 import { format } from "date-fns";
+import { formatCurrency } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 
 export default function CustomTooltip({ active, payload }: any) {
@@ -10,32 +10,32 @@ export default function CustomTooltip({ active, payload }: any) {
   const expenses = payload[0].value;
 
   return (
-    <div className="rounded-sm  bg-muted shadow-sm border overflow-hidden">
-      <div className="text-sm p-2 px-3 bg-white/10 ">
+    <div className="overflow-hidden rounded-sm border bg-muted shadow-sm">
+      <div className="bg-white/10 p-2 px-3 text-sm">
         {format(date, "MMM dd, yyyy")}
       </div>
 
       <Separator />
 
-      <div className="p-2 px-3 space-y-1">
-        <div className=" flex items-center justify-between gap-x-4">
+      <div className="space-y-1 p-2 px-3">
+        <div className="flex items-center justify-between gap-x-4">
           <div>
-            <div className="size-1.5 bg-blue-500 rounded-full" />
-            <p className="text-sm text-muted-foreground">Income</p>
+            <div className="size-1.5 rounded-full bg-blue-500" />
+            <p className="text-muted-foreground text-sm">Income</p>
           </div>
-          <p className="text-sm text-right font-medium">
+          <p className="text-right font-medium text-sm">
             {formatCurrency(income)}
           </p>
         </div>
       </div>
 
-      <div className="p-2 px-3 space-y-1">
-        <div className=" flex items-center justify-between gap-x-4">
+      <div className="space-y-1 p-2 px-3">
+        <div className="flex items-center justify-between gap-x-4">
           <div>
-            <div className="size-1.5 bg-rose-500 rounded-full" />
-            <p className="text-sm text-muted-foreground">Expenses</p>
+            <div className="size-1.5 rounded-full bg-rose-500" />
+            <p className="text-muted-foreground text-sm">Expenses</p>
           </div>
-          <p className="text-sm text-right font-medium">
+          <p className="text-right font-medium text-sm">
             {formatCurrency(expenses * -1)}
           </p>
         </div>

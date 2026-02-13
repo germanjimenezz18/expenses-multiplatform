@@ -3,8 +3,6 @@ import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-
-
 /* accounts */
 export const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),
@@ -19,8 +17,6 @@ export const accountsRelations = relations(accounts, ({ many }) => ({
 
 export const insertAccountSchema = createInsertSchema(accounts);
 
-
-
 /* categories */
 export const categories = pgTable("categories", {
   id: text("id").primaryKey(),
@@ -34,9 +30,6 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 }));
 
 export const insertCategorySchema = createInsertSchema(categories);
-
-
-
 
 /* transactions 
   Amount : Integers multplied by 1000 to avoid float/double problems  $10.50 = 10500

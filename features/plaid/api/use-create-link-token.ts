@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { client } from "@/lib/hono";
 import { useSearchParams } from "next/navigation";
-import { convertAmountFromMiliUnits } from "@/lib/utils";
+import { client } from "@/lib/hono";
 
 export const useCreateLinkToken = () => {
   const params = useSearchParams();
