@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ButtonConnectToBank from "@/components/button-connect-to-bank";
 import Header from "@/components/Header";
 import { ModeToggleButtons } from "@/components/ModeToggleButtons";
 import SideNavbar from "@/components/SideNav";
@@ -31,7 +30,6 @@ export default function SettingsPage() {
                 <Link className="font-semibold text-primary" href="#">
                   General
                 </Link>
-                <Link href="#">Integrations</Link>
                 <Link href="#">Support</Link>
               </nav>
               <div className="grid gap-6">
@@ -43,17 +41,6 @@ export default function SettingsPage() {
                     </CardDescription>
                     <ModeToggleButtons />
                   </CardHeader>
-                </Card>
-                <Card x-chunk="dashboard-04-chunk-2">
-                  <CardHeader>
-                    <CardTitle>Integrations</CardTitle>
-                    <CardDescription>
-                      Manage third-party bank integrations
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ButtonConnectToBank />
-                  </CardContent>
                 </Card>
                 <Card x-chunk="dashboard-04-chunk-3">
                   <CardHeader>

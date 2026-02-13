@@ -24,7 +24,6 @@ export default function WelcomeCard() {
         </CardDescription>
       </CardHeader>
       <CardFooter className="flex gap-x-2 md:flex-row">
-        {/* <ButtonConnectToBank/> */}
         <ButtonSheetNewTransaction />
         <ButtonSheetNewAccount />
       </CardFooter>

@@ -6,7 +6,6 @@ import { z } from "zod";
 /* accounts */
 export const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),
-  plaidId: text("plaid_id"),
   name: text("name").notNull(),
   userId: text("user_id").notNull(),
 });
@@ -20,7 +19,6 @@ export const insertAccountSchema = createInsertSchema(accounts);
 /* categories */
 export const categories = pgTable("categories", {
   id: text("id").primaryKey(),
-  plaidId: text("plaid_id"),
   name: text("name").notNull(),
   userId: text("user_id").notNull(),
 });

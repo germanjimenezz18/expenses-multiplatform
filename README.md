@@ -20,12 +20,10 @@ A modern expense tracking application built with Next.js and a powerful stack of
 - **Drizzle ORM** - TypeScript ORM
 - **Neon DB** - Serverless Postgres database
 - **Clerk** - Authentication and user management
-- **Plaid API** - Bank account integration
 
 ## Features
 
 - 🔐 Authentication with Clerk
-- 💳 Bank account integration with Plaid
 - 📊 Transaction management
 - 📈 Category tracking
 - 🏦 Multiple account support
@@ -52,7 +50,6 @@ cp .env.example .env
 4. Configure your environment variables:
 - Set up Clerk credentials
 - Configure Neon DB connection
-- Add Plaid API keys
 
 5. Run database migrations:
 ```bash
