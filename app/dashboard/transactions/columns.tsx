@@ -92,7 +92,7 @@ export const columns: ColumnDef<ResponseType>[] = [
       return (
         <Badge
           className={`font-medium text-xs ${amount < 0 ? "font-bold" : ""}`}
-          variant={amount < 0 ? "destructive" : "primary"}
+          variant={amount < 0 ? "destructive" : "default"}
         >
           {formatCurrency(amount)}
         </Badge>
