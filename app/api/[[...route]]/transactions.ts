@@ -196,7 +196,10 @@ const app = new Hono()
         .with(transactionsToDelete)
         .delete(transactions)
         .where(
-          inArray(transactions.id, sql`SELECT id FROM ${transactionsToDelete}`)
+          inArray(
+            transactions.id,
+            sql`(SELECT id FROM ${transactionsToDelete})`
+          )
         )
         .returning({ id: transactions.id });
 
@@ -272,7 +275,10 @@ const app = new Hono()
         .with(transactionsToDelete)
         .delete(transactions)
         .where(
-          inArray(transactions.id, sql`SELECT id FROM ${transactionsToDelete}`)
+          inArray(
+            transactions.id,
+            sql`(SELECT id FROM ${transactionsToDelete})`
+          )
         )
         .returning({ id: transactions.id });
       if (!data) {

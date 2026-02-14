@@ -13,9 +13,9 @@ import { useDeleteTransaction } from "@/features/transactions/api/use-delete-tra
 import { useOpenTransaction } from "@/features/transactions/hooks/use-open-transaction";
 import { useConfirm } from "@/hooks/use-confirm";
 
-type Props = {
+interface Props {
   id: string;
-};
+}
 
 export default function Actions({ id }: Props) {
   const { onOpen } = useOpenTransaction();
