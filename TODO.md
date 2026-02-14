@@ -1,6 +1,7 @@
 # APP TODO LIST
 
-- [ ] Add latest shadcn components and configuration + tailwind v4
+- [x] Add latest shadcn components and configuration
+- [ ] Upgrade to tailwind v4 (currently on v3 for shadcn compatibility)
 
 
 
