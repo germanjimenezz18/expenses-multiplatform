@@ -31,25 +31,27 @@ export function PieVariant({ data = [] }: Props) {
         <Legend
           align="right"
           content={({ payload }: any) => {
+            const safePayload = Array.isArray(payload) ? payload : [];
+
             return (
               <ul className="flex flex-col space-y-2">
-                {payload.map((entry: any, index: number) => (
+                {safePayload.map((entry: any, index: number) => (
                   <li
                     className="flex items-center space-x-2"
                     key={`item-${index}`}
                   >
                     <span
                       className="size-2 rounded-full"
-                      style={{ backgroundColor: entry.color }}
+                      style={{ backgroundColor: entry?.color }}
                     />
                     <div className="space-x-1">
                       <span className="text-muted-foreground text-sm">
-                        {entry.value}
+                        {entry?.value}
                       </span>
                       <span className="text-sm">
                         {formatPercentage(
                           totalAbsoluteValue > 0
-                            ? (Math.abs(Number(entry.payload?.value) || 0) /
+                            ? (Math.abs(Number(entry?.payload?.value) || 0) /
                                 totalAbsoluteValue) *
                                 100
                             : 0

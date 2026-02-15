@@ -3,11 +3,17 @@ import { formatCurrency } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 
 export default function CustomTooltip({ active, payload }: any) {
-  if (!active) return null;
+  if (!(active && Array.isArray(payload)) || payload.length === 0) return null;
 
-  const date = payload[0].payload.date;
-  const income = payload[0].value;
-  const expenses = payload[0].value;
+  const firstItem = payload[0];
+
+  if (!firstItem) return null;
+
+  const date = firstItem.payload?.date;
+  const income = Number(firstItem.value) || 0;
+  const expenses = Number(firstItem.value) || 0;
+
+  if (!date) return null;
 
   return (
     <div className="overflow-hidden rounded-sm border bg-muted shadow-sm">

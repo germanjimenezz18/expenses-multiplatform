@@ -2,10 +2,14 @@ import { formatCurrency } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 
 export default function CategoryTooltip({ active, payload }: any) {
-  if (!active) return null;
+  if (!(active && Array.isArray(payload)) || payload.length === 0) return null;
 
-  const name = payload[0].payload.name;
-  const value = payload[0].value;
+  const firstItem = payload[0];
+
+  if (!firstItem) return null;
+
+  const name = firstItem.payload?.name ?? "Unknown";
+  const value = Number(firstItem.value) || 0;
 
   return (
     <div className="overflow-hidden rounded-sm border bg-muted shadow-sm">
