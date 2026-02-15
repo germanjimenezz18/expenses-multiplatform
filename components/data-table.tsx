@@ -75,7 +75,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center">
         {!hideSearch && (
           <Input
-            className="max-w-sm"
+            className="mb-2 max-w-sm"
             onChange={(event) =>
               table.getColumn(filterKey)?.setFilterValue(event.target.value)
             }
