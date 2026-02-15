@@ -47,7 +47,10 @@ export default function Actions({ id }: Props) {
             <Edit className="mr-2 size-4 text-primary" />
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem disabled={false} onClick={() => onOpenBalanceCheck(id)}>
+          <DropdownMenuItem
+            disabled={false}
+            onClick={() => onOpenBalanceCheck(id)}
+          >
             <PlusCircle className="mr-2 size-4 text-primary" />
             New Balance Check
           </DropdownMenuItem>

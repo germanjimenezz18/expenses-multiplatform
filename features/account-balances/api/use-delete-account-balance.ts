@@ -3,7 +3,7 @@ import type { InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
-// @ts-ignore - Route type will be available after dev server restart
+// @ts-expect-error - Route type will be available after dev server restart
 type ResponseType = InferResponseType<
   (typeof client.api)["account-balances"][":id"]["$delete"]
 >;
@@ -15,7 +15,7 @@ export const useDeleteAccountBalance = (id?: string) => {
     mutationFn: async () => {
       if (!id) throw new Error("ID is required");
 
-      // @ts-ignore - Route type will be available after dev server restart
+      // @ts-expect-error - Route type will be available after dev server restart
       const response = await client.api["account-balances"][":id"].$delete({
         param: { id },
       });

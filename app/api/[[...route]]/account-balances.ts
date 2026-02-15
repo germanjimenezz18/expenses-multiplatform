@@ -68,7 +68,10 @@ const app = new Hono()
         .select()
         .from(accountBalances)
         .where(
-          and(eq(accountBalances.userId, auth.userId), eq(accountBalances.id, id))
+          and(
+            eq(accountBalances.userId, auth.userId),
+            eq(accountBalances.id, id)
+          )
         );
 
       if (!data) {
@@ -95,7 +98,9 @@ const app = new Hono()
       const [account] = await db
         .select()
         .from(accounts)
-        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, accountId)));
+        .where(
+          and(eq(accounts.userId, auth.userId), eq(accounts.id, accountId))
+        );
 
       if (!account) {
         return c.json({ error: "Account not found" }, 404);
@@ -133,7 +138,9 @@ const app = new Hono()
       const [account] = await db
         .select()
         .from(accounts)
-        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, accountId)));
+        .where(
+          and(eq(accounts.userId, auth.userId), eq(accounts.id, accountId))
+        );
 
       if (!account) {
         return c.json({ error: "Account not found" }, 404);
@@ -217,7 +224,10 @@ const app = new Hono()
         .select()
         .from(accounts)
         .where(
-          and(eq(accounts.userId, auth.userId), eq(accounts.id, values.accountId))
+          and(
+            eq(accounts.userId, auth.userId),
+            eq(accounts.id, values.accountId)
+          )
         );
 
       if (!account) {
@@ -264,7 +274,12 @@ const app = new Hono()
           ...values,
           updatedAt: new Date(),
         })
-        .where(and(eq(accountBalances.userId, auth.userId), eq(accountBalances.id, id)))
+        .where(
+          and(
+            eq(accountBalances.userId, auth.userId),
+            eq(accountBalances.id, id)
+          )
+        )
         .returning();
 
       if (!data) {
@@ -289,7 +304,12 @@ const app = new Hono()
 
       const [data] = await db
         .delete(accountBalances)
-        .where(and(eq(accountBalances.userId, auth.userId), eq(accountBalances.id, id)))
+        .where(
+          and(
+            eq(accountBalances.userId, auth.userId),
+            eq(accountBalances.id, id)
+          )
+        )
         .returning({
           id: accountBalances.id,
         });

@@ -9,7 +9,7 @@ export const useGetAccountBalances = (accountId?: string, limit?: number) => {
       if (accountId) params.accountId = accountId;
       if (limit) params.limit = limit.toString();
 
-      // @ts-ignore - Route type will be available after dev server restart
+      // @ts-expect-error - Route type will be available after dev server restart
       const response = await client.api["account-balances"].$get({
         query: params,
       });

@@ -97,12 +97,15 @@ export const accountBalances = pgTable("account_balances", {
   userId: text("user_id").notNull(),
 });
 
-export const accountBalancesRelations = relations(accountBalances, ({ one }) => ({
-  account: one(accounts, {
-    fields: [accountBalances.accountId],
-    references: [accounts.id],
-  }),
-}));
+export const accountBalancesRelations = relations(
+  accountBalances,
+  ({ one }) => ({
+    account: one(accounts, {
+      fields: [accountBalances.accountId],
+      references: [accounts.id],
+    }),
+  })
+);
 
 export const insertAccountBalanceSchema = createInsertSchema(accountBalances, {
   date: z.coerce.date(),

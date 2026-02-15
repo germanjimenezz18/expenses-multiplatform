@@ -47,7 +47,9 @@ export default function EditAccountBalanceSheet() {
 
   const isLoading = balanceQuery.isLoading || accountQuery.isLoading;
   const isPending =
-    editMutation.isPending || deleteMutation.isPending || accountMutation.isPending;
+    editMutation.isPending ||
+    deleteMutation.isPending ||
+    accountMutation.isPending;
 
   const onSubmit = (values: FormValues) => {
     editMutation.mutate(values, {
@@ -72,7 +74,9 @@ export default function EditAccountBalanceSheet() {
   const defaultValues = balanceQuery.data
     ? {
         accountId: balanceQuery.data.accountId,
-        balance: convertAmountFromMiliUnits(balanceQuery.data.balance).toString(),
+        balance: convertAmountFromMiliUnits(
+          balanceQuery.data.balance
+        ).toString(),
         date: balanceQuery.data.date,
         note: balanceQuery.data.note,
       }
