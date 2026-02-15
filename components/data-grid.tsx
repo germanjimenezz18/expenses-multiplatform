@@ -28,6 +28,14 @@ export default function DataGrid() {
   return (
     <div className="mb-8 grid grid-cols-1 gap-8 pb-2 lg:grid-cols-4">
       <DataCard
+        dateRange={dateRangeLabel}
+        icon={FaWallet}
+        percentageChange={data?.totalBalanceChange}
+        title="Total Balance"
+        value={data?.totalBalanceAmount}
+        variant="default"
+      />
+      <DataCard
         className=""
         dateRange={dateRangeLabel}
         icon={FaPiggyBank}
@@ -51,14 +59,6 @@ export default function DataGrid() {
         title="Expenses"
         value={(data?.expensesAmount ?? 0) * -1}
         variant="danger"
-      />
-      <DataCard
-        dateRange={dateRangeLabel}
-        icon={FaWallet}
-        percentageChange={data?.totalBalanceChange}
-        title="Total Balance"
-        value={data?.totalBalanceAmount}
-        variant="default"
       />
     </div>
   );

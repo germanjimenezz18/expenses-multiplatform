@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AmountInput } from "@/components/amount-input";
@@ -31,7 +32,7 @@ const apiSchema = insertTransactionSchema.omit({ id: true });
 type FormValues = z.input<typeof formSchema>;
 type ApiFormValues = z.input<typeof apiSchema>;
 
-type Props = {
+interface Props {
   id?: string;
   defaultValues?: FormValues;
   onSubmit: (values: ApiFormValues) => void;
@@ -41,7 +42,8 @@ type Props = {
   categoryOptions: { label: string; value: string }[];
   onCreateAccount: (name: string) => void;
   onCreateCategory: (name: string) => void;
-};
+  focusField?: string;
+}
 
 export default function TransactionForm({
   id,
@@ -53,6 +55,7 @@ export default function TransactionForm({
   categoryOptions,
   onCreateAccount,
   onCreateCategory,
+  focusField,
 }: Props) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -61,6 +64,16 @@ export default function TransactionForm({
       date: defaultValues?.date ?? new Date(),
     },
   });
+
+  useEffect(() => {
+    if (focusField) {
+      // Small delay to ensure the form is fully mounted
+      const timer = setTimeout(() => {
+        form.setFocus(focusField as keyof FormValues);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [focusField, form]);
   const handleSubmit = (values: FormValues) => {
     console.log("llega a submit");
     console.log({ values });

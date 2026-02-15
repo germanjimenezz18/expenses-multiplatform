@@ -4,13 +4,12 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import type { InferResponseType } from "hono";
 import { ArrowUpDown } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { client } from "@/lib/hono";
-import { formatCurrency } from "@/lib/utils";
 import AccountColumn from "./account-column";
 import Actions from "./actions";
+import AmountColumn from "./amount-column";
 import CategoryColumn from "./category-column";
 
 export type ResponseType = InferResponseType<
@@ -88,14 +87,11 @@ export const columns: ColumnDef<ResponseType>[] = [
       );
     },
     cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue("amount"));
       return (
-        <Badge
-          className={`font-medium text-xs ${amount < 0 ? "font-bold" : ""}`}
-          variant={amount < 0 ? "destructive" : "default"}
-        >
-          {formatCurrency(amount)}
-        </Badge>
+        <AmountColumn
+          amount={Number.parseFloat(row.getValue("amount"))}
+          id={row.original.id}
+        />
       );
     },
     filterFn: (row, columnId, filterValue) => {

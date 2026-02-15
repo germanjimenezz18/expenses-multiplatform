@@ -23,7 +23,7 @@ const formSchema = insertTransactionSchema.omit({ id: true });
 type FormValues = z.input<typeof formSchema>;
 
 export default function EditTransactionSheet() {
-  const { isOpen, onClose, id } = useOpenTransaction();
+  const { isOpen, onClose, id, focusField } = useOpenTransaction();
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
     "You are about to delete this transaction."
@@ -123,6 +123,7 @@ export default function EditTransactionSheet() {
               categoryOptions={categoryOptions}
               defaultValues={defaultValues}
               disabled={isPending}
+              focusField={focusField}
               id={id}
               onCreateAccount={onCreateAccount}
               onCreateCategory={onCreateCategory}

@@ -2,14 +2,16 @@ import { create } from "zustand";
 
 type OpenTransactionState = {
   id?: string;
+  focusField?: string;
   isOpen: boolean;
-  onOpen: (id: string) => void;
+  onOpen: (id: string, focusField?: string) => void;
   onClose: () => void;
 };
 
 export const useOpenTransaction = create<OpenTransactionState>((set) => ({
   id: undefined,
+  focusField: undefined,
   isOpen: false,
-  onOpen: (id) => set({ isOpen: true, id }),
-  onClose: () => set({ isOpen: false, id: undefined }),
+  onOpen: (id, focusField) => set({ isOpen: true, id, focusField }),
+  onClose: () => set({ isOpen: false, id: undefined, focusField: undefined }),
 }));
