@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Trash } from "lucide-react";
-import * as React from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -48,11 +48,9 @@ export function DataTable<TData, TValue>({
     "Your are about to permorm a bulk delete."
   );
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -87,29 +85,10 @@ export function DataTable<TData, TValue>({
             }
           />
         )}
-
-        {table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <Button
-            className="ml-auto font-normal text-xs"
-            disabled={disabled}
-            onClick={async () => {
-              const ok = await confirm();
-              if (ok) {
-                onDelete(table.getFilteredSelectedRowModel().rows);
-                table.resetRowSelection();
-              }
-            }}
-            size={"sm"}
-            variant={"destructive"}
-          >
-            <Trash className="mr-2 size-4" />
-            Delete ({table.getFilteredSelectedRowModel().rows.length})
-          </Button>
-        )}
       </div>
 
       <div className="rounded-md border">
-        <Table className="">
+        <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -165,6 +144,25 @@ export function DataTable<TData, TValue>({
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
+
+        {table.getFilteredSelectedRowModel().rows.length > 0 && (
+          <Button
+            className="ml-auto"
+            disabled={disabled}
+            onClick={async () => {
+              const ok = await confirm();
+              if (ok) {
+                onDelete(table.getFilteredSelectedRowModel().rows);
+                table.resetRowSelection();
+              }
+            }}
+            size={"sm"}
+            variant={"destructive"}
+          >
+            <Trash className="size-4" />
+            Delete ({table.getFilteredSelectedRowModel().rows.length})
+          </Button>
+        )}
         <Button
           disabled={!table.getCanPreviousPage()}
           onClick={() => table.previousPage()}
