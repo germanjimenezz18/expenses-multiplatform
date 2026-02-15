@@ -27,6 +27,13 @@ import {
 import { useConfirm } from "@/hooks/use-confirm";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 // Context type exposed to filter components
 export interface DataTableFilterContext<TData> {
@@ -230,6 +237,24 @@ export function DataTable<TData, TValue>({
             Delete ({table.getFilteredSelectedRowModel().rows.length})
           </Button>
         )}
+
+        <div className="flex items-center gap-2">
+          <span className="text-muted-foreground text-sm">Rows per page</span>
+          <Select
+            onValueChange={(value) => table.setPageSize(Number(value))}
+            value={String(table.getState().pagination.pageSize)}
+          >
+            <SelectTrigger className="h-8 w-[70px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="25">25</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         <Button
           disabled={!table.getCanPreviousPage()}
           onClick={() => table.previousPage()}
