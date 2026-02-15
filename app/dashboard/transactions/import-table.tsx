@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/table";
 import TableHeadSelect from "./table-head-select";
 
-type Props = {
+interface Props {
   headers: string[];
   body: string[][];
   selectedColumns: Record<string, string | null>;
   onTableHeadSelectChange: (columnIndex: number, value: string | null) => void;
-};
+}
 
 export default function ImportTable({
   headers,
@@ -27,7 +27,7 @@ export default function ImportTable({
         <TableHeader className="bg-muted">
           <TableRow>
             {headers.map((_item, index) => (
-              <TableHead key={index}>
+              <TableHead key={_item}>
                 <TableHeadSelect
                   columnIndex={index}
                   onChange={onTableHeadSelectChange}
@@ -41,8 +41,8 @@ export default function ImportTable({
         <TableBody>
           {body.map((row: string[], index) => (
             <TableRow key={index}>
-              {row.map((cell, index) => (
-                <TableCell key={index}>{cell}</TableCell>
+              {row.map((cell, cellIndex) => (
+                <TableCell key={cellIndex}>{cell}</TableCell>
               ))}
             </TableRow>
           ))}

@@ -17,10 +17,10 @@ import { columns } from "./columns";
 import ImportCard from "./import-card";
 import UploadButton from "./upload-button";
 
-enum VARIANTS {
-  LIST = "LIST",
-  IMPORT = "IMPORT",
-}
+const VARIANTS = {
+  LIST: "LIST",
+  IMPORT: "IMPORT",
+} as const;
 
 const INITIAL_IMPORT_RESULTS = {
   data: [],
@@ -30,9 +30,8 @@ const INITIAL_IMPORT_RESULTS = {
 
 export default function TransactionsPageContent() {
   const [AccountDialog, confirm] = useSelectAccount();
-  const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
+  const [variant, setVariant] = useState<keyof typeof VARIANTS>(VARIANTS.LIST);
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
-  console.log({ importResults });
 
   const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
     console.log({ results });

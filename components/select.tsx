@@ -4,14 +4,14 @@ import { useMemo } from "react";
 import type { SingleValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
 
-type Props = {
+interface Props {
   onChange: (value?: string) => void;
   onCreate: (name: string) => void;
   options?: { label: string; value: string }[];
   value?: string | null | undefined;
   disabled?: boolean;
   placeholder?: string;
-};
+}
 
 export const Select = ({
   onChange,

@@ -72,9 +72,9 @@ export default function DataCard({
             {dateRange}
           </CardDescription>
         </div>
-        <div className={cn(boxVariant({ variant }))}>
+        {/* <div className={cn(boxVariant({ variant }))}>
           <Icon className={cn(iconVariant({ variant }))} />
-        </div>
+        </div> */}
       </CardHeader>
 
       <CardContent>
