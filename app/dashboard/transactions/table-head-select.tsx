@@ -7,11 +7,11 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-type Props = {
+interface Props {
   columnIndex: number;
   selectedColumns: Record<string, string | null>;
   onChange: (columnIndex: number, value: string | null) => void;
-};
+}
 
 const options = ["amount", "payee", "date"];
 
@@ -37,7 +37,7 @@ export default function TableHeadSelect({
       </SelectTrigger>
       <SelectContent className="">
         <SelectItem value="skip">Skip</SelectItem>
-        {options.map((option, index) => {
+        {options.map((option, _index) => {
           const disabled =
             Object.values(selectedColumns).includes(option) &&
             currentSelection !== option;
@@ -46,7 +46,7 @@ export default function TableHeadSelect({
             <SelectItem
               className="capitalize"
               disabled={disabled}
-              key={index}
+              key={option}
               value={option}
             >
               {option}

@@ -19,13 +19,13 @@ const formSchema = insertCategorySchema.pick({
 
 type FormValues = z.input<typeof formSchema>;
 
-type Props = {
+interface Props {
   id?: string;
   defaultValues?: FormValues;
   onSubmit: (values: FormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
-};
+}
 
 export default function CategoryForm({
   id,

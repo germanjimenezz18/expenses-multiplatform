@@ -8,11 +8,11 @@ import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
-type Props = {
+interface Props {
   value?: Date;
   onChange?: SelectSingleEventHandler;
   disabled?: boolean;
-};
+}
 
 export const DatePicker = ({ value, onChange, disabled }: Props) => {
   return (

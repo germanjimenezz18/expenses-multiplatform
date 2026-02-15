@@ -7,12 +7,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-type Props = {
+interface Props {
   data?: {
     name: string;
     value: number;
   }[];
-};
+}
 
 export const RadarVariant = ({ data = [] }: Props) => {
   return (

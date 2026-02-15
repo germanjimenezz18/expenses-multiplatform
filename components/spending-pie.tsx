@@ -14,12 +14,12 @@ import {
 } from "./ui/select";
 import { Skeleton } from "./ui/skeleton";
 
-type Props = {
+interface Props {
   data?: {
     name: string;
     value: number;
   }[];
-};
+}
 
 export default function SpendingPie({ data = [] }: Props) {
   const [chartType, setChartType] = useState("pie");

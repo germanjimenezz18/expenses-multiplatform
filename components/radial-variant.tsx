@@ -9,12 +9,12 @@ import { formatCurrency } from "@/lib/utils";
 
 const COLORS = ["#0088FE", "#00C49F", "#FF8042", "#ff5b00"];
 
-type Props = {
+interface Props {
   data?: {
     name: string;
     value: number;
   }[];
-};
+}
 
 export function RadialVariant({ data = [] }: Props) {
   return (
