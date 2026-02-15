@@ -11,11 +11,17 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { insertAccountSchema } from "@/db/schema";
+import { ACCOUNT_TYPES } from "@/lib/account-types";
 
-const formSchema = insertAccountSchema.pick({
-  name: true,
-});
+const formSchema = insertAccountSchema.pick({ name: true, type: true });
 
 type FormValues = z.input<typeof formSchema>;
 
@@ -61,6 +67,38 @@ export default function AccountForm({
               <FormControl>
                 <Input disabled={disabled} placeholder="e.g. Cash" {...field} />
               </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type</FormLabel>
+              <Select
+                defaultValue={field.value}
+                disabled={disabled}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select account type" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {ACCOUNT_TYPES.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      <div className="flex items-center gap-2">
+                        <type.icon className="size-4" />
+                        <span>{type.label}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </FormItem>
           )}
         />

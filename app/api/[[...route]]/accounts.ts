@@ -28,12 +28,13 @@ const app = new Hono()
       .select({
         id: accounts.id,
         name: accounts.name,
+        type: accounts.type,
         balance: sum(transactions.amount).mapWith(Number),
       })
       .from(accounts)
       .leftJoin(transactions, eq(transactions.accountId, accounts.id))
       .where(eq(accounts.userId, auth.userId))
-      .groupBy(accounts.id, accounts.name);
+      .groupBy(accounts.id, accounts.name, accounts.type);
 
     // For each account, get latest balance check and calculate expected balance
     const enrichedData = await Promise.all(
@@ -76,6 +77,7 @@ const app = new Hono()
         return {
           id: account.id,
           name: account.name,
+          type: account.type,
           balance: account.balance || 0,
           lastCheckedBalance: latestBalance?.balance || null,
           lastCheckedDate: latestBalance?.date || null,
@@ -106,6 +108,7 @@ const app = new Hono()
         .select({
           id: accounts.id,
           name: accounts.name,
+          type: accounts.type,
         })
         .from(accounts)
         .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)));
@@ -119,7 +122,7 @@ const app = new Hono()
   .post(
     "/",
     clerkMiddleware(),
-    zValidator("json", insertAccountSchema.pick({ name: true })),
+    zValidator("json", insertAccountSchema.pick({ name: true, type: true })),
     async (c) => {
       const auth = getAuth(c);
       const values = c.req.valid("json");
@@ -176,7 +179,7 @@ const app = new Hono()
     "/:id",
     clerkMiddleware(),
     zValidator("param", z.object({ id: z.string().optional() })),
-    zValidator("json", insertAccountSchema.pick({ name: true })),
+    zValidator("json", insertAccountSchema.pick({ name: true, type: true })),
     async (c) => {
       const auth = getAuth(c);
 

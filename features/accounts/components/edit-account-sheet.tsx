@@ -15,7 +15,7 @@ import AccountForm from "@/features/accounts/components/account-form";
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
 import { useConfirm } from "@/hooks/use-confirm";
 
-const formSchema = insertAccountSchema.pick({ name: true });
+const formSchema = insertAccountSchema.pick({ name: true, type: true });
 type FormValues = z.input<typeof formSchema>;
 
 export default function EditAccountSheet() {
@@ -54,9 +54,11 @@ export default function EditAccountSheet() {
   const defaultValues = accountQuery.data
     ? {
         name: accountQuery.data.name,
+        type: accountQuery.data.type,
       }
     : {
-        name: " ",
+        name: "",
+        type: "bank" as const,
       };
 
   return (

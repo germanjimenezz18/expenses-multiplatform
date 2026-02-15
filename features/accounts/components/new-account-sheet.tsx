@@ -11,7 +11,7 @@ import { useCreateAccount } from "../api/use-create-account";
 import { useNewAccount } from "../hooks/use-new-account";
 import AccountForm from "./account-form";
 
-const formSchema = insertAccountSchema.pick({ name: true });
+const formSchema = insertAccountSchema.pick({ name: true, type: true });
 type FormValues = z.input<typeof formSchema>;
 
 export default function NewAccountSheet() {
@@ -36,7 +36,7 @@ export default function NewAccountSheet() {
           </SheetDescription>
         </SheetHeader>
         <AccountForm
-          defaultValues={{ name: "" }}
+          defaultValues={{ name: "", type: "bank" }}
           disabled={mutation.isPending}
           onSubmit={onSubmit}
         />
