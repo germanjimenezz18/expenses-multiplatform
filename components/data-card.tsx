@@ -65,7 +65,7 @@ export default function DataCard({
 }: DataCardProps) {
   return (
     <Card className={` ${className} `}>
-      <CardHeader className="flex flex-row items-center justify-between gap-x-4 rounded-lg rounded-b-none bg-muted/50">
+      <CardHeader className="flex flex-row items-center justify-between gap-x-4">
         <div className="">
           <CardTitle className="line-clamp-1 text-xl">{title}</CardTitle>
           <CardDescription className="line-clamp-1">

@@ -117,7 +117,7 @@ function TransactionTabs() {
           columns={columns}
           data={transactions}
           disabled={isDisabled}
-          filterKey="date"
+          filterKey="payee"
           hideSearch={true}
           onDelete={(row) => {
             console.log(row);
