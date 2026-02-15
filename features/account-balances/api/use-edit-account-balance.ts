@@ -3,11 +3,9 @@ import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
-// @ts-expect-error - Route type will be available after dev server restart
 type ResponseType = InferResponseType<
   (typeof client.api)["account-balances"][":id"]["$patch"]
 >;
-// @ts-expect-error - Route type will be available after dev server restart
 type RequestType = InferRequestType<
   (typeof client.api)["account-balances"][":id"]["$patch"]
 >["json"];
@@ -19,7 +17,6 @@ export const useEditAccountBalance = (id?: string) => {
     mutationFn: async (json) => {
       if (!id) throw new Error("ID is required");
 
-      // @ts-expect-error - Route type will be available after dev server restart
       const response = await client.api["account-balances"][":id"].$patch({
         param: { id },
         json,

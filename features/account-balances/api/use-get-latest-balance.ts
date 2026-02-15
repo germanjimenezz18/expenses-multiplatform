@@ -5,7 +5,6 @@ export const useGetLatestBalance = (accountId: string) => {
   const query = useQuery({
     queryKey: ["account-balances", "latest", accountId],
     queryFn: async () => {
-      // @ts-expect-error - Route type will be available after dev server restart
       const response = await client.api["account-balances"].latest[
         ":accountId"
       ].$get({
