@@ -1,12 +1,27 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+/* account type enum */
+export const accountTypeEnum = pgEnum("account_type", [
+  "bank",
+  "cash",
+  "crypto",
+  "credit_card",
+  "debit_card",
+  "investment",
+  "savings",
+  "digital_wallet",
+  "loan",
+  "other",
+]);
 
 /* accounts */
 export const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
+  type: accountTypeEnum("type").notNull().default("bank"),
   userId: text("user_id").notNull(),
 });
 

@@ -1,0 +1,2 @@
+CREATE TYPE "public"."account_type" AS ENUM('bank', 'cash', 'crypto', 'credit_card', 'debit_card', 'investment', 'savings', 'digital_wallet', 'loan', 'other');--> statement-breakpoint
+ALTER TABLE "accounts" ADD COLUMN "type" "account_type" DEFAULT 'bank' NOT NULL;

@@ -37,8 +37,8 @@ export default function AccountsPage() {
   }
 
   return (
-    <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-      <div className="mx-auto w-full max-w-screen-2xl">
+    <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+      <div className="mx-auto w-full max-w-screen-4xl">
         <Card className="drop-shadow-sm">
           <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
             <CardTitle className="line-clamp-1 text-xl">Accounts</CardTitle>

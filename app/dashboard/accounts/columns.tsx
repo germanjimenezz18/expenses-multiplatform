@@ -6,6 +6,8 @@ import type { InferResponseType } from "hono";
 import { ArrowUpDown, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import type { AccountType } from "@/lib/account-types";
+import { getAccountTypeInfo } from "@/lib/account-types";
 import type { client } from "@/lib/hono";
 import { convertAmountFromMiliUnits, formatCurrency } from "@/lib/utils";
 import Actions from "./actions";
@@ -51,6 +53,31 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
   },
   {
+    accessorKey: "type",
+    header: ({ column }) => {
+      return (
+        <Button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          variant="ghost"
+        >
+          Type
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const type = row.getValue("type") as AccountType;
+      const typeInfo = getAccountTypeInfo(type);
+      const Icon = typeInfo.icon;
+      return (
+        <div className="flex items-center gap-2">
+          <Icon className="size-4 text-muted-foreground" />
+          <span>{typeInfo.label}</span>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "balance",
     header: ({ column }) => {
       return (
@@ -66,7 +93,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     cell: ({ row }) => {
       const amount = row.getValue("balance") as number;
       return (
-        <div className="text-right font-medium">
+        <div className="font-medium">
           {formatCurrency(convertAmountFromMiliUnits(amount))}
         </div>
       );
@@ -78,7 +105,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     cell: ({ row }) => {
       const amount = row.getValue("lastCheckedBalance") as number | null;
       return (
-        <div className="text-right">
+        <div className="">
           {amount !== null
             ? formatCurrency(convertAmountFromMiliUnits(amount))
             : "Never"}
@@ -91,11 +118,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     header: "Last Checked Date",
     cell: ({ row }) => {
       const date = row.getValue("lastCheckedDate") as string | null;
-      return (
-        <div className="text-center">
-          {date ? format(new Date(date), "MMM dd, yyyy") : "—"}
-        </div>
-      );
+      return <div>{date ? format(new Date(date), "MMM dd, yyyy") : "—"}</div>;
     },
   },
   {
@@ -121,7 +144,7 @@ export const columns: ColumnDef<ResponseType>[] = [
       const isBalanced = Math.abs(difference) < 10; // Less than 0.01 difference (in miliUnits)
 
       return (
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center gap-2">
           <span className="font-medium">
             {formatCurrency(convertAmountFromMiliUnits(expectedBalance))}
           </span>

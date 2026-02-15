@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { convertAmountFromMiliUnits, formatCurrency } from "@/lib/utils";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -31,23 +31,13 @@ import { Separator } from "./ui/separator";
 
 export default function AccountTracker() {
   const accountsQuery = useGetAccounts();
-  const transactionsQuery = useGetTransactions();
 
   const accounts = accountsQuery.data || [];
-  const transactions = transactionsQuery.data || [];
 
-  const accountsWithBalance = accounts.map((account) => {
-    const balance = transactions
-      .filter((transaction) => transaction.accountId === account.id)
-      .reduce((acc, curr) => acc + curr.amount, 0);
-    return { ...account, balance };
-  });
-
-  const totalAccountsBalance = accountsWithBalance.reduce(
-    (acc, curr) => acc + curr.balance,
+  const totalAccountsBalance = accounts.reduce(
+    (total, account) => total + (account.lastCheckedBalance || 0),
     0
   );
-
   return (
     <div className="">
       <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
@@ -104,17 +94,23 @@ export default function AccountTracker() {
           <div className="grid gap-3">
             <div className="font-semibold">Accounts Details</div>
             <ul className="grid gap-3">
-              {accountsWithBalance ? (
+              {accounts ? (
                 <ul className="grid gap-3">
-                  {accountsWithBalance.map((account, index) => (
+                  {accounts.map((account) => (
                     <li
                       className="flex items-center justify-between"
-                      key={index}
+                      key={account.id}
                     >
                       <span className="text-muted-foreground">
                         {account.name}
                       </span>
-                      <span>{account.balance.toFixed(2)} €</span>
+                      <span>
+                        {formatCurrency(
+                          convertAmountFromMiliUnits(
+                            account?.lastCheckedBalance || 0
+                          )
+                        )}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -131,76 +127,16 @@ export default function AccountTracker() {
             </ul>
             <Separator className="my-2" />
             <ul className="grid gap-3">
-              {/* <li className="flex items-center justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
-                <span>$299.00</span>
-              </li> */}
-              {/* <li className="flex items-center justify-between">
-                <span className="text-muted-foreground">Shipping</span>
-                <span>$5.00</span>
-              </li>
-              <li className="flex items-center justify-between">
-                <span className="text-muted-foreground">Tax</span>
-                <span>$25.00</span>
-              </li> */}
               <li className="flex items-center justify-between font-semibold">
                 <span className="text-muted-foreground">Total</span>
-                <span>{totalAccountsBalance.toFixed(2)} €</span>
+                <span>
+                  {formatCurrency(
+                    convertAmountFromMiliUnits(totalAccountsBalance)
+                  )}
+                </span>
               </li>
             </ul>
           </div>
-          {/* <Separator className="my-4" />
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-3">
-              <div className="font-semibold">Shipping Information</div>
-              <address className="grid gap-0.5 not-italic text-muted-foreground">
-                <span>Liam Johnson</span>
-                <span>1234 Main St.</span>
-                <span>Anytown, CA 12345</span>
-              </address>
-            </div>
-            <div className="grid auto-rows-max gap-3">
-              <div className="font-semibold">Billing Information</div>
-              <div className="text-muted-foreground">
-                Same as shipping address
-              </div>
-            </div>
-          </div> */}
-          {/* <Separator className="my-4" />
-          <div className="grid gap-3">
-            <div className="font-semibold">Accounts Information</div>
-            <dl className="grid gap-3">
-              <div className="flex items-center justify-between">
-                <dt className="text-muted-foreground">Customer</dt>
-                <dd>Liam Johnson</dd>
-              </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-muted-foreground">Email</dt>
-                <dd>
-                  <a href="mailto:">liam@acme.com</a>
-                </dd>
-              </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-muted-foreground">Phone</dt>
-                <dd>
-                  <a href="tel:">+1 234 567 890</a>
-                </dd>
-              </div>
-            </dl>
-          </div> */}
-          {/* <Separator className="my-4" />
-          <div className="grid gap-3">
-            <div className="font-semibold">Payment Information</div>
-            <dl className="grid gap-3">
-              <div className="flex items-center justify-between">
-                <dt className="flex items-center gap-1 text-muted-foreground">
-                  <CreditCard className="h-4 w-4" />
-                  Visa
-                </dt>
-                <dd>**** **** **** 4532</dd>
-              </div>
-            </dl>
-          </div> */}
         </CardContent>
         <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
           <div className="text-muted-foreground text-xs">
