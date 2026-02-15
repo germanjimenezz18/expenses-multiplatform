@@ -75,7 +75,7 @@ export default function DateFilter() {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          className="h-9 w-full rounded-md border bg-transparent px-3 font-normal outline-none transition hover:bg-secondary focus:ring-transparent focus:ring-offset-0 lg:w-auto"
+          className="h-9 w-full rounded-md border px-3 font-normal outline-none transition hover:bg-secondary focus:ring-transparent focus:ring-offset-0 lg:w-auto"
           disabled={false}
           size={"sm"}
           variant={"outline"}

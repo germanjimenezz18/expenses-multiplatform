@@ -78,7 +78,7 @@ export default function Header() {
       </Sheet>
       <div className="hidden lg:flex">
         <Badge
-          className="select-none whitespace-nowrap text-muted-foreground hover:border-primary/50 hover:text-primary/60"
+          className="select-none whitespace-nowrap bg-background py-0.5 text-muted-foreground hover:border-primary/50 hover:text-primary"
           variant="outline"
         >
           Expenses

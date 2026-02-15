@@ -52,7 +52,7 @@ export default function AccountFilter() {
       onValueChange={onChange}
       value={accountId}
     >
-      <SelectTrigger className="h-9 w-full rounded-md border bg-transparent px-3 font-normal outline-none transition hover:bg-secondary focus:ring-transparent focus:ring-offset-0 lg:w-auto">
+      <SelectTrigger className="h-9 w-full rounded-md border px-3 font-normal outline-none transition hover:bg-secondary focus:ring-transparent focus:ring-offset-0 lg:w-auto">
         <SelectValue placeholder="Accounts" />
       </SelectTrigger>
 
