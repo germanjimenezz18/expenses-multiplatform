@@ -12,6 +12,7 @@ export const accounts = pgTable("accounts", {
 
 export const accountsRelations = relations(accounts, ({ many }) => ({
   transactions: many(transactions),
+  balances: many(accountBalances),
 }));
 
 export const insertAccountSchema = createInsertSchema(accounts);
@@ -62,5 +63,32 @@ export const transactionsRelations = relations(transactions, ({ one }) => ({
 }));
 
 export const insertTransactionSchema = createInsertSchema(transactions, {
+  date: z.coerce.date(),
+});
+
+/* account_balances
+  Balance : Integers multiplied by 1000 to avoid float/double problems  $10.50 = 10500
+*/
+export const accountBalances = pgTable("account_balances", {
+  id: text("id").primaryKey(),
+  date: timestamp("date", { mode: "date" }).notNull(),
+  accountId: text("account_id")
+    .references(() => accounts.id, { onDelete: "cascade" })
+    .notNull(),
+  balance: integer("balance").notNull(), // miliUnits (x1000)
+  note: text("note"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+  userId: text("user_id").notNull(),
+});
+
+export const accountBalancesRelations = relations(accountBalances, ({ one }) => ({
+  account: one(accounts, {
+    fields: [accountBalances.accountId],
+    references: [accounts.id],
+  }),
+}));
+
+export const insertAccountBalanceSchema = createInsertSchema(accountBalances, {
   date: z.coerce.date(),
 });
