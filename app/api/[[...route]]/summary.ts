@@ -102,7 +102,7 @@ const app = new Hono().get(
 
     const category = await db
       .select({
-        name: sql<string>`COALESCE(${categories.name}, ${UNCATEGORIZED_NAME})`,
+        name: sql<string>`COALESCE(${categories.name}, ${sql.raw(`'${UNCATEGORIZED_NAME}'`)})`,
         value: sql`SUM(ABS(${transactions.amount}))`.mapWith(Number),
       })
       .from(transactions)
@@ -117,7 +117,7 @@ const app = new Hono().get(
           lte(transactions.date, endDate)
         )
       )
-      .groupBy(sql`COALESCE(${categories.name}, ${UNCATEGORIZED_NAME})`)
+      .groupBy(sql`COALESCE(${categories.name}, ${sql.raw(`'${UNCATEGORIZED_NAME}'`)})`)
       .orderBy(desc(sql`SUM(ABS(${transactions.amount}))`));
 
     const topCategories = category.slice(0, 3);
