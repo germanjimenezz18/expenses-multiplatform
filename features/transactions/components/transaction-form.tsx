@@ -75,8 +75,6 @@ export default function TransactionForm({
     }
   }, [focusField, form]);
   const handleSubmit = (values: FormValues) => {
-    console.log("llega a submit");
-    console.log({ values });
     const amount = Number.parseFloat(values.amount);
     const amountInMiliUnits = convertAmountToMiliUnits(amount);
 

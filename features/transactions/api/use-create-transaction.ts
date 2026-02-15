@@ -3,7 +3,6 @@ import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
-// este tipo es inferido de la definición de la ruta en el servidor
 type ResponseType = InferResponseType<typeof client.api.transactions.$post>;
 type RequestType = InferRequestType<
   typeof client.api.transactions.$post
@@ -22,8 +21,7 @@ export const useCreateTransaction = () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       toast.error("Error creating transaction");
     },
   });

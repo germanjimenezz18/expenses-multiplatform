@@ -3,7 +3,6 @@ import type { InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
-// este tipo es inferido de la definición de la ruta en el servidor
 type ResponseType = InferResponseType<
   (typeof client.api.transactions)[":id"]["$delete"]
 >;
@@ -25,9 +24,8 @@ export const useDeleteTransaction = (id?: string) => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
-    onError: (error) => {
-      console.log(error);
-      toast.error("Failed deleting transaction");
+    onError: () => {
+      toast.error("Failed to delete transaction");
     },
   });
 

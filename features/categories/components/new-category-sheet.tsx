@@ -9,7 +9,7 @@ import {
 import { insertCategorySchema } from "@/db/schema";
 import { useCreateCategory } from "@/features/categories/api/use-create-category";
 import CategoryForm from "@/features/categories/components/category-form";
-import { useNewCategory } from "@/features/categories/hooks/use-new-categorie";
+import { useNewCategory } from "@/features/categories/hooks/use-new-category";
 
 const formSchema = insertCategorySchema.pick({ name: true });
 type FormValues = z.input<typeof formSchema>;

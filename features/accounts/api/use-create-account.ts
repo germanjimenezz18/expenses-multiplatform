@@ -3,7 +3,6 @@ import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
-// este tipo es inferido de la definición de la ruta en el servidor
 type ResponseType = InferResponseType<typeof client.api.accounts.$post>;
 type RequestType = InferRequestType<typeof client.api.accounts.$post>["json"];
 
@@ -20,8 +19,7 @@ export const useCreateAccount = () => {
       toast.success("Account created");
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       toast.error("Error creating account");
     },
   });

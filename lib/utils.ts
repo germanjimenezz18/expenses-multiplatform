@@ -63,13 +63,9 @@ export function convertAmountFromMiliUnits(amount: number) {
   return amount / 1000;
 }
 
-// export function formatCurrency(value: number, currencyType: CurrencyType) {
 export function formatCurrency(value: number) {
   const currencySymbol = "€";
   const formatted = new Intl.NumberFormat("en-IN", {
-    // style: "currency",
-    // currency: "EUR",
-    // currencyDisplay: "symbol",
     notation: "standard",
     minimumFractionDigits: 2,
   }).format(value);
@@ -114,10 +110,10 @@ export default function fillMissingDays(
   return transactionsByDay;
 }
 
-type Period = {
+interface Period {
   from: string | Date | undefined;
   to: string | Date | undefined;
-};
+}
 export function formatDateRange(period?: Period) {
   const { from: defaultFrom, to: defaultTo } = getDefaultPeriod();
 

@@ -25,8 +25,7 @@ export const useDeleteAccountBalance = (id?: string) => {
       queryClient.invalidateQueries({ queryKey: ["account-balances"] });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       toast.error("Error deleting balance check");
     },
   });

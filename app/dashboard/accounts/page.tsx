@@ -55,7 +55,6 @@ export default function AccountsPage() {
               filterKey="name"
               onDelete={(row) => {
                 const ids = row.map((r) => r.original.id);
-                console.log(ids);
                 deleteAccounts.mutate({ ids });
               }}
             />

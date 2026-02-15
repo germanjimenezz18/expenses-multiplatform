@@ -120,7 +120,7 @@ function TransactionTabs() {
           filterKey="payee"
           hideSearch={true}
           onDelete={(row) => {
-            console.log(row);
+            // TODO: Implement delete functionality
           }}
         />
       </CardContent>

@@ -1,5 +1,3 @@
-// authors.ts
-
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
@@ -20,7 +18,7 @@ const app = new Hono()
     const auth = getAuth(c);
 
     if (!auth?.userId) {
-      return c.json({ error: "Unauthorizedd" }, 401);
+      return c.json({ error: "Unauthorized" }, 401);
     }
 
     // Get all accounts with transaction balance

@@ -3,7 +3,6 @@ import type { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 import { client } from "@/lib/hono";
 
-// este tipo es inferido de la definición de la ruta en el servidor
 type ResponseType = InferResponseType<
   (typeof client.api.transactions)["bulk-create"]["$post"]
 >;
@@ -23,12 +22,11 @@ export const useBulkCreateTransactions = () => {
     },
 
     onSuccess: () => {
-      toast.success("Transactions crated");
+      toast.success("Transactions created");
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       toast.error("Failed to create transactions");
     },
   });

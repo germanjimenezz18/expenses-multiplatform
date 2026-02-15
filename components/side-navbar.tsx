@@ -34,7 +34,6 @@ const firstRoute = { name: "Expenses Multiplatform", href: "/dashboard" };
 
 export default function SideNavbar() {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <TooltipProvider>
@@ -49,7 +48,7 @@ export default function SideNavbar() {
           </Link>
 
           {/* mainRoutes */}
-          {routes.map((route, index) => (
+          {routes.map((route) => (
             <NavigationButton
               href={route.href}
               icon={route.icon}

@@ -13,7 +13,6 @@ import {
 export default function BreadcrumbLoco() {
   const pathname = usePathname();
   const pathnames = pathname.split("/").filter((x) => x);
-  console.log(pathnames);
 
   return (
     <Breadcrumb className="hidden md:flex">

@@ -42,7 +42,6 @@ export default function TransactionsPageContent() {
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
 
   const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
-    console.log({ results });
     setImportResults(results);
     setVariant(VARIANTS.IMPORT);
   };
@@ -136,22 +135,35 @@ export default function TransactionsPageContent() {
               data={transactions}
               disabled={isDisabled}
               filterKey="payee"
+              onDelete={(row) => {
+                const ids = row.map((r) => r.original.id);
+                deleteTransactions.mutate({ ids });
+              }}
               renderFilters={(ctx) => (
                 <>
                   <Input
                     className="max-w-[200px]"
-                    onChange={(e) => ctx.setColumnFilter("payee", e.target.value)}
+                    onChange={(e) =>
+                      ctx.setColumnFilter("payee", e.target.value)
+                    }
                     placeholder="Search payee..."
                     value={
-                      (ctx.table.getColumn("payee")?.getFilterValue() as string) ?? ""
+                      (ctx.table
+                        .getColumn("payee")
+                        ?.getFilterValue() as string) ?? ""
                     }
                   />
                   <Select
                     onValueChange={(value) =>
-                      ctx.setColumnFilter("amount", value === "all" ? undefined : value)
+                      ctx.setColumnFilter(
+                        "amount",
+                        value === "all" ? undefined : value
+                      )
                     }
                     value={
-                      (ctx.table.getColumn("amount")?.getFilterValue() as string) ?? "all"
+                      (ctx.table
+                        .getColumn("amount")
+                        ?.getFilterValue() as string) ?? "all"
                     }
                   >
                     <SelectTrigger className="w-[140px]">
@@ -165,10 +177,6 @@ export default function TransactionsPageContent() {
                   </Select>
                 </>
               )}
-              onDelete={(row) => {
-                const ids = row.map((r) => r.original.id);
-                deleteTransactions.mutate({ ids });
-              }}
             />
           </CardContent>
         </Card>

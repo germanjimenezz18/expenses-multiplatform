@@ -30,8 +30,7 @@ export const useEditAccountBalance = (id?: string) => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       queryClient.invalidateQueries({ queryKey: ["account-balances", id] });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       toast.error("Error updating balance check");
     },
   });

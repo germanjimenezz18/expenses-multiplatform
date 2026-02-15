@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 
 export function ModeToggleButtons() {
   const { setTheme, theme } = useTheme();
-  console.log(theme);
   return (
     <div className="flex flex-row gap-3">
       <Button

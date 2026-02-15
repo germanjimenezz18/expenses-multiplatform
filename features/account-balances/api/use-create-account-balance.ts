@@ -24,8 +24,7 @@ export const useCreateAccountBalance = () => {
       queryClient.invalidateQueries({ queryKey: ["account-balances"] });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
     },
-    onError: (error) => {
-      console.log(error);
+    onError: () => {
       toast.error("Error creating balance check");
     },
   });

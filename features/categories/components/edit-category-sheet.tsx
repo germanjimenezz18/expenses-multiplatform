@@ -13,7 +13,7 @@ import { useDeleteCategory } from "@/features/categories/api/use-delete-category
 import { useEditCategory } from "@/features/categories/api/use-edit-category";
 import { useGetCategory } from "@/features/categories/api/use-get-category";
 import CategoryForm from "@/features/categories/components/category-form";
-import { useOpenCategory } from "@/features/categories/hooks/use-open-categorie";
+import { useOpenCategory } from "@/features/categories/hooks/use-open-category";
 import { useConfirm } from "@/hooks/use-confirm";
 
 const formSchema = insertCategorySchema.pick({ name: true });
