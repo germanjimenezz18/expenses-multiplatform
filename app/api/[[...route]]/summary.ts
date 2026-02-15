@@ -12,6 +12,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { db } from "@/db/drizzle";
 import { accounts, categories, transactions } from "@/db/schema";
+import { UNCATEGORIZED_NAME } from "@/lib/constants";
 import fillMissingDays, { calculatePercentageChange } from "../../../lib/utils";
 
 const app = new Hono().get(
@@ -101,12 +102,12 @@ const app = new Hono().get(
 
     const category = await db
       .select({
-        name: categories.name,
+        name: sql<string>`COALESCE(${categories.name}, ${UNCATEGORIZED_NAME})`,
         value: sql`SUM(ABS(${transactions.amount}))`.mapWith(Number),
       })
       .from(transactions)
       .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-      .innerJoin(categories, eq(transactions.categoryId, categories.id))
+      .leftJoin(categories, eq(transactions.categoryId, categories.id))
       .where(
         and(
           accountId ? eq(transactions.accountId, accountId) : undefined,
@@ -116,7 +117,7 @@ const app = new Hono().get(
           lte(transactions.date, endDate)
         )
       )
-      .groupBy(categories.name)
+      .groupBy(sql`COALESCE(${categories.name}, ${UNCATEGORIZED_NAME})`)
       .orderBy(desc(sql`SUM(ABS(${transactions.amount}))`));
 
     const topCategories = category.slice(0, 3);
@@ -148,7 +149,6 @@ const app = new Hono().get(
       })
       .from(transactions)
       .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-      .innerJoin(categories, eq(transactions.categoryId, categories.id))
       .where(
         and(
           accountId ? eq(transactions.accountId, accountId) : undefined,
