@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Header from "@/components/Header";
-import { ModeToggleButtons } from "@/components/ModeToggleButtons";
-import SideNavbar from "@/components/SideNav";
+import Header from "@/components/header";
+import { ModeToggleButtons } from "@/components/mode-toggle-buttons";
+import SideNavbar from "@/components/side-navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,

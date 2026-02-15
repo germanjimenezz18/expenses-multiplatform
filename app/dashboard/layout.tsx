@@ -1,5 +1,5 @@
-import Header from "@/components/Header";
-import SideNavbar from "@/components/SideNav";
+import Header from "@/components/header";
+import SideNavbar from "@/components/side-navbar";
 import { SheetProvider } from "@/providers/sheet-provider";
 
 type Props = {

@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NavigationButton from "./NavigationButton";
+import NavigationButton from "./navigation-button";
 
 const routes = [
   { name: "Dashboard", icon: Home, href: "/dashboard" },
@@ -54,7 +54,7 @@ export default function SideNavbar() {
               href={route.href}
               icon={route.icon}
               isActive={pathname === route.href}
-              key={index}
+              key={route.href}
               name={route.name}
             />
           ))}
