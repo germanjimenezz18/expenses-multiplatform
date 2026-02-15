@@ -1,6 +1,6 @@
 "use client";
 
-import { Delete, Edit, MoreHorizontal } from "lucide-react";
+import { Delete, Edit, MoreHorizontal, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useNewAccountBalance } from "@/features/account-balances/hooks/use-new-account-balance";
 import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
 import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
 import { useConfirm } from "@/hooks/use-confirm";
@@ -19,6 +20,7 @@ interface Props {
 
 export default function Actions({ id }: Props) {
   const { onOpen } = useOpenAccount();
+  const { onOpen: onOpenBalanceCheck } = useNewAccountBalance();
   const deleteMutation = useDeleteAccount(id);
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
@@ -44,6 +46,10 @@ export default function Actions({ id }: Props) {
           <DropdownMenuItem disabled={false} onClick={() => onOpen(id)}>
             <Edit className="mr-2 size-4 text-primary" />
             Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem disabled={false} onClick={() => onOpenBalanceCheck(id)}>
+            <PlusCircle className="mr-2 size-4 text-primary" />
+            New Balance Check
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
