@@ -20,6 +20,11 @@ interface Props {
 }
 
 export function PieVariant({ data = [] }: Props) {
+  const totalAbsoluteValue = data.reduce(
+    (sum, item) => sum + Math.abs(Number(item.value) || 0),
+    0
+  );
+
   return (
     <ResponsiveContainer height={300} width="100%">
       <PieChart>
@@ -42,7 +47,13 @@ export function PieVariant({ data = [] }: Props) {
                         {entry.value}
                       </span>
                       <span className="text-sm">
-                        {formatPercentage(entry.payload.percent * 100)}
+                        {formatPercentage(
+                          totalAbsoluteValue > 0
+                            ? (Math.abs(Number(entry.payload?.value) || 0) /
+                                totalAbsoluteValue) *
+                                100
+                            : 0
+                        )}
                       </span>
                     </div>
                   </li>
@@ -66,21 +77,10 @@ export function PieVariant({ data = [] }: Props) {
           outerRadius={90}
           paddingAngle={2}
         >
-          {data.map((_entry, index) => {
-            console.log({ data });
-            return (
-              <Cell
-                fill={COLORS[index % COLORS.length]}
-                key={`cell-${index}`}
-              />
-            );
-          })}
+          {data.map((_entry, index) => (
+            <Cell fill={COLORS[index % COLORS.length]} key={`cell-${index}`} />
+          ))}
         </Pie>
-        <Tooltip
-          formatter={(value: number | undefined) =>
-            value !== undefined ? formatPercentage(value) : ""
-          }
-        />
       </PieChart>
     </ResponsiveContainer>
   );
