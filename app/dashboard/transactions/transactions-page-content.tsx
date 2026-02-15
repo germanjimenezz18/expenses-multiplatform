@@ -5,6 +5,14 @@ import { toast } from "sonner";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import type { transactions as transactionsSchema } from "@/db/schema";
@@ -123,15 +131,42 @@ export default function TransactionsPageContent() {
             </div>
           </CardHeader>
           <CardContent>
-            {/* make the datatable take grid de 3 columnas primer elemento que ocupe dos de ellas */}
             <DataTable
               columns={columns}
               data={transactions}
               disabled={isDisabled}
               filterKey="payee"
+              renderFilters={(ctx) => (
+                <>
+                  <Input
+                    className="max-w-[200px]"
+                    onChange={(e) => ctx.setColumnFilter("payee", e.target.value)}
+                    placeholder="Search payee..."
+                    value={
+                      (ctx.table.getColumn("payee")?.getFilterValue() as string) ?? ""
+                    }
+                  />
+                  <Select
+                    onValueChange={(value) =>
+                      ctx.setColumnFilter("amount", value === "all" ? undefined : value)
+                    }
+                    value={
+                      (ctx.table.getColumn("amount")?.getFilterValue() as string) ?? "all"
+                    }
+                  >
+                    <SelectTrigger className="w-[140px]">
+                      <SelectValue placeholder="All types" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All types</SelectItem>
+                      <SelectItem value="income">Income</SelectItem>
+                      <SelectItem value="expense">Expense</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </>
+              )}
               onDelete={(row) => {
                 const ids = row.map((r) => r.original.id);
-                console.log(ids);
                 deleteTransactions.mutate({ ids });
               }}
             />

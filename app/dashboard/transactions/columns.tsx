@@ -98,6 +98,13 @@ export const columns: ColumnDef<ResponseType>[] = [
         </Badge>
       );
     },
+    filterFn: (row, columnId, filterValue) => {
+      if (!filterValue || filterValue === "all") return true;
+      const amount = row.getValue(columnId) as number;
+      if (filterValue === "income") return amount >= 0;
+      if (filterValue === "expense") return amount < 0;
+      return true;
+    },
   },
   {
     accessorKey: "category",
