@@ -1,10 +1,58 @@
 /** biome-ignore-all lint/suspicious/noBitwiseOperators: <explanation> */
 import { type ClassValue, clsx } from "clsx";
-import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import {
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  isSameDay,
+  startOfMonth,
+  subMonths,
+} from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export interface DatePeriod {
+  from: Date;
+  to: Date;
+}
+
+export function getDefaultPeriod(): DatePeriod {
+  const now = new Date();
+  return {
+    from: startOfMonth(now),
+    to: endOfMonth(now),
+  };
+}
+
+export interface MonthPreset {
+  label: string;
+  from: Date;
+  to: Date;
+}
+
+export function getMonthPresets(): MonthPreset[] {
+  const now = new Date();
+  return [
+    { label: "This Month", from: startOfMonth(now), to: endOfMonth(now) },
+    {
+      label: "Last Month",
+      from: startOfMonth(subMonths(now, 1)),
+      to: endOfMonth(subMonths(now, 1)),
+    },
+    {
+      label: "2 Months Ago",
+      from: startOfMonth(subMonths(now, 2)),
+      to: endOfMonth(subMonths(now, 2)),
+    },
+    {
+      label: "3 Months Ago",
+      from: startOfMonth(subMonths(now, 3)),
+      to: endOfMonth(subMonths(now, 3)),
+    },
+  ];
 }
 
 export function convertAmountToMiliUnits(amount: number) {
@@ -71,17 +119,14 @@ type Period = {
   to: string | Date | undefined;
 };
 export function formatDateRange(period?: Period) {
-  const defaultTo = new Date();
-  const defaultFrom = subDays(defaultTo, 30);
+  const { from: defaultFrom, to: defaultTo } = getDefaultPeriod();
 
   if (!period?.from) {
-    return `
-    ${format(defaultFrom, "LLL dd")} - ${format(defaultTo, "LLL dd, y")}`;
+    return `${format(defaultFrom, "LLL dd")} - ${format(defaultTo, "LLL dd, y")}`;
   }
 
   if (period.to) {
-    return `
-    ${format(period.from, "LLL dd")} - ${format(period.to, "LLL dd, y")}`;
+    return `${format(period.from, "LLL dd")} - ${format(period.to, "LLL dd, y")}`;
   }
 
   return format(period.from, "LLL dd, y");

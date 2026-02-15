@@ -3,7 +3,7 @@
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
-import { parse, subDays } from "date-fns";
+import { endOfMonth, parse, startOfMonth } from "date-fns";
 import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -36,18 +36,14 @@ const app = new Hono()
       }
 
       const { from, to, accountId } = c.req.valid("query");
-      const defaultTo = new Date();
-      const defaultFrom = subDays(defaultTo, 30);
-      console.log({
-        defaultTo,
-        defaultFrom,
-      });
+      const now = new Date();
+      const defaultTo = endOfMonth(now);
+      const defaultFrom = startOfMonth(now);
 
       const startDate = from
         ? parse(from, "yyyy-MM-dd", new Date())
         : defaultFrom;
       const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
-      console.log({ startDate, endDate });
 
       const data = await db
         .select({

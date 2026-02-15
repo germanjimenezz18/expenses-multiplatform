@@ -1,12 +1,16 @@
 "use client";
 
-import { format, subDays } from "date-fns";
+import { format } from "date-fns";
 import { ChevronDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
-import { formatDateRange } from "@/lib/utils";
+import {
+  formatDateRange,
+  getDefaultPeriod,
+  getMonthPresets,
+} from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import {
@@ -25,14 +29,27 @@ export default function DateFilter() {
   const from = params.get("from") || "";
   const to = params.get("to") || "";
 
-  const defaultTo = new Date();
-  const defaultFrom = subDays(defaultTo, 30);
+  const { from: defaultFrom, to: defaultTo } = getDefaultPeriod();
   const paramState = {
     from: from ? new Date(from) : defaultFrom,
     to: to ? new Date(to) : defaultTo,
     accountId,
   };
   const [date, setDate] = useState<DateRange | undefined>(paramState);
+  const [month, setMonth] = useState<Date>(paramState.from);
+
+  const handleDateSelect = (newDate: DateRange | undefined) => {
+    setDate(newDate);
+    if (newDate?.from) {
+      setMonth(newDate.from);
+    }
+  };
+
+  const handlePresetClick = (from: Date, to: Date) => {
+    setDate({ from, to });
+    setMonth(from);
+  };
+
   const pushToUrl = (dateRange: DateRange | undefined) => {
     const query = {
       from: format(dateRange?.from || defaultFrom, "yyyy-MM-dd"),
@@ -68,13 +85,31 @@ export default function DateFilter() {
         </Button>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-full p-0 lg:w-auto">
+        <div className="border-b p-3">
+          <p className="mb-2 font-medium text-muted-foreground text-xs">
+            Quick Select
+          </p>
+          <div className="flex flex-wrap gap-1">
+            {getMonthPresets().map((preset) => (
+              <Button
+                className="h-7 text-xs"
+                key={preset.label}
+                onClick={() => handlePresetClick(preset.from, preset.to)}
+                size="sm"
+                variant="outline"
+              >
+                {preset.label}
+              </Button>
+            ))}
+          </div>
+        </div>
         <Calendar
-          defaultMonth={date?.from}
           disabled={false}
-          initialFocus
           mode="range"
+          month={month}
           numberOfMonths={2}
-          onSelect={setDate}
+          onMonthChange={setMonth}
+          onSelect={handleDateSelect}
           selected={date}
         />
         <div className="flex w-full items-center gap-x-2 p-4">
