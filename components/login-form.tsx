@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import LoginGithubButton from "./LoginGithubButton";
-import LoginGoogleButton from "./LoginGoogleButton";
+import LoginGithubButton from "./login-github-button";
+import LoginGoogleButton from "./login-google-button";
 import { Separator } from "./ui/separator";
 
 export function LoginForm() {
