@@ -76,6 +76,28 @@ const app = new Hono().get(
         );
     }
 
+    async function fetchAccountBalanceSummary(
+      userId: string,
+      endDate: Date,
+      accountIdFilter?: string
+    ): Promise<{ totalBalance: number }> {
+      const result = await db.execute(sql`
+        SELECT COALESCE(SUM(balance), 0)::integer as total_balance
+        FROM (
+          SELECT DISTINCT ON (account_id) balance
+          FROM account_balances
+          WHERE user_id = ${userId}
+            AND date <= ${endDate}
+            ${accountIdFilter ? sql`AND account_id = ${accountIdFilter}` : sql``}
+          ORDER BY account_id, date DESC
+        ) latest_balances
+      `);
+
+      return {
+        totalBalance: Number(result.rows[0]?.total_balance ?? 0),
+      };
+    }
+
     const [currentPeriod] = await fetchFinancialData(
       auth.userId,
       startDate,
@@ -100,6 +122,22 @@ const app = new Hono().get(
       lastPeriod.remaining
     );
 
+    const currentBalanceSummary = await fetchAccountBalanceSummary(
+      auth.userId,
+      endDate,
+      accountId
+    );
+    const lastPeriodBalanceSummary = await fetchAccountBalanceSummary(
+      auth.userId,
+      lastPeriodEnd,
+      accountId
+    );
+
+    const totalBalanceChange = calculatePercentageChange(
+      currentBalanceSummary.totalBalance,
+      lastPeriodBalanceSummary.totalBalance
+    );
+
     const category = await db
       .select({
         name: sql<string>`COALESCE(${categories.name}, ${sql.raw(`'${UNCATEGORIZED_NAME}'`)})`,
@@ -117,7 +155,9 @@ const app = new Hono().get(
           lte(transactions.date, endDate)
         )
       )
-      .groupBy(sql`COALESCE(${categories.name}, ${sql.raw(`'${UNCATEGORIZED_NAME}'`)})`)
+      .groupBy(
+        sql`COALESCE(${categories.name}, ${sql.raw(`'${UNCATEGORIZED_NAME}'`)})`
+      )
       .orderBy(desc(sql`SUM(ABS(${transactions.amount}))`));
 
     const topCategories = category.slice(0, 3);
@@ -170,6 +210,8 @@ const app = new Hono().get(
         incomeChange,
         expensesAmount: currentPeriod.expenses,
         expensesChange,
+        totalBalanceAmount: currentBalanceSummary.totalBalance,
+        totalBalanceChange,
         categories: finalCategories,
         days,
       },
