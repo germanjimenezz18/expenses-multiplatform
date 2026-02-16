@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
-type NewCategoryState = {
+interface NewCategoryState {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-};
+}
 
 export const useNewCategory = create<NewCategoryState>((set) => ({
   isOpen: false,

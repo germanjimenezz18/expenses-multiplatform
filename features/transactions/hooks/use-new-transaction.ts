@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
-type NewTransactionState = {
+interface NewTransactionState {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-};
+}
 
 export const useNewTransaction = create<NewTransactionState>((set) => ({
   isOpen: false,

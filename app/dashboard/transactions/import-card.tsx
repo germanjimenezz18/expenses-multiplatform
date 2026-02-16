@@ -100,7 +100,7 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
     )?.[0];
 
     if (!dateColumnKey) return null;
-    const colIndex = Number.parseInt(dateColumnKey.replace("column_", ""));
+    const colIndex = Number.parseInt(dateColumnKey.replace("column_", ""), 10);
     return body[0]?.[colIndex] || null;
   };
 

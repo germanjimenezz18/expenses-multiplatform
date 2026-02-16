@@ -9,6 +9,8 @@
     "start": "next start",
     "check": "ultracite check",
     "fix": "ultracite fix",
+    "write": "bunx --bun biome lint --write .",
+
     "test:e2e": "npx cypress run",
     "cypress:open": "cypress open",
     "db:generate": "drizzle-kit generate",

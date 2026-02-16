@@ -119,7 +119,7 @@ function TransactionTabs() {
           disabled={isDisabled}
           filterKey="payee"
           hideSearch={true}
-          onDelete={(row) => {
+          onDelete={(_row) => {
             // TODO: Implement delete functionality
           }}
         />

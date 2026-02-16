@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
-type OpenTransactionState = {
+interface OpenTransactionState {
   id?: string;
   focusField?: string;
   isOpen: boolean;
   onOpen: (id: string, focusField?: string) => void;
   onClose: () => void;
-};
+}
 
 export const useOpenTransaction = create<OpenTransactionState>((set) => ({
   id: undefined,

@@ -38,7 +38,7 @@ export function EditSheet({
     deleteConfirmMessage
   );
 
-  const handleDelete = async () => {
+  const _handleDelete = async () => {
     if (!onDelete) return;
     const ok = await confirm();
     if (ok) {
