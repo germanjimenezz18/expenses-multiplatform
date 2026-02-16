@@ -38,10 +38,10 @@ export function AnimatedTabs() {
         ref={containerRef}
       >
         <div className="relative flex w-full justify-center bg-white">
-          {TABS.map((tab, index) => (
+          {TABS.map((tab) => (
             <button
               className="flex h-8 items-center rounded-full p-3 font-medium text-black text-sm"
-              key={index}
+              key={tab.label}
               onClick={() => setActiveTab(tab.label)}
               tabIndex={-1}
               type="button"
@@ -52,13 +52,13 @@ export function AnimatedTabs() {
         </div>
       </div>
       <div className="relative flex w-full justify-center">
-        {TABS.map((tab, index) => {
+        {TABS.map((tab) => {
           const isActive = activeTab === tab.label;
 
           return (
             <button
               className="flex h-8 items-center rounded-full p-3 font-medium text-neutral-300 text-sm"
-              key={index}
+              key={tab.label}
               onClick={() => setActiveTab(tab.label)}
               ref={isActive ? activeTabRef : null}
               type="button"
