@@ -17,7 +17,6 @@ export const useDeleteAccount = (id?: string) => {
       });
       return response.json();
     },
-
     onSuccess: () => {
       toast.success("Account deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["accounts", { id }] });

@@ -28,7 +28,7 @@ export function ResourcePageLayout<TData>({
   isPending,
   onAddNew,
   onDelete,
-  gridCols = "lg:grid-cols-3",
+  gridCols = "lg:grid-cols-1",
   loadingSlot,
 }: ResourcePageLayoutProps<TData>) {
   if (isLoading) {
