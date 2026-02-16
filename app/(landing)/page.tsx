@@ -1,7 +1,7 @@
 import { ArrowRight, Globe } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { AnimatedTabs } from "../../components/AnimatedTabs";
+import { AnimatedTabs } from "../../components/animated-tabs";
 import { TextGenerateEffectExample } from "../../components/text-generate-effect";
 
 export default function LandingPage() {
