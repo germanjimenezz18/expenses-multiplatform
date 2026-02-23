@@ -1,9 +1,8 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Loader2, Plus, Save, Wallet } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AmountInput } from "@/components/amount-input";
 import { DatePicker } from "@/components/date-picker";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { client } from "@/lib/hono";
+import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import {
   convertAmountFromMiliUnits,
   convertAmountToMiliUnits,
@@ -51,24 +50,13 @@ export default function BalanceTrackerSheet() {
 
   const bulkMutation = useBulkCreateBalances();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["accounts"],
-    queryFn: async () => {
-      const response = await client.api.accounts.$get();
-      const result = await response.json();
-      if ("error" in result) {
-        throw new Error(result.error);
-      }
-      return result as { data: AccountWithBalances[] };
-    },
-  });
+  const accountsQuery = useGetAccounts();
+  const accounts = (accountsQuery.data ?? []) as AccountWithBalances[];
+  const isLoading = accountsQuery.isLoading;
 
-  const accounts: AccountWithBalances[] = data?.data ?? [];
-
-  const handleOpen = (open: boolean) => {
-    if (open) {
-      setCurrentStep(0);
-      setShowSummary(false);
+  // Sync balances when accounts load and sheet is open
+  useEffect(() => {
+    if (isOpen && accounts.length > 0 && balances.length === 0) {
       setBalances(
         accounts.map((acc) => ({
           accountId: acc.id,
@@ -80,7 +68,11 @@ export default function BalanceTrackerSheet() {
           date: new Date(),
         }))
       );
-    } else {
+    }
+  }, [isOpen, accounts, balances.length]);
+
+  const handleOpen = (open: boolean) => {
+    if (!open) {
       setCurrentStep(0);
       setShowSummary(false);
       setBalances([]);
@@ -178,19 +170,23 @@ export default function BalanceTrackerSheet() {
           />
         )}
 
-        {!isLoading && accounts.length > 0 && !showSummary && (
-          <StepView
-            account={currentAccount}
-            balance={currentBalance}
-            canGoBack={canGoBack}
-            currentStep={currentStep}
-            isLastStep={isLastStep}
-            onBack={handlePrevious}
-            onNext={handleNext}
-            totalSteps={accounts.length}
-            updateBalance={updateBalance}
-          />
-        )}
+        {!isLoading &&
+          accounts.length > 0 &&
+          !showSummary &&
+          currentAccount &&
+          currentBalance && (
+            <StepView
+              account={currentAccount}
+              balance={currentBalance}
+              canGoBack={canGoBack}
+              currentStep={currentStep}
+              isLastStep={isLastStep}
+              onBack={handlePrevious}
+              onNext={handleNext}
+              totalSteps={accounts.length}
+              updateBalance={updateBalance}
+            />
+          )}
       </SheetContent>
     </Sheet>
   );
