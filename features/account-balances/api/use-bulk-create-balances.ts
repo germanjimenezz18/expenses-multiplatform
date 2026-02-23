@@ -13,14 +13,13 @@ type RequestType = InferRequestType<
 export const useBulkCreateBalances = () => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResponseType, Error, RequestType>({
+  return useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
       const response = await client.api["account-balances"][
         "bulk-create"
       ].$post({ json });
       return response.json();
     },
-
     onSuccess: () => {
       toast.success("Balances saved successfully");
       queryClient.invalidateQueries({ queryKey: ["account-balances"] });
@@ -30,6 +29,4 @@ export const useBulkCreateBalances = () => {
       toast.error("Error saving balances");
     },
   });
-
-  return mutation;
 };
