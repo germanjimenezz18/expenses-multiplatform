@@ -133,6 +133,13 @@ export default function BalanceTrackerSheet() {
 
   const isLastStep = currentStep === accounts.length - 1;
   const canGoBack = currentStep > 0 || showSummary;
+  // Show step view if not loading, accounts exist, summary is not shown, and we have current account and balance data
+  const showStepView =
+    !isLoading &&
+    accounts.length > 0 &&
+    !showSummary &&
+    currentAccount &&
+    currentBalance;
 
   return (
     <Sheet onOpenChange={handleOpen} open={isOpen}>
@@ -172,23 +179,19 @@ export default function BalanceTrackerSheet() {
           />
         )}
 
-        {!isLoading &&
-          accounts.length > 0 &&
-          !showSummary &&
-          currentAccount &&
-          currentBalance && (
-            <StepView
-              account={currentAccount}
-              balance={currentBalance}
-              canGoBack={canGoBack}
-              currentStep={currentStep}
-              isLastStep={isLastStep}
-              onBack={handlePrevious}
-              onNext={handleNext}
-              totalSteps={accounts.length}
-              updateBalance={updateBalance}
-            />
-          )}
+        {showStepView && (
+          <StepView
+            account={currentAccount}
+            balance={currentBalance}
+            canGoBack={canGoBack}
+            currentStep={currentStep}
+            isLastStep={isLastStep}
+            onBack={handlePrevious}
+            onNext={handleNext}
+            totalSteps={accounts.length}
+            updateBalance={updateBalance}
+          />
+        )}
       </SheetContent>
     </Sheet>
   );
