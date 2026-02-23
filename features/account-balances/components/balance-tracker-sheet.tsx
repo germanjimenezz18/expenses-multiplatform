@@ -50,9 +50,8 @@ export default function BalanceTrackerSheet() {
 
   const bulkMutation = useBulkCreateBalances();
 
-  const accountsQuery = useGetAccounts();
-  const accounts = (accountsQuery.data ?? []) as AccountWithBalances[];
-  const isLoading = accountsQuery.isLoading;
+  const { data, isLoading } = useGetAccounts();
+  const accounts = (data ?? []) as AccountWithBalances[];
 
   // Sync balances when accounts load and sheet is open
   useEffect(() => {
