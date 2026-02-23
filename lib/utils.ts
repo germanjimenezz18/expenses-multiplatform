@@ -10,13 +10,11 @@
  * @module lib/utils
  */
 
-/** biome-ignore-all lint/suspicious/noBitwiseOperators: not needed */
 import { type ClassValue, clsx } from "clsx";
 import {
   eachDayOfInterval,
   endOfMonth,
   format,
-  isSameDay,
   startOfMonth,
   subMonths,
 } from "date-fns";
@@ -176,15 +174,15 @@ export function convertAmountFromMiliUnits(amount: number) {
  * Formats a number as a currency string with Euro symbol.
  *
  * Uses `Intl.NumberFormat` for locale-aware number formatting with
- * Indian numbering system (lakh/crore grouping). Always shows 2 decimal places.
+ * standard Western number grouping. Always shows 2 decimal places.
  *
  * @param value - Decimal amount to format (already converted from miliUnits)
  * @returns Formatted currency string (e.g., "€ 1,234.56")
  *
  * @example
  * ```typescript
- * formatCurrency(1234.5)  // "€ 1,234.50"
- * formatCurrency(0)       // "€ 0.00"
+ * formatCurrency(1234.5)  // "1,234.50 €"
+ * formatCurrency(0)       // "0.00 €"
  *
  * // Typical usage with database values
  * formatCurrency(convertAmountFromMiliUnits(transaction.amount))
@@ -192,7 +190,7 @@ export function convertAmountFromMiliUnits(amount: number) {
  */
 export function formatCurrency(value: number) {
   const currencySymbol = "€";
-  const formatted = new Intl.NumberFormat("en-IN", {
+  const formatted = new Intl.NumberFormat("en-US", {
     notation: "standard",
     minimumFractionDigits: 2,
   }).format(value);
@@ -271,25 +269,23 @@ export default function fillMissingDays(
   startDate: Date,
   endDate: Date
 ) {
-  if (activeDays.length < 0) return [];
-
   const allDays = eachDayOfInterval({
     start: startDate,
     end: endDate,
   });
 
-  const transactionsByDay = allDays.map((day) => {
-    const found = activeDays.find((d) => isSameDay(d.date, day));
-    if (found) {
-      return found;
-    }
-    return {
-      date: day,
-      income: 0,
-      expenses: 0,
-    };
+  if (activeDays.length === 0) {
+    return allDays.map((day) => ({ date: day, income: 0, expenses: 0 }));
+  }
+
+  const activeMap = new Map(
+    activeDays.map((d) => [format(d.date, "yyyy-MM-dd"), d])
+  );
+
+  return allDays.map((day) => {
+    const key = format(day, "yyyy-MM-dd");
+    return activeMap.get(key) ?? { date: day, income: 0, expenses: 0 };
   });
-  return transactionsByDay;
 }
 
 /**
@@ -391,9 +387,5 @@ export function formatPercentage(
  * ```
  */
 export function generateUUID(): string {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    const v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+  return crypto.randomUUID();
 }
