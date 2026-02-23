@@ -2,7 +2,7 @@
 
 import { format } from "date-fns";
 import { Loader2, Plus, Save, Wallet } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AmountInput } from "@/components/amount-input";
 import { DatePicker } from "@/components/date-picker";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
+import {
+  type Account,
+  useGetAccounts,
+} from "@/features/accounts/api/use-get-accounts";
 import {
   convertAmountFromMiliUnits,
   convertAmountToMiliUnits,
@@ -23,16 +26,6 @@ import {
 } from "@/lib/utils";
 import { useBulkCreateBalances } from "../api/use-bulk-create-balances";
 import { useOpenBalanceTracker } from "../hooks/use-open-balance-tracker";
-
-interface AccountWithBalances {
-  id: string;
-  name: string;
-  type: string;
-  balance: number;
-  lastCheckedBalance: number | null;
-  lastCheckedDate: string | null;
-  expectedBalance: number;
-}
 
 interface BalanceEntry {
   accountId: string;
@@ -51,7 +44,7 @@ export default function BalanceTrackerSheet() {
   const bulkMutation = useBulkCreateBalances();
 
   const { data, isLoading } = useGetAccounts();
-  const accounts = (data ?? []) as AccountWithBalances[];
+  const accounts = data ?? [];
 
   // Sync balances when accounts load and sheet is open
   useEffect(() => {
@@ -70,37 +63,44 @@ export default function BalanceTrackerSheet() {
     }
   }, [isOpen, accounts, balances.length]);
 
-  const handleOpen = (open: boolean) => {
-    if (!open) {
-      setCurrentStep(0);
-      setShowSummary(false);
-      setBalances([]);
-    }
-  };
+  const handleOpen = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        setCurrentStep(0);
+        setShowSummary(false);
+        setBalances([]);
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
-  const updateBalance = (field: keyof BalanceEntry, value: string | Date) => {
-    setBalances((prev) =>
-      prev.map((b, i) => (i === currentStep ? { ...b, [field]: value } : b))
-    );
-  };
+  const updateBalance = useCallback(
+    (field: keyof BalanceEntry, value: string | Date) => {
+      setBalances((prev) =>
+        prev.map((b, i) => (i === currentStep ? { ...b, [field]: value } : b))
+      );
+    },
+    [currentStep]
+  );
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentStep < accounts.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
       setShowSummary(true);
     }
-  };
+  }, [currentStep, accounts.length]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (showSummary) {
       setShowSummary(false);
     } else if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
     }
-  };
+  }, [showSummary, currentStep]);
 
-  const handleSaveAll = () => {
+  const handleSaveAll = useCallback(() => {
     const balancesToSave = balances
       .filter((b) => b.balance && b.balance !== "0")
       .map((b) => ({
@@ -120,13 +120,16 @@ export default function BalanceTrackerSheet() {
         }
       );
     }
-  };
+  }, [balances, bulkMutation, onClose]);
 
   const currentAccount = accounts[currentStep];
   const currentBalance = balances[currentStep];
-  const hasBalancesToSave = balances.some(
-    (b) => b.balance && b.balance !== "0"
+
+  const entriesToSave = useMemo(
+    () => balances.filter((b) => b.balance && b.balance !== "0"),
+    [balances]
   );
+  const hasBalancesToSave = entriesToSave.length > 0;
 
   const isLastStep = currentStep === accounts.length - 1;
   const canGoBack = currentStep > 0 || showSummary;
@@ -161,7 +164,7 @@ export default function BalanceTrackerSheet() {
 
         {!isLoading && accounts.length > 0 && showSummary && (
           <SummaryView
-            balances={balances}
+            entriesToSave={entriesToSave}
             hasBalancesToSave={hasBalancesToSave}
             isPending={bulkMutation.isPending}
             onBack={handlePrevious}
@@ -204,7 +207,7 @@ function StepView({
 }: {
   currentStep: number;
   totalSteps: number;
-  account: AccountWithBalances;
+  account: Account;
   balance: BalanceEntry;
   onBack: () => void;
   onNext: () => void;
@@ -301,20 +304,18 @@ function StepView({
 }
 
 function SummaryView({
-  balances,
+  entriesToSave,
   onBack,
   onSave,
   isPending,
   hasBalancesToSave,
 }: {
-  balances: BalanceEntry[];
+  entriesToSave: BalanceEntry[];
   onBack: () => void;
   onSave: () => void;
   isPending: boolean;
   hasBalancesToSave: boolean;
 }) {
-  const entriesToSave = balances.filter((b) => b.balance && b.balance !== "0");
-
   return (
     <div className="flex flex-1 flex-col space-y-4 overflow-y-auto pt-4">
       <div className="space-y-2">
