@@ -1,6 +1,7 @@
 "use client";
 
 import { useMountedState } from "react-use";
+import BalanceTrackerSheet from "@/features/account-balances/components/balance-tracker-sheet";
 import EditAccountBalanceSheet from "@/features/account-balances/components/edit-account-balance-sheet";
 import NewAccountBalanceSheet from "@/features/account-balances/components/new-account-balance-sheet";
 import EditAccountSheet from "@/features/accounts/components/edit-account-sheet";
@@ -19,6 +20,7 @@ export const SheetProvider = () => {
       <NewAccountSheet />
       <EditAccountSheet />
 
+      <BalanceTrackerSheet />
       <NewAccountBalanceSheet />
       <EditAccountBalanceSheet />
 

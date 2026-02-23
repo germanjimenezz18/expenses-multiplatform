@@ -11,6 +11,7 @@ import {
   Search,
   Settings,
   UserRound,
+  Wallet,
 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -22,6 +23,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useOpenBalanceTracker } from "@/features/account-balances/hooks/use-open-balance-tracker";
 import Filters from "./filters";
 import { Badge } from "./ui/badge";
 
@@ -42,6 +44,8 @@ export default function Header() {
     { name: "Analytics", icon: LineChart, href: "/dashboard/analytics" },
     { name: "Settings", icon: Settings, href: "/settings" },
   ] as const;
+
+  const { onOpen } = useOpenBalanceTracker();
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -107,6 +111,10 @@ export default function Header() {
       </div>
 
       {/* Clerk button */}
+      <Button className="mr-2" onClick={onOpen} size="icon" variant="outline">
+        <Wallet className="h-5 w-5" />
+        <span className="sr-only">Balance Tracker</span>
+      </Button>
       <ClerkLoaded>
         <UserButton afterSignOutUrl="/sign-in" />
       </ClerkLoaded>

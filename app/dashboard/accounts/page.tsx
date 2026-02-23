@@ -1,9 +1,10 @@
 "use client";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Wallet } from "lucide-react";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useOpenBalanceTracker } from "@/features/account-balances/hooks/use-open-balance-tracker";
 import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
@@ -13,9 +14,11 @@ export default function AccountsPage() {
   const newAccount = useNewAccount();
   const accountsQuery = useGetAccounts();
   const deleteAccounts = useBulkDeleteAccounts();
+  const openBalanceTracker = useOpenBalanceTracker();
   const accounts = accountsQuery.data || [];
 
   const isDisabled = accountsQuery.isLoading || deleteAccounts.isPending;
+  const hasAccounts = accounts.length > 0;
 
   if (accountsQuery.isLoading) {
     return (
@@ -42,10 +45,21 @@ export default function AccountsPage() {
         <Card className="drop-shadow-sm">
           <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
             <CardTitle className="line-clamp-1 text-xl">Accounts</CardTitle>
-            <Button onClick={newAccount.onOpen} size={"sm"}>
-              <Plus className="mr-2 size-4" />
-              Add New
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                disabled={!hasAccounts}
+                onClick={openBalanceTracker.onOpen}
+                size={"sm"}
+                variant="outline"
+              >
+                <Wallet className="mr-2 size-4" />
+                Track Balances
+              </Button>
+              <Button onClick={newAccount.onOpen} size={"sm"}>
+                <Plus className="mr-2 size-4" />
+                Add New
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <DataTable

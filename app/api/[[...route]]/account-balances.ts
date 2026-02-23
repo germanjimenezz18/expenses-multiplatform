@@ -1,7 +1,7 @@
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
-import { and, desc, eq, gt, sum } from "drizzle-orm";
+import { and, desc, eq, gt, inArray, sum } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";
 import { db } from "@/db/drizzle";
@@ -317,6 +317,66 @@ const app = new Hono()
       if (!data) {
         return c.json({ error: "Not Found" }, 404);
       }
+
+      return c.json({ data });
+    }
+  )
+  // POST /bulk-create - Create multiple balance checks at once
+  .post(
+    "/bulk-create",
+    clerkMiddleware(),
+    zValidator(
+      "json",
+      z.object({
+        balances: z.array(
+          insertAccountBalanceSchema.pick({
+            date: true,
+            accountId: true,
+            balance: true,
+            note: true,
+          })
+        ),
+      })
+    ),
+    async (c) => {
+      const auth = getAuth(c);
+      const { balances } = c.req.valid("json");
+
+      if (!auth?.userId) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      // Verify all accounts belong to user
+      const accountIds = balances.map((b) => b.accountId);
+      const existingAccounts = await db
+        .select({ id: accounts.id })
+        .from(accounts)
+        .where(
+          and(
+            eq(accounts.userId, auth.userId),
+            inArray(accounts.id, accountIds)
+          )
+        );
+
+      const validAccountIds = new Set(existingAccounts.map((a) => a.id));
+      const validBalances = balances.filter((b) =>
+        validAccountIds.has(b.accountId)
+      );
+
+      if (validBalances.length === 0) {
+        return c.json({ error: "No valid accounts found" }, 400);
+      }
+
+      const data = await db
+        .insert(accountBalances)
+        .values(
+          validBalances.map((balance) => ({
+            id: createId(),
+            userId: auth.userId,
+            ...balance,
+          }))
+        )
+        .returning();
 
       return c.json({ data });
     }
