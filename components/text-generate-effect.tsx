@@ -25,7 +25,7 @@ function TextGenerateEffect({
       {text.split("").map((char, index) => (
         <motion.span
           className={cn(
-            "inline-block whitespace-pre text-neutral-200",
+            "inline-block whitespace-pre text-neutral-600 dark:text-neutral-300",
             className
           )}
           initial={{ opacity: 0, filter: "blur(4px)", rotateX: 90, y: 5 }}
