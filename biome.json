@@ -9,6 +9,9 @@
     "rules": {
       "style": {
         "useBlockStatements": "off"
+      },
+      "performance": {
+        "noBarrelFile": "off"
       }
     }
   },
