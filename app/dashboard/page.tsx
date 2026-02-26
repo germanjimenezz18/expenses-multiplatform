@@ -1,11 +1,13 @@
 "use client";
+import { useGetSummary } from "@features/summary";
+import { useGetTransactions } from "@features/transactions";
+import { useNewTransaction } from "@features/transactions/hooks";
 import { Plus } from "lucide-react";
 import { Suspense } from "react";
 import AccountTracker from "@/components/account-tracker";
 import { DataCardLoading } from "@/components/data-card";
 import DataGrid from "@/components/data-grid";
 import { DataTable } from "@/components/data-table";
-import SpendingPie, { SpendingPieLoading } from "@/components/spending-pie";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,9 +17,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetSummary } from "@features/summary";
-import { useGetTransactions } from "@features/transactions";
-import { useNewTransaction } from "@features/transactions/hooks";
+import SpendingPie, {
+  SpendingPieLoading,
+} from "@/features/summary/components/spending-pie";
 import { columns } from "./transactions/columns";
 
 export default function Dashboard() {

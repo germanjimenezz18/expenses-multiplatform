@@ -1,8 +1,10 @@
 "use client";
 
 import { useGetSummary } from "@features/summary";
-import Chart, { ChartLoading } from "./chart";
-import SpendingPie, { SpendingPieLoading } from "./spending-pie";
+import Chart, { ChartLoading } from "@/components/chart";
+import SpendingPie, {
+  SpendingPieLoading,
+} from "@/features/summary/components/spending-pie";
 
 export default function DataCharts() {
   const { data, isLoading } = useGetSummary();

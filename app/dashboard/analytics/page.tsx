@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { ChartLoading } from "@/components/chart";
 import { DataCardLoading } from "@/components/data-card";
-import DataCharts from "@/components/data-charts";
 import DataGrid from "@/components/data-grid";
-import { SpendingPieLoading } from "@/components/spending-pie";
+import DataCharts from "@/features/summary/components/data-charts";
+import { SpendingPieLoading } from "@/features/summary/components/spending-pie";
 
 export default function AnaliticsPage() {
   return (

@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noBitwiseOperators: Using bitwise operators for UUID generation */
+
 /**
  * Calculates percentage delta between current and previous values.
  */
