@@ -1,0 +1,70 @@
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { toast } from "sonner";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createQueryWrapper } from "@/features/__tests__/setup";
+import { client } from "@/lib/hono";
+import { useBulkCreateBalances } from "../use-bulk-create-balances";
+
+describe("useBulkCreateBalances", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("calls API, invalidates queries, and shows success toast", async () => {
+    const payload = {
+      balances: [
+        {
+          accountId: "acc-1",
+          balance: 400_000,
+          date: "2026-01-22",
+          note: "Batch save",
+        },
+      ],
+    };
+
+    vi.mocked(
+      client.api["account-balances"]["bulk-create"].$post
+    ).mockResolvedValueOnce({
+      json: async () => ({ inserted: 1 }),
+    } as never);
+
+    const { wrapper, queryClient } = createQueryWrapper();
+    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+
+    const { result } = renderHook(() => useBulkCreateBalances(), { wrapper });
+
+    await act(() => {
+      result.current.mutate(payload as never);
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(
+      client.api["account-balances"]["bulk-create"].$post
+    ).toHaveBeenCalledWith({
+      json: payload,
+    });
+    expect(toast.success).toHaveBeenCalledWith("Balances saved successfully");
+    expect(invalidateSpy).toHaveBeenCalledWith({
+      queryKey: ["account-balances"],
+    });
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["accounts"] });
+  });
+
+  it("shows error toast on failure", async () => {
+    vi.mocked(
+      client.api["account-balances"]["bulk-create"].$post
+    ).mockRejectedValueOnce(new Error("Network error"));
+
+    const { wrapper } = createQueryWrapper();
+    const { result } = renderHook(() => useBulkCreateBalances(), { wrapper });
+
+    await act(() => {
+      result.current.mutate({ balances: [] } as never);
+    });
+
+    await waitFor(() => expect(result.current.isError).toBe(true));
+
+    expect(toast.error).toHaveBeenCalledWith("Error saving balances");
+  });
+});

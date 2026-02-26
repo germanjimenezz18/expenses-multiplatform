@@ -1,0 +1,62 @@
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { toast } from "sonner";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createQueryWrapper } from "@/features/__tests__/setup";
+import { client } from "@/lib/hono";
+import { useCreateTransaction } from "../use-create-transaction";
+
+describe("useCreateTransaction", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("calls API, invalidates queries, and shows success toast", async () => {
+    const payload = {
+      amount: 10_000,
+      payee: "Groceries",
+      date: "2026-01-12",
+      accountId: "acc-1",
+      categoryId: "cat-1",
+      notes: "Weekly",
+    };
+
+    vi.mocked(client.api.transactions.$post).mockResolvedValueOnce({
+      json: async () => ({ id: "txn-1" }),
+    } as never);
+
+    const { wrapper, queryClient } = createQueryWrapper();
+    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+
+    const { result } = renderHook(() => useCreateTransaction(), { wrapper });
+
+    await act(() => {
+      result.current.mutate(payload as never);
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(client.api.transactions.$post).toHaveBeenCalledWith({
+      json: payload,
+    });
+    expect(toast.success).toHaveBeenCalledWith("Transaction created");
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["transactions"] });
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["summary"] });
+  });
+
+  it("shows error toast on failure", async () => {
+    vi.mocked(client.api.transactions.$post).mockRejectedValueOnce(
+      new Error("Network error")
+    );
+
+    const { wrapper } = createQueryWrapper();
+    const { result } = renderHook(() => useCreateTransaction(), { wrapper });
+
+    await act(() => {
+      result.current.mutate({ amount: 1000 } as never);
+    });
+
+    await waitFor(() => expect(result.current.isError).toBe(true));
+
+    expect(toast.error).toHaveBeenCalledWith("Error creating transaction");
+  });
+});

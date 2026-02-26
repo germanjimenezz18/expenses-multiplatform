@@ -37,6 +37,58 @@ vi.mock("@/lib/hono", () => ({
           $post: vi.fn(),
         },
       },
+      transactions: {
+        $get: vi.fn(),
+        $post: vi.fn(),
+        ":id": {
+          $get: vi.fn(),
+          $patch: vi.fn(),
+          $delete: vi.fn(),
+        },
+        "bulk-create": {
+          $post: vi.fn(),
+        },
+        "bulk-delete": {
+          $post: vi.fn(),
+        },
+      },
+      categories: {
+        $get: vi.fn(),
+        $post: vi.fn(),
+        ":id": {
+          $get: vi.fn(),
+          $patch: vi.fn(),
+          $delete: vi.fn(),
+        },
+        "bulk-delete": {
+          $post: vi.fn(),
+        },
+      },
+      "account-balances": {
+        $get: vi.fn(),
+        $post: vi.fn(),
+        ":id": {
+          $get: vi.fn(),
+          $patch: vi.fn(),
+          $delete: vi.fn(),
+        },
+        latest: {
+          ":accountId": {
+            $get: vi.fn(),
+          },
+        },
+        expected: {
+          ":accountId": {
+            $get: vi.fn(),
+          },
+        },
+        "bulk-create": {
+          $post: vi.fn(),
+        },
+      },
+      summary: {
+        $get: vi.fn(),
+      },
     },
   },
 }));
