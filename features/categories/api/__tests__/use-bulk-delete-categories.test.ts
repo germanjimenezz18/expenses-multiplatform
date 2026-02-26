@@ -24,9 +24,9 @@ describe("useBulkDeleteCategories", () => {
 
     const { result } = renderHook(() => useBulkDeleteCategories(), { wrapper });
 
-    await act(() => {
-      result.current.mutate(payload as never);
-    });
+    await act(async () => {
+      await result.current.mutateAsync(payload as never);
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -46,9 +46,9 @@ describe("useBulkDeleteCategories", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useBulkDeleteCategories(), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ ids: ["cat-1"] } as never);
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync({ ids: ["cat-1"] } as never)).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

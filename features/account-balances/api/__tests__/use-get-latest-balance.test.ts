@@ -22,7 +22,7 @@ describe("useGetLatestBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetLatestBalance("acc-1"), {
       wrapper,
-    });
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -45,7 +45,7 @@ describe("useGetLatestBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetLatestBalance("acc-1"), {
       wrapper,
-    });
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

@@ -22,9 +22,9 @@ describe("useCreateCategory", () => {
 
     const { result } = renderHook(() => useCreateCategory(), { wrapper });
 
-    await act(() => {
-      result.current.mutate(payload as never);
-    });
+    await act(async () => {
+      await result.current.mutateAsync(payload as never);
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -41,9 +41,9 @@ describe("useCreateCategory", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useCreateCategory(), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ name: "Utilities" } as never);
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync({ name: "Utilities" } as never)).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

@@ -24,7 +24,7 @@ describe("useGetCategory", () => {
 
     expect(client.api.categories[":id"].$get).toHaveBeenCalledWith({
       param: { id: "cat-1" },
-    });
+  });
     expect(result.current.data).toEqual(mockData);
   });
 

@@ -24,8 +24,8 @@ describe("useDeleteAccountBalance", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate();
+    await act(async () => {
+      await result.current.mutateAsync();
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -50,8 +50,8 @@ describe("useDeleteAccountBalance", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate();
+    await act(async () => {
+      await expect(result.current.mutateAsync()).rejects.toThrow();
     });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
@@ -65,8 +65,8 @@ describe("useDeleteAccountBalance", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate();
+    await act(async () => {
+      await expect(result.current.mutateAsync()).rejects.toThrow();
     });
 
     await waitFor(() => expect(result.current.isError).toBe(true));

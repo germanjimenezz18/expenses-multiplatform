@@ -30,8 +30,8 @@ describe("useEditAccountBalance", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate(payload as never);
+    await act(async () => {
+      await result.current.mutateAsync(payload as never);
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -60,8 +60,10 @@ describe("useEditAccountBalance", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate({ balance: 510_000 } as never);
+    await act(async () => {
+      await expect(
+        result.current.mutateAsync({ balance: 510_000 } as never)
+      ).rejects.toThrow();
     });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
@@ -75,8 +77,10 @@ describe("useEditAccountBalance", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate({ balance: 510_000 } as never);
+    await act(async () => {
+      await expect(
+        result.current.mutateAsync({ balance: 510_000 } as never)
+      ).rejects.toThrow();
     });
 
     await waitFor(() => expect(result.current.isError).toBe(true));

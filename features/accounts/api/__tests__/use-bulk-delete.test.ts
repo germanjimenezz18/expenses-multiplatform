@@ -20,9 +20,9 @@ describe("useBulkDeleteAccounts", () => {
 
     const { result } = renderHook(() => useBulkDeleteAccounts(), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ ids: ["1", "2"] });
-    });
+    await act(async () => {
+      await result.current.mutateAsync({ ids: ["1", "2"] });
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -41,9 +41,9 @@ describe("useBulkDeleteAccounts", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useBulkDeleteAccounts(), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ ids: ["1", "2"] });
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync({ ids: ["1", "2"] })).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

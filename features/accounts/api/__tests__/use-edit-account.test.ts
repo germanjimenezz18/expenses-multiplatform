@@ -20,9 +20,9 @@ describe("useEditAccount", () => {
 
     const { result } = renderHook(() => useEditAccount("1"), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ name: "Updated" });
-    });
+    await act(async () => {
+      await result.current.mutateAsync({ name: "Updated" });
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -49,9 +49,9 @@ describe("useEditAccount", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useEditAccount("1"), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ name: "Updated" });
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync({ name: "Updated" })).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

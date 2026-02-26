@@ -22,9 +22,9 @@ describe("useCreateAccount", () => {
 
     const { result } = renderHook(() => useCreateAccount(), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ name: "New Account" });
-    });
+    await act(async () => {
+      await result.current.mutateAsync({ name: "New Account" });
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -43,9 +43,9 @@ describe("useCreateAccount", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useCreateAccount(), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ name: "New Account" });
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync({ name: "New Account" })).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

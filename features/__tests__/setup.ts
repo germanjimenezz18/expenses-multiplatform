@@ -3,6 +3,10 @@ import type { ReactNode } from "react";
 import React from "react";
 import { vi } from "vitest";
 
+(
+  globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
+).IS_REACT_ACT_ENVIRONMENT = true;
+
 // Mock sonner
 vi.mock("sonner", () => ({
   toast: {

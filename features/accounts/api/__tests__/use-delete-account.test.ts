@@ -20,9 +20,9 @@ describe("useDeleteAccount", () => {
 
     const { result } = renderHook(() => useDeleteAccount("1"), { wrapper });
 
-    await act(() => {
-      result.current.mutate();
-    });
+    await act(async () => {
+      await result.current.mutateAsync();
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -45,9 +45,9 @@ describe("useDeleteAccount", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useDeleteAccount("1"), { wrapper });
 
-    await act(() => {
-      result.current.mutate();
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync()).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

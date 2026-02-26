@@ -22,9 +22,9 @@ describe("useEditCategory", () => {
 
     const { result } = renderHook(() => useEditCategory("cat-1"), { wrapper });
 
-    await act(() => {
-      result.current.mutate(payload as never);
-    });
+    await act(async () => {
+      await result.current.mutateAsync(payload as never);
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -49,9 +49,9 @@ describe("useEditCategory", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useEditCategory("cat-1"), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ name: "Updated Category" } as never);
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync({ name: "Updated Category" } as never)).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

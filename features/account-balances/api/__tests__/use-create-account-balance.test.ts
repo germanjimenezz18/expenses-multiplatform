@@ -27,9 +27,9 @@ describe("useCreateAccountBalance", () => {
 
     const { result } = renderHook(() => useCreateAccountBalance(), { wrapper });
 
-    await act(() => {
-      result.current.mutate(payload as never);
-    });
+    await act(async () => {
+      await result.current.mutateAsync(payload as never);
+  });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -51,9 +51,9 @@ describe("useCreateAccountBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useCreateAccountBalance(), { wrapper });
 
-    await act(() => {
-      result.current.mutate({ accountId: "acc-1" } as never);
-    });
+    await act(async () => {
+      await expect(result.current.mutateAsync({ accountId: "acc-1" } as never)).rejects.toThrow();
+  });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

@@ -26,8 +26,8 @@ describe("useBulkDeleteTransactions", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate(payload as never);
+    await act(async () => {
+      await result.current.mutateAsync(payload as never);
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -50,8 +50,10 @@ describe("useBulkDeleteTransactions", () => {
       wrapper,
     });
 
-    await act(() => {
-      result.current.mutate({ ids: ["txn-1"] } as never);
+    await act(async () => {
+      await expect(
+        result.current.mutateAsync({ ids: ["txn-1"] } as never)
+      ).rejects.toThrow();
     });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
