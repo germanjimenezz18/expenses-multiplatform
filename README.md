@@ -75,20 +75,11 @@ The application uses Hono for API routes:
 - `/api/categories` - Category management
 - `/api/transactions` - Transaction operations
 
-## Testing
-
-End-to-end testing is implemented with Cypress:
-```bash
-npm run cypress:open  # Interactive testing
-npm run test:e2e     # Headless testing
-```
-
 ## Deployment
 
 The project includes a GitHub Actions pipeline for automated deployment:
 - Linting
 - Building
-- E2E Testing (commented out in current config)
 
 ## Scripts
 
