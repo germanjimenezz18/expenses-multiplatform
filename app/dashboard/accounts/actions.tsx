@@ -9,9 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNewAccountBalance } from "@/features/account-balances/hooks/use-new-account-balance";
-import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
-import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
+import { useNewAccountBalance } from "@features/account-balances/hooks";
+import { useDeleteAccount } from "@features/accounts";
+import { useOpenAccount } from "@features/accounts/hooks";
 import { useConfirm } from "@/hooks/use-confirm";
 
 interface Props {

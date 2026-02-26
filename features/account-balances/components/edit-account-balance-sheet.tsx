@@ -8,8 +8,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { insertAccountBalanceSchema } from "@/db/schema";
-import { useCreateAccount } from "@/features/accounts/api/use-create-account";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
+import { useCreateAccount, useGetAccounts } from "@features/accounts";
 import { useConfirm } from "@/hooks/use-confirm";
 import { convertAmountFromMiliUnits } from "@/lib/utils";
 import { useDeleteAccountBalance } from "../api/use-delete-account-balance";

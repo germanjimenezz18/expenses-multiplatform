@@ -23,7 +23,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useOpenBalanceTracker } from "@/features/account-balances/hooks/use-open-balance-tracker";
+import { useOpenBalanceTracker } from "@features/account-balances/hooks";
 import Filters from "./filters";
 import { Badge } from "./ui/badge";
 

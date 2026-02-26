@@ -8,7 +8,7 @@ import {
   Settings2,
 } from "lucide-react";
 import Link from "next/link";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
+import { useGetAccounts } from "@features/accounts";
 import { convertAmountFromMiliUnits, formatCurrency } from "@/lib/utils";
 import { Button } from "./ui/button";
 import {

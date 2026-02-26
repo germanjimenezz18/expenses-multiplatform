@@ -15,9 +15,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetSummary } from "@/features/summary/api/use-get-summary";
-import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
-import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import { useGetSummary } from "@features/summary";
+import { useGetTransactions } from "@features/transactions";
+import { useNewTransaction } from "@features/transactions/hooks";
 import { columns } from "./transactions/columns";
 
 export default function Dashboard() {

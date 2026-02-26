@@ -2,8 +2,8 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { useGetSummary } from "@/features/summary/api/use-get-summary";
+import { useGetAccounts } from "@features/accounts";
+import { useGetSummary } from "@features/summary";
 import {
   Select,
   SelectContent,

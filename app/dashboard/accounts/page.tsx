@@ -4,10 +4,9 @@ import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useOpenBalanceTracker } from "@/features/account-balances/hooks/use-open-balance-tracker";
-import { useBulkDeleteAccounts } from "@/features/accounts/api/use-bulk-delete";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
+import { useOpenBalanceTracker } from "@features/account-balances/hooks";
+import { useBulkDeleteAccounts, useGetAccounts } from "@features/accounts";
+import { useNewAccount } from "@features/accounts/hooks";
 import { columns } from "./columns";
 
 export default function AccountsPage() {

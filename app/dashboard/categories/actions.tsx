@@ -9,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useDeleteCategory } from "@/features/categories/api/use-delete-category";
-import { useOpenCategory } from "@/features/categories/hooks/use-open-category";
+import { useDeleteCategory } from "@features/categories";
+import { useOpenCategory } from "@features/categories/hooks";
 import { useConfirm } from "@/hooks/use-confirm";
 
 interface Props {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useOpenTransaction } from "@/features/transactions/hooks/use-open-transaction";
+import { useOpenTransaction } from "@features/transactions/hooks";
 import { cn, formatCurrency } from "@/lib/utils";
 
 interface Props {

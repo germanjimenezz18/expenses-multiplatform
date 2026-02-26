@@ -1,4 +1,4 @@
-import { useOpenAccount } from "@/features/accounts/hooks/use-open-account";
+import { useOpenAccount } from "@features/accounts/hooks";
 
 interface Props {
   account: string;

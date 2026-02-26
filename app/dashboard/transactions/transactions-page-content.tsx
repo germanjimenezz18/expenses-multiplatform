@@ -16,11 +16,9 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 
 import type { transactions as transactionsSchema } from "@/db/schema";
-import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
-import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transaction";
-import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transaction";
-import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
-import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import { useSelectAccount } from "@features/accounts/hooks";
+import { useBulkCreateTransactions, useBulkDeleteTransactions, useGetTransactions } from "@features/transactions";
+import { useNewTransaction } from "@features/transactions/hooks";
 import { columns } from "./columns";
 import ImportCard from "./import-card";
 import UploadButton from "./upload-button";

@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { FaPiggyBank, FaWallet } from "react-icons/fa";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
-import { useGetSummary } from "@/features/summary/api/use-get-summary";
+import { useGetSummary } from "@features/summary";
 import { formatDateRange } from "@/lib/utils";
 import DataCard, { DataCardLoading } from "./data-card";
 

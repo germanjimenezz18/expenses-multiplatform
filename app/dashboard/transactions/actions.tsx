@@ -9,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useDeleteTransaction } from "@/features/transactions/api/use-delete-transaction";
-import { useOpenTransaction } from "@/features/transactions/hooks/use-open-transaction";
+import { useDeleteTransaction } from "@features/transactions";
+import { useOpenTransaction } from "@features/transactions/hooks";
 import { useConfirm } from "@/hooks/use-confirm";
 
 interface Props {

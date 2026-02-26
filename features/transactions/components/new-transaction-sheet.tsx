@@ -8,10 +8,8 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { insertTransactionSchema } from "@/db/schema";
-import { useCreateAccount } from "@/features/accounts/api/use-create-account";
-import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
-import { useCreateCategory } from "@/features/categories/api/use-create-category";
-import { useGetCategories } from "@/features/categories/api/use-get-categories";
+import { useCreateAccount, useGetAccounts } from "@features/accounts";
+import { useCreateCategory, useGetCategories } from "@features/categories";
 import { useCreateTransaction } from "@/features/transactions/api/use-create-transaction";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
 import TransactionForm from "./transaction-form";

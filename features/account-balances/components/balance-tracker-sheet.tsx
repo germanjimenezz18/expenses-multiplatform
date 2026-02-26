@@ -15,10 +15,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  type Account,
-  useGetAccounts,
-} from "@/features/accounts/api/use-get-accounts";
+import { type Account, useGetAccounts } from "@features/accounts";
 import {
   convertAmountFromMiliUnits,
   convertAmountToMiliUnits,
