@@ -10,12 +10,13 @@
     "check": "ultracite check",
     "fix": "ultracite fix",
     "write": "bunx --bun biome lint --write .",
-
     "test:e2e": "npx cypress run",
     "cypress:open": "cypress open",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "test": "vitest",
+    "test:run": "vitest run"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.88",
@@ -76,6 +77,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.13",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^25.2.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -83,11 +85,13 @@
     "cypress": "^15.10.0",
     "dotenv": "^17.3.1",
     "drizzle-kit": "^0.31.9",
+    "happy-dom": "^20.7.0",
     "husky": "^9.1.7",
     "pg": "^8.12.0",
     "postcss": "^8",
     "tailwindcss": "^3",
     "typescript": "^5",
-    "ultracite": "7.1.5"
+    "ultracite": "7.1.5",
+    "vitest": "^4.0.18"
   }
 }
