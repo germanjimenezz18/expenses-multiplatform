@@ -1,3 +1,4 @@
+import { useCreateAccount, useGetAccounts } from "@features/accounts";
 import { Loader2 } from "lucide-react";
 import type { z } from "zod";
 import {
@@ -8,9 +9,8 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { insertAccountBalanceSchema } from "@/db/schema";
-import { useCreateAccount, useGetAccounts } from "@features/accounts";
 import { useConfirm } from "@/hooks/use-confirm";
-import { convertAmountFromMiliUnits } from "@/lib/utils";
+import { convertAmountFromMiliUnits } from "@/lib/utils/currency";
 import { useDeleteAccountBalance } from "../api/use-delete-account-balance";
 import { useEditAccountBalance } from "../api/use-edit-account-balance";
 import { useGetAccountBalance } from "../api/use-get-account-balance";

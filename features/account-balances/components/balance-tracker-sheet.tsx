@@ -1,5 +1,6 @@
 "use client";
 
+import { type Account, useGetAccounts } from "@features/accounts";
 import { format } from "date-fns";
 import { Loader2, Plus, Save, Wallet } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -15,12 +16,11 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { type Account, useGetAccounts } from "@features/accounts";
 import {
   convertAmountFromMiliUnits,
   convertAmountToMiliUnits,
   formatCurrency,
-} from "@/lib/utils";
+} from "@/lib/utils/currency";
 import { useBulkCreateBalances } from "../api/use-bulk-create-balances";
 import { useOpenBalanceTracker } from "../hooks/use-open-balance-tracker";
 

@@ -9,7 +9,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import type { AccountType } from "@/lib/account-types";
 import { getAccountTypeInfo } from "@/lib/account-types";
 import type { client } from "@/lib/hono";
-import { convertAmountFromMiliUnits, formatCurrency } from "@/lib/utils";
+import {
+  convertAmountFromMiliUnits,
+  formatCurrency,
+} from "@/lib/utils/currency";
 import Actions from "./actions";
 
 export type ResponseType = InferResponseType<

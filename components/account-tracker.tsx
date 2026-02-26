@@ -1,5 +1,6 @@
 "use client";
 
+import { useGetAccounts } from "@features/accounts";
 import {
   ChevronLeft,
   ChevronRight,
@@ -8,8 +9,10 @@ import {
   Settings2,
 } from "lucide-react";
 import Link from "next/link";
-import { useGetAccounts } from "@features/accounts";
-import { convertAmountFromMiliUnits, formatCurrency } from "@/lib/utils";
+import {
+  convertAmountFromMiliUnits,
+  formatCurrency,
+} from "@/lib/utils/currency";
 import { Button } from "./ui/button";
 import {
   Card,

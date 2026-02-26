@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { insertAccountBalanceSchema } from "@/db/schema";
-import { convertAmountToMiliUnits } from "@/lib/utils";
+import { convertAmountToMiliUnits } from "@/lib/utils/currency";
 
 const formSchema = z.object({
   date: z.coerce.date(),

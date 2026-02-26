@@ -13,7 +13,8 @@ import { z } from "zod";
 import { db } from "@/db/drizzle";
 import { accounts, categories, transactions } from "@/db/schema";
 import { UNCATEGORIZED_NAME } from "@/lib/constants";
-import fillMissingDays, { calculatePercentageChange } from "../../../lib/utils";
+import fillMissingDays from "../../../lib/utils/dates";
+import { calculatePercentageChange } from "../../../lib/utils/math";
 
 const app = new Hono().get(
   "/",

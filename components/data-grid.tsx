@@ -1,10 +1,10 @@
 "use client";
 
+import { useGetSummary } from "@features/summary";
 import { useSearchParams } from "next/navigation";
 import { FaPiggyBank, FaWallet } from "react-icons/fa";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
-import { useGetSummary } from "@features/summary";
-import { formatDateRange } from "@/lib/utils";
+import { formatDateRange } from "@/lib/utils/dates";
 import DataCard, { DataCardLoading } from "./data-card";
 
 export default function DataGrid() {

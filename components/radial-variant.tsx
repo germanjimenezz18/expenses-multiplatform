@@ -5,7 +5,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/currency";
 
 const COLORS = ["#0088FE", "#00C49F", "#FF8042", "#ff5b00"];
 

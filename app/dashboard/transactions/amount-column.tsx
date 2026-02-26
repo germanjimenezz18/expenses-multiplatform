@@ -1,7 +1,8 @@
 "use client";
 
 import { useOpenTransaction } from "@features/transactions/hooks";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/currency";
 
 interface Props {
   amount: number;

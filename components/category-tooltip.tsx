@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/currency";
 import { Separator } from "./ui/separator";
 
 export default function CategoryTooltip({ active, payload }: any) {

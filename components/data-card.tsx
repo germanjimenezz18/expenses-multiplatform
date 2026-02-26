@@ -1,7 +1,9 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import CountUp from "react-countup";
 import type { IconType } from "react-icons";
-import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils/currency";
+import { formatPercentage } from "@/lib/utils/math";
 import {
   Card,
   CardContent,

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { client } from "@/lib/hono";
-import { convertAmountFromMiliUnits } from "@/lib/utils";
+import { convertAmountFromMiliUnits } from "@/lib/utils/currency";
 
 export const useGetSummary = () => {
   const params = useSearchParams();

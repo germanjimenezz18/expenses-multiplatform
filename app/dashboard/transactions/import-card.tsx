@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { convertAmountToMiliUnits } from "@/lib/utils";
+import { convertAmountToMiliUnits } from "@/lib/utils/currency";
 import ImportTable from "./import-table";
 
 const DATE_FORMAT_OPTIONS = [
