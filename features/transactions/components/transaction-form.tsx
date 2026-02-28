@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Trash } from "lucide-react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { ListPlus, Plus, Trash, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import CurrencyInput from "react-currency-input-field";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { AmountInput } from "@/components/amount-input";
 import { DatePicker } from "@/components/date-picker";
@@ -19,6 +20,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { insertTransactionSchema } from "@/db/schema";
 import { convertAmountToMiliUnits } from "@/lib/utils/currency";
 
+const itemFormSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  quantity: z.coerce.number().positive().optional(),
+  totalPrice: z.string().min(1, "Price is required"),
+});
+
 const formSchema = z.object({
   date: z.coerce.date(),
   accountId: z.string(),
@@ -26,6 +33,7 @@ const formSchema = z.object({
   payee: z.string(),
   amount: z.string(),
   notes: z.string().nullable().optional(),
+  items: z.array(itemFormSchema).nullable().optional(),
 });
 const apiSchema = insertTransactionSchema.omit({ id: true });
 
@@ -65,6 +73,15 @@ export default function TransactionForm({
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "items",
+  });
+
+  const [showItems, setShowItems] = useState(
+    () => !!defaultValues?.items?.length
+  );
+
   useEffect(() => {
     if (focusField) {
       // Small delay to ensure the form is fully mounted
@@ -74,11 +91,22 @@ export default function TransactionForm({
       return () => clearTimeout(timer);
     }
   }, [focusField, form]);
+
   const handleSubmit = (values: FormValues) => {
     const amount = Number.parseFloat(values.amount);
     const amountInMiliUnits = convertAmountToMiliUnits(amount);
 
-    onSubmit({ ...values, amount: amountInMiliUnits });
+    const items = values.items?.length
+      ? values.items.map((item) => ({
+          name: item.name,
+          quantity: Number(item.quantity) || undefined,
+          totalPrice: convertAmountToMiliUnits(
+            Number.parseFloat(item.totalPrice)
+          ),
+        }))
+      : null;
+
+    onSubmit({ ...values, amount: amountInMiliUnits, items });
   };
 
   const handleDelete = () => {
@@ -193,6 +221,101 @@ export default function TransactionForm({
             </FormItem>
           )}
         />
+
+        {showItems ? (
+          <div className="space-y-3 rounded-md border p-3">
+            <div className="flex items-center justify-between">
+              <span className="font-medium text-sm">
+                Items ({fields.length})
+              </span>
+              <Button
+                className="h-auto p-1 text-muted-foreground text-xs"
+                onClick={() => {
+                  setShowItems(false);
+                  form.setValue("items", null);
+                }}
+                type="button"
+                variant="ghost"
+              >
+                Hide
+              </Button>
+            </div>
+
+            {fields.map((field, index) => (
+              <div
+                className="grid grid-cols-[1fr_60px_100px_32px] items-start gap-2"
+                key={field.id}
+              >
+                <Input
+                  disabled={disabled}
+                  placeholder="Item name"
+                  {...form.register(`items.${index}.name`)}
+                />
+                <Input
+                  disabled={disabled}
+                  min={1}
+                  placeholder="Qty"
+                  type="number"
+                  {...form.register(`items.${index}.quantity`)}
+                />
+                <CurrencyInput
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  decimalScale={2}
+                  decimalsLimit={2}
+                  disabled={disabled}
+                  onValueChange={(value) =>
+                    form.setValue(`items.${index}.totalPrice`, value ?? "")
+                  }
+                  placeholder="0.00"
+                  value={form.watch(`items.${index}.totalPrice`)}
+                />
+                <Button
+                  className="size-10 p-0"
+                  disabled={disabled}
+                  onClick={() => {
+                    remove(index);
+                    if (fields.length <= 1) {
+                      setShowItems(false);
+                      form.setValue("items", null);
+                    }
+                  }}
+                  type="button"
+                  variant="ghost"
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
+            ))}
+
+            <Button
+              className="w-full gap-2 text-muted-foreground"
+              disabled={disabled}
+              onClick={() => append({ name: "", totalPrice: "" })}
+              size="sm"
+              type="button"
+              variant="ghost"
+            >
+              <Plus className="size-4" />
+              Add item
+            </Button>
+          </div>
+        ) : (
+          <Button
+            className="w-full gap-2 text-muted-foreground"
+            disabled={disabled}
+            onClick={() => {
+              setShowItems(true);
+              if (fields.length === 0) {
+                append({ name: "", totalPrice: "" });
+              }
+            }}
+            type="button"
+            variant="outline"
+          >
+            <ListPlus className="size-4" />
+            Add items
+          </Button>
+        )}
 
         <Button className="w-full" disabled={disabled}>
           {id ? "Save Changes" : "Create transaction"}

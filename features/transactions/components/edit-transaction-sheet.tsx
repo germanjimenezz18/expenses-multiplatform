@@ -89,6 +89,12 @@ export default function EditTransactionSheet() {
           : new Date(),
         payee: transactionQuery.data.payee,
         notes: transactionQuery.data.notes,
+        items:
+          transactionQuery.data.items?.map((item) => ({
+            name: item.name,
+            quantity: item.quantity,
+            totalPrice: item.totalPrice.toString(),
+          })) ?? null,
       }
     : {
         accountId: "",
@@ -97,6 +103,7 @@ export default function EditTransactionSheet() {
         date: new Date(),
         payee: "",
         notes: "",
+        items: null,
       };
 
   return (

@@ -19,6 +19,14 @@ export const useGetTransaction = (id?: string) => {
       return {
         ...data,
         amount: convertAmountFromMiliUnits(data.amount),
+        items:
+          data.items?.map((item) => ({
+            ...item,
+            totalPrice: convertAmountFromMiliUnits(item.totalPrice),
+            unitPrice: item.unitPrice
+              ? convertAmountFromMiliUnits(item.unitPrice)
+              : undefined,
+          })) ?? null,
       };
     },
   });
