@@ -1,5 +1,12 @@
 "use client";
-import { Loader2, Plus } from "lucide-react";
+import { useSelectAccount } from "@features/accounts/hooks";
+import {
+  useBulkCreateTransactions,
+  useBulkDeleteTransactions,
+  useGetTransactions,
+} from "@features/transactions";
+import { useNewTransaction } from "@features/transactions/hooks";
+import { Loader2, Plus, ScanLine } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { DataTable } from "@/components/data-table";
@@ -14,18 +21,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-
 import type { transactions as transactionsSchema } from "@/db/schema";
-import { useSelectAccount } from "@features/accounts/hooks";
-import { useBulkCreateTransactions, useBulkDeleteTransactions, useGetTransactions } from "@features/transactions";
-import { useNewTransaction } from "@features/transactions/hooks";
 import { columns } from "./columns";
 import ImportCard from "./import-card";
+import ReceiptDropzone from "./receipt-dropzone";
 import UploadButton from "./upload-button";
 
 const VARIANTS = {
   LIST: "LIST",
   IMPORT: "IMPORT",
+  RECEIPT: "RECEIPT",
 } as const;
 
 const INITIAL_IMPORT_RESULTS = {
@@ -107,6 +112,11 @@ export default function TransactionsPageContent() {
       </>
     );
   }
+
+  if (variant === VARIANTS.RECEIPT) {
+    return <ReceiptDropzone onCancel={onCancelImport} />;
+  }
+
   return (
     <div className="flex flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid lg:grid-cols-1 xl:grid-cols-1">
       <div className="w-full">
@@ -125,6 +135,14 @@ export default function TransactionsPageContent() {
                 Add New Transaction
               </Button>
               <UploadButton onUpload={onUpload} />
+              <Button
+                className="w-full lg:w-auto"
+                onClick={() => setVariant(VARIANTS.RECEIPT)}
+                size="sm"
+              >
+                <ScanLine className="mr-2 size-4" />
+                Scan Receipt
+              </Button>
             </div>
           </CardHeader>
           <CardContent>

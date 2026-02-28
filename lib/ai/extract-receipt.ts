@@ -26,6 +26,9 @@ Rules:
 
 type ImageMimeType = "image/jpeg" | "image/png" | "image/webp";
 
+const OPENING_MARKDOWN_FENCE = /^```(?:json)?\s*\n?/i;
+const CLOSING_MARKDOWN_FENCE = /\n?```\s*$/i;
+
 interface ExtractReceiptParams {
   model: LanguageModelV3;
   imageData: string | Uint8Array;
@@ -61,9 +64,15 @@ export async function extractReceiptData({
     maxOutputTokens: GENERATION_DEFAULTS.receipt.maxTokens,
   });
 
+  // Models often wrap JSON in markdown fences — strip them before parsing
+  const cleaned = text
+    .replace(OPENING_MARKDOWN_FENCE, "")
+    .replace(CLOSING_MARKDOWN_FENCE, "")
+    .trim();
+
   let parsed: unknown;
   try {
-    parsed = JSON.parse(text);
+    parsed = JSON.parse(cleaned);
   } catch {
     return { success: false, error: "Model response is not valid JSON" };
   }

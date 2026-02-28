@@ -17,7 +17,7 @@ export default function UploadButton({ onUpload }: Props) {
       {({ getRootProps }: any) => (
         <Button className="w-full lg:w-auto" size="sm" {...getRootProps()}>
           <Upload className="mr-2 size-4" />
-          Upload
+          Upload CSV
         </Button>
       )}
     </CSVReader>
