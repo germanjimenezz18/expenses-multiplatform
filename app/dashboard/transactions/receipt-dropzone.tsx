@@ -1,87 +1,69 @@
 "use client";
-import { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { forwardRef, useImperativeHandle, useRef } from "react";
+import { toast } from "sonner";
 import { useExtractReceipt } from "@/features/receipts/api/use-extract-receipt";
+import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
 
-interface Props {
-  onCancel: () => void;
+export interface ReceiptDropzoneHandle {
+  trigger: () => void;
 }
 
-export default function ReceiptDropzone({ onCancel }: Props) {
+const ReceiptDropzone = forwardRef<ReceiptDropzoneHandle>((_props, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<string | null>(null);
   const mutation = useExtractReceipt();
+  const newTransaction = useNewTransaction();
+
+  useImperativeHandle(ref, () => ({
+    trigger: () => {
+      inputRef.current?.click();
+    },
+  }));
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    newTransaction.onOpenScanning();
+
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64 = (reader.result as string).split(",")[1];
-      setPreview(URL.createObjectURL(file));
-      mutation.mutate({ image: base64 });
+      mutation.mutate(
+        { image: base64 },
+        {
+          onSuccess: (result) => {
+            if ("error" in result) {
+              toast.error(result.error);
+              newTransaction.onClose();
+              return;
+            }
+            newTransaction.setScanResult(
+              result.data as unknown as Record<string, unknown>
+            );
+          },
+          onError: () => {
+            newTransaction.onClose();
+          },
+        }
+      );
     };
     reader.readAsDataURL(file);
+
+    // Reset input so the same file can be selected again
+    e.target.value = "";
   };
 
   return (
-    <div className="flex flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid lg:grid-cols-1 xl:grid-cols-1">
-      <div className="w-full">
-        <Card className="drop-shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between gap-y-2">
-            <CardTitle className="line-clamp-1 text-xl">Scan Receipt</CardTitle>
-            <Button onClick={onCancel} size="sm" variant="outline">
-              Cancel
-            </Button>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-              <input
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
-                ref={inputRef}
-                type="file"
-              />
-              <Button
-                disabled={mutation.isPending}
-                onClick={() => inputRef.current?.click()}
-                size="sm"
-              >
-                {mutation.isPending ? "Extracting..." : "Select Image"}
-              </Button>
-            </div>
-
-            {preview && (
-              <img
-                alt="Receipt preview"
-                className="max-h-64 rounded border object-contain"
-                src={preview}
-              />
-            )}
-
-            {mutation.isPending && (
-              <p className="text-muted-foreground text-sm">
-                Analyzing receipt...
-              </p>
-            )}
-
-            {mutation.isError && (
-              <p className="text-destructive text-sm">
-                {mutation.error.message}
-              </p>
-            )}
-
-            {mutation.data && (
-              <pre className="max-h-96 overflow-auto rounded bg-muted p-4 text-xs">
-                {JSON.stringify(mutation.data, null, 2)}
-              </pre>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <input
+      accept="image/*"
+      className="hidden"
+      onChange={handleFileChange}
+      ref={inputRef}
+      type="file"
+    />
   );
-}
+});
+
+ReceiptDropzone.displayName = "ReceiptDropzone";
+
+export default ReceiptDropzone;

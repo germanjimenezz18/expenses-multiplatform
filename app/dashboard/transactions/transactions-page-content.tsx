@@ -7,7 +7,7 @@ import {
 } from "@features/transactions";
 import { useNewTransaction } from "@features/transactions/hooks";
 import { Loader2, Plus, ScanLine } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
@@ -24,13 +24,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { transactions as transactionsSchema } from "@/db/schema";
 import { columns } from "./columns";
 import ImportCard from "./import-card";
-import ReceiptDropzone from "./receipt-dropzone";
+import ReceiptDropzone, {
+  type ReceiptDropzoneHandle,
+} from "./receipt-dropzone";
 import UploadButton from "./upload-button";
 
 const VARIANTS = {
   LIST: "LIST",
   IMPORT: "IMPORT",
-  RECEIPT: "RECEIPT",
 } as const;
 
 const INITIAL_IMPORT_RESULTS = {
@@ -51,6 +52,7 @@ export default function TransactionsPageContent() {
   const onCancelImport = () => {
     setVariant(VARIANTS.LIST);
   };
+  const scanRef = useRef<ReceiptDropzoneHandle>(null);
   const newTransaction = useNewTransaction();
   const createTransactions = useBulkCreateTransactions();
   const transactionsQuery = useGetTransactions();
@@ -113,90 +115,89 @@ export default function TransactionsPageContent() {
     );
   }
 
-  if (variant === VARIANTS.RECEIPT) {
-    return <ReceiptDropzone onCancel={onCancelImport} />;
-  }
-
   return (
-    <div className="flex flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid lg:grid-cols-1 xl:grid-cols-1">
-      <div className="w-full">
-        <Card className="drop-shadow-sm">
-          <CardHeader className="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-            <CardTitle className="line-clamp-1 text-xl">
-              Transactions History
-            </CardTitle>
-            <div className="flex flex-col items-center gap-x-2 gap-y-2 lg:flex-row">
-              <Button
-                className="w-full lg:w-auto"
-                onClick={newTransaction.onOpen}
-                size={"sm"}
-              >
-                <Plus className="mr-2 size-4" />
-                Add New Transaction
-              </Button>
-              <UploadButton onUpload={onUpload} />
-              <Button
-                className="w-full lg:w-auto"
-                onClick={() => setVariant(VARIANTS.RECEIPT)}
-                size="sm"
-              >
-                <ScanLine className="mr-2 size-4" />
-                Scan Receipt
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <DataTable
-              columns={columns}
-              data={transactions}
-              disabled={isDisabled}
-              filterKey="payee"
-              onDelete={(row) => {
-                const ids = row.map((r) => r.original.id);
-                deleteTransactions.mutate({ ids });
-              }}
-              renderFilters={(ctx) => (
-                <>
-                  <Input
-                    className="max-w-[200px]"
-                    onChange={(e) =>
-                      ctx.setColumnFilter("payee", e.target.value)
-                    }
-                    placeholder="Search payee..."
-                    value={
-                      (ctx.table
-                        .getColumn("payee")
-                        ?.getFilterValue() as string) ?? ""
-                    }
-                  />
-                  <Select
-                    onValueChange={(value) =>
-                      ctx.setColumnFilter(
-                        "amount",
-                        value === "all" ? undefined : value
-                      )
-                    }
-                    value={
-                      (ctx.table
-                        .getColumn("amount")
-                        ?.getFilterValue() as string) ?? "all"
-                    }
-                  >
-                    <SelectTrigger className="w-[140px]">
-                      <SelectValue placeholder="All types" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All types</SelectItem>
-                      <SelectItem value="income">Income</SelectItem>
-                      <SelectItem value="expense">Expense</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </>
-              )}
-            />
-          </CardContent>
-        </Card>
+    <>
+      <ReceiptDropzone ref={scanRef} />
+      <div className="flex flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid lg:grid-cols-1 xl:grid-cols-1">
+        <div className="w-full">
+          <Card className="drop-shadow-sm">
+            <CardHeader className="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+              <CardTitle className="line-clamp-1 text-xl">
+                Transactions History
+              </CardTitle>
+              <div className="flex flex-col items-center gap-x-2 gap-y-2 lg:flex-row">
+                <Button
+                  className="w-full lg:w-auto"
+                  onClick={newTransaction.onOpen}
+                  size={"sm"}
+                >
+                  <Plus className="mr-2 size-4" />
+                  Add New Transaction
+                </Button>
+                <UploadButton onUpload={onUpload} />
+                <Button
+                  className="w-full lg:w-auto"
+                  onClick={() => scanRef.current?.trigger()}
+                  size="sm"
+                >
+                  <ScanLine className="mr-2 size-4" />
+                  Scan Receipt
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <DataTable
+                columns={columns}
+                data={transactions}
+                disabled={isDisabled}
+                filterKey="payee"
+                onDelete={(row) => {
+                  const ids = row.map((r) => r.original.id);
+                  deleteTransactions.mutate({ ids });
+                }}
+                renderFilters={(ctx) => (
+                  <>
+                    <Input
+                      className="max-w-[200px]"
+                      onChange={(e) =>
+                        ctx.setColumnFilter("payee", e.target.value)
+                      }
+                      placeholder="Search payee..."
+                      value={
+                        (ctx.table
+                          .getColumn("payee")
+                          ?.getFilterValue() as string) ?? ""
+                      }
+                    />
+                    <Select
+                      onValueChange={(value) =>
+                        ctx.setColumnFilter(
+                          "amount",
+                          value === "all" ? undefined : value
+                        )
+                      }
+                      value={
+                        (ctx.table
+                          .getColumn("amount")
+                          ?.getFilterValue() as string) ?? "all"
+                      }
+                    >
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue placeholder="All types" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All types</SelectItem>
+                        <SelectItem value="income">Income</SelectItem>
+                        <SelectItem value="expense">Expense</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+              />
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

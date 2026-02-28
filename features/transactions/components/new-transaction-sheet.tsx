@@ -1,4 +1,6 @@
-import { Loader2 } from "lucide-react";
+import { useCreateAccount, useGetAccounts } from "@features/accounts";
+import { useCreateCategory, useGetCategories } from "@features/categories";
+import { Loader2, ScanLine } from "lucide-react";
 import type { z } from "zod";
 import {
   Sheet,
@@ -7,18 +9,91 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 import { insertTransactionSchema } from "@/db/schema";
-import { useCreateAccount, useGetAccounts } from "@features/accounts";
-import { useCreateCategory, useGetCategories } from "@features/categories";
 import { useCreateTransaction } from "@/features/transactions/api/use-create-transaction";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
+import { convertAmountFromMiliUnits } from "@/lib/utils/currency";
 import TransactionForm from "./transaction-form";
 
 const formSchema = insertTransactionSchema.omit({ id: true });
 type FormValues = z.input<typeof formSchema>;
 
+const matchCategory = (
+  suggested: string | undefined,
+  options: { label: string; value: string }[]
+) => {
+  if (!suggested) return null;
+  const lower = suggested.toLowerCase();
+  return (
+    options.find(
+      (o) =>
+        o.label.toLowerCase().includes(lower) ||
+        lower.includes(o.label.toLowerCase())
+    )?.value ?? null
+  );
+};
+
+function ScanningSkeletonUI() {
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <ScanLine className="size-4 animate-pulse" />
+        <span className="animate-pulse font-medium text-sm">
+          Scanning with AI...
+        </span>
+      </div>
+      <div className="space-y-4">
+        {/* Date picker */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-16" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        {/* Account */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-16" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        {/* Category */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        {/* Payee */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-12" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        {/* Amount */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-16" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        {/* Notes */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-12" />
+          <Skeleton className="h-20 w-full" />
+        </div>
+        {/* Items */}
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-12" />
+          {[1, 2, 3].map((i) => (
+            <div className="flex gap-2" key={i}>
+              <Skeleton className="h-10 flex-1" />
+              <Skeleton className="h-10 w-16" />
+              <Skeleton className="h-10 w-24" />
+            </div>
+          ))}
+        </div>
+        {/* Submit button */}
+        <Skeleton className="h-10 w-full" />
+      </div>
+    </div>
+  );
+}
+
 export default function NewTransactionSheet() {
-  const { isOpen, onClose } = useNewTransaction();
+  const { isOpen, scanning, initialData, onClose } = useNewTransaction();
 
   const createMutation = useCreateTransaction();
 
@@ -53,17 +128,57 @@ export default function NewTransactionSheet() {
     });
   };
 
+  const defaultValues = initialData
+    ? {
+        payee: (initialData.merchant as string) ?? "",
+        date: initialData.date
+          ? new Date(initialData.date as string)
+          : new Date(),
+        amount: convertAmountFromMiliUnits(
+          initialData.total as number
+        ).toString(),
+        accountId: "",
+        categoryId:
+          matchCategory(
+            initialData.suggestedCategory as string | undefined,
+            categoryOptions
+          ) ?? "",
+        notes: null as string | null,
+        items: Array.isArray(initialData.items)
+          ? (
+              initialData.items as {
+                name: string;
+                quantity?: number;
+                totalPrice: number;
+              }[]
+            ).map((item) => ({
+              name: item.name,
+              quantity: item.quantity,
+              totalPrice: convertAmountFromMiliUnits(
+                item.totalPrice
+              ).toString(),
+            }))
+          : [],
+      }
+    : undefined;
+
   return (
     <Sheet onOpenChange={onClose} open={isOpen}>
       <SheetContent className="space-y-4">
         <SheetHeader>
-          <SheetTitle>Add a new Transaction</SheetTitle>
+          <SheetTitle>
+            {scanning ? "Scanning Receipt" : "Add a new Transaction"}
+          </SheetTitle>
           <SheetDescription>
-            Create a new Transaction to track your expenses
+            {scanning
+              ? "Extracting data from your receipt..."
+              : "Create a new Transaction to track your expenses"}
           </SheetDescription>
         </SheetHeader>
 
-        {isLoading ? (
+        {scanning ? (
+          <ScanningSkeletonUI />
+        ) : isLoading ? (
           <div className="intset-0 absolute flex items-center justify-center">
             <Loader2 className="size-4 animate-spin text-primary" />
           </div>
@@ -71,6 +186,7 @@ export default function NewTransactionSheet() {
           <TransactionForm
             accountOptions={accountOptions}
             categoryOptions={categoryOptions}
+            defaultValues={defaultValues}
             disabled={isPending}
             onCreateAccount={onCreateAccount}
             onCreateCategory={onCreateCategory}

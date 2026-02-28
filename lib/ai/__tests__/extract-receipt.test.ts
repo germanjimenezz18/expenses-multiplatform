@@ -42,7 +42,8 @@ function mockModelRaw(text: string) {
   });
 }
 
-const DUMMY_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk";
+const DUMMY_IMAGE =
+  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk";
 
 describe("extractReceiptData", () => {
   it("extracts a complete receipt with all fields", async () => {
