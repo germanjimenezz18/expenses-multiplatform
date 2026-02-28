@@ -119,10 +119,3 @@ Each feature has stores for UI state (sheet open/close):
 - etc.
 
 All are registered in `providers/sheet-provider.tsx`.
-
-## Architectural improvements roadmap
-
-1. **Barrel exports** — Add `index.ts` to each feature to hide internals
-2. **Unit tests** — Prioritize tests for `features/*/api/` (interface contracts)
-3. **Split `lib/utils.ts`** — Separate into `currency.ts`, `dates.ts`, `math.ts`
-4. **Move business components** — `data-charts.tsx`, `spending-pie.tsx` → `features/summary/`
