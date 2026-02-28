@@ -1,5 +1,6 @@
 import type { LanguageModelV3 } from "@ai-sdk/provider";
 import { generateText } from "ai";
+import type { z } from "zod";
 import { GENERATION_DEFAULTS } from "./models";
 import { receiptExtractionSchema } from "./schemas";
 
@@ -32,7 +33,7 @@ interface ExtractReceiptParams {
 }
 
 export type ExtractReceiptResult =
-  | { success: true; data: typeof receiptExtractionSchema._type }
+  | { success: true; data: z.infer<typeof receiptExtractionSchema> }
   | { success: false; error: string };
 
 export async function extractReceiptData({
@@ -57,7 +58,7 @@ export async function extractReceiptData({
       },
     ],
     temperature: GENERATION_DEFAULTS.receipt.temperature,
-    maxTokens: GENERATION_DEFAULTS.receipt.maxTokens,
+    maxOutputTokens: GENERATION_DEFAULTS.receipt.maxTokens,
   });
 
   let parsed: unknown;
