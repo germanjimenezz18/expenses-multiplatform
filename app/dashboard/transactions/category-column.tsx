@@ -1,6 +1,6 @@
-import { TriangleAlert } from "lucide-react";
 import { useOpenCategory } from "@features/categories/hooks";
 import { useOpenTransaction } from "@features/transactions/hooks";
+import { TriangleAlert } from "lucide-react";
 import { UNCATEGORIZED_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 

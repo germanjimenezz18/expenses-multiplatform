@@ -22,7 +22,7 @@ describe("useGetExpectedBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetExpectedBalance("acc-1"), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -45,7 +45,7 @@ describe("useGetExpectedBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetExpectedBalance("acc-1"), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

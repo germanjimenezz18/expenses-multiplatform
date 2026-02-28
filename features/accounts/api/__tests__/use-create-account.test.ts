@@ -24,7 +24,7 @@ describe("useCreateAccount", () => {
 
     await act(async () => {
       await result.current.mutateAsync({ name: "New Account" });
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -44,8 +44,10 @@ describe("useCreateAccount", () => {
     const { result } = renderHook(() => useCreateAccount(), { wrapper });
 
     await act(async () => {
-      await expect(result.current.mutateAsync({ name: "New Account" })).rejects.toThrow();
-  });
+      await expect(
+        result.current.mutateAsync({ name: "New Account" })
+      ).rejects.toThrow();
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

@@ -22,7 +22,7 @@ describe("useGetAccountBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetAccountBalance("bal-1"), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -43,7 +43,7 @@ describe("useGetAccountBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetAccountBalance("bal-1"), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 
@@ -56,7 +56,7 @@ describe("useGetAccountBalance", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetAccountBalance(undefined), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.fetchStatus).toBe("idle"));
 

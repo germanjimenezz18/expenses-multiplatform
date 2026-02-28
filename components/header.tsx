@@ -1,5 +1,6 @@
 "use client";
 import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
+import { useOpenBalanceTracker } from "@features/account-balances/hooks";
 import {
   ArrowLeftRight,
   ChartColumnStacked,
@@ -23,7 +24,6 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useOpenBalanceTracker } from "@features/account-balances/hooks";
 import Filters from "./filters";
 import { Badge } from "./ui/badge";
 

@@ -1,5 +1,7 @@
 "use client";
 
+import { useDeleteTransaction } from "@features/transactions";
+import { useOpenTransaction } from "@features/transactions/hooks";
 import { Delete, Edit, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useDeleteTransaction } from "@features/transactions";
-import { useOpenTransaction } from "@features/transactions/hooks";
 import { useConfirm } from "@/hooks/use-confirm";
 
 interface Props {

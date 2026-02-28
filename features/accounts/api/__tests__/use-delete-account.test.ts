@@ -22,7 +22,7 @@ describe("useDeleteAccount", () => {
 
     await act(async () => {
       await result.current.mutateAsync();
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -47,7 +47,7 @@ describe("useDeleteAccount", () => {
 
     await act(async () => {
       await expect(result.current.mutateAsync()).rejects.toThrow();
-  });
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

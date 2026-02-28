@@ -1,5 +1,8 @@
 "use client";
 
+import { useNewAccountBalance } from "@features/account-balances/hooks";
+import { useDeleteAccount } from "@features/accounts";
+import { useOpenAccount } from "@features/accounts/hooks";
 import { Delete, Edit, MoreHorizontal, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNewAccountBalance } from "@features/account-balances/hooks";
-import { useDeleteAccount } from "@features/accounts";
-import { useOpenAccount } from "@features/accounts/hooks";
 import { useConfirm } from "@/hooks/use-confirm";
 
 interface Props {

@@ -1,11 +1,14 @@
 "use client";
+import {
+  useBulkDeleteCategories,
+  useGetCategories,
+} from "@features/categories";
+import { useNewCategory } from "@features/categories/hooks";
 import { Loader2, Plus } from "lucide-react";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBulkDeleteCategories, useGetCategories } from "@features/categories";
-import { useNewCategory } from "@features/categories/hooks";
 import { columns } from "./columns";
 
 export default function CategoriesPage() {

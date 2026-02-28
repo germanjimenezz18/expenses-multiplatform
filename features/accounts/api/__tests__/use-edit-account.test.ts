@@ -22,7 +22,7 @@ describe("useEditAccount", () => {
 
     await act(async () => {
       await result.current.mutateAsync({ name: "Updated" });
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -50,8 +50,10 @@ describe("useEditAccount", () => {
     const { result } = renderHook(() => useEditAccount("1"), { wrapper });
 
     await act(async () => {
-      await expect(result.current.mutateAsync({ name: "Updated" })).rejects.toThrow();
-  });
+      await expect(
+        result.current.mutateAsync({ name: "Updated" })
+      ).rejects.toThrow();
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

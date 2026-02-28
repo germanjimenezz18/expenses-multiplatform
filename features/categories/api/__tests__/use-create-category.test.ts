@@ -24,7 +24,7 @@ describe("useCreateCategory", () => {
 
     await act(async () => {
       await result.current.mutateAsync(payload as never);
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -42,8 +42,10 @@ describe("useCreateCategory", () => {
     const { result } = renderHook(() => useCreateCategory(), { wrapper });
 
     await act(async () => {
-      await expect(result.current.mutateAsync({ name: "Utilities" } as never)).rejects.toThrow();
-  });
+      await expect(
+        result.current.mutateAsync({ name: "Utilities" } as never)
+      ).rejects.toThrow();
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

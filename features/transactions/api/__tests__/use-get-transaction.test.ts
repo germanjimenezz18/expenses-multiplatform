@@ -28,7 +28,7 @@ describe("useGetTransaction", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetTransaction("txn-1"), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -51,7 +51,7 @@ describe("useGetTransaction", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetTransaction("txn-1"), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 
@@ -62,7 +62,7 @@ describe("useGetTransaction", () => {
     const { wrapper } = createQueryWrapper();
     const { result } = renderHook(() => useGetTransaction(undefined), {
       wrapper,
-  });
+    });
 
     await waitFor(() => expect(result.current.fetchStatus).toBe("idle"));
 

@@ -22,7 +22,7 @@ describe("useBulkDeleteAccounts", () => {
 
     await act(async () => {
       await result.current.mutateAsync({ ids: ["1", "2"] });
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -42,8 +42,10 @@ describe("useBulkDeleteAccounts", () => {
     const { result } = renderHook(() => useBulkDeleteAccounts(), { wrapper });
 
     await act(async () => {
-      await expect(result.current.mutateAsync({ ids: ["1", "2"] })).rejects.toThrow();
-  });
+      await expect(
+        result.current.mutateAsync({ ids: ["1", "2"] })
+      ).rejects.toThrow();
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 

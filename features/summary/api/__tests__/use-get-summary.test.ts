@@ -48,7 +48,7 @@ describe("useGetSummary", () => {
         to: "2026-01-31",
         accountId: "acc-1",
       },
-  });
+    });
 
     expect(result.current.data).toEqual({
       incomeAmount: 125,

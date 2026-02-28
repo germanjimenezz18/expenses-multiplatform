@@ -24,9 +24,15 @@
       "@features/categories": ["./features/categories/api/index.ts"],
       "@features/categories/hooks": ["./features/categories/hooks/index.ts"],
       "@features/transactions": ["./features/transactions/api/index.ts"],
-      "@features/transactions/hooks": ["./features/transactions/hooks/index.ts"],
-      "@features/account-balances": ["./features/account-balances/api/index.ts"],
-      "@features/account-balances/hooks": ["./features/account-balances/hooks/index.ts"],
+      "@features/transactions/hooks": [
+        "./features/transactions/hooks/index.ts"
+      ],
+      "@features/account-balances": [
+        "./features/account-balances/api/index.ts"
+      ],
+      "@features/account-balances/hooks": [
+        "./features/account-balances/hooks/index.ts"
+      ],
       "@features/summary": ["./features/summary/api/index.ts"]
     },
     "target": "ES2017"

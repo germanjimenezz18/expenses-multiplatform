@@ -35,7 +35,7 @@ describe("useBulkCreateBalances", () => {
 
     await act(async () => {
       await result.current.mutateAsync(payload as never);
-  });
+    });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
 
@@ -60,8 +60,10 @@ describe("useBulkCreateBalances", () => {
     const { result } = renderHook(() => useBulkCreateBalances(), { wrapper });
 
     await act(async () => {
-      await expect(result.current.mutateAsync({ balances: [] } as never)).rejects.toThrow();
-  });
+      await expect(
+        result.current.mutateAsync({ balances: [] } as never)
+      ).rejects.toThrow();
+    });
 
     await waitFor(() => expect(result.current.isError).toBe(true));
 
