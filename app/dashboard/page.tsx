@@ -2,8 +2,8 @@
 import { useGetSummary } from "@features/summary";
 import { useGetTransactions } from "@features/transactions";
 import { useNewTransaction } from "@features/transactions/hooks";
-import { Plus } from "lucide-react";
-import { Suspense } from "react";
+import { Plus, ScanLine } from "lucide-react";
+import { Suspense, useRef } from "react";
 import AccountTracker from "@/components/account-tracker";
 import { DataCardLoading } from "@/components/data-card";
 import DataGrid from "@/components/data-grid";
@@ -21,6 +21,8 @@ import SpendingPie, {
   SpendingPieLoading,
 } from "@/features/summary/components/spending-pie";
 import { columns } from "./transactions/columns";
+import type { ReceiptDropzoneHandle } from "./transactions/receipt-dropzone";
+import ReceiptDropzone from "./transactions/receipt-dropzone";
 
 export default function Dashboard() {
   return (
@@ -81,6 +83,8 @@ function DashboardSpendingPie() {
 }
 
 function TransactionTabs() {
+  const scanRef = useRef<ReceiptDropzoneHandle>(null);
+
   const transactionsQuery = useGetTransactions();
   const transactions = transactionsQuery.data || [];
   const isDisabled = transactionsQuery.isLoading;
@@ -88,6 +92,7 @@ function TransactionTabs() {
 
   return (
     <Card>
+      <ReceiptDropzone ref={scanRef} />
       <CardHeader className="flex flex-col gap-y-2 px-7 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <CardTitle className="text-xl">Transactions</CardTitle>
@@ -111,6 +116,16 @@ function TransactionTabs() {
           >
             <Plus className="mr-2 size-4" />
             Add New Transaction
+          </Button>
+
+          <Button
+            className="w-full lg:w-auto"
+            onClick={() => scanRef.current?.trigger()}
+            size="sm"
+            variant={"outline"}
+          >
+            <ScanLine className="mr-2 size-4" />
+            Scan Receipt
           </Button>
         </div>
       </CardHeader>

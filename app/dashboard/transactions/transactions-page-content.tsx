@@ -139,6 +139,7 @@ export default function TransactionsPageContent() {
                   className="w-full lg:w-auto"
                   onClick={() => scanRef.current?.trigger()}
                   size="sm"
+                  variant={"outline"}
                 >
                   <ScanLine className="mr-2 size-4" />
                   Scan Receipt
