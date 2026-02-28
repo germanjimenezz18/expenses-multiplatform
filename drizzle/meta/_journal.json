@@ -29,6 +29,13 @@
       "when": 1771127505270,
       "tag": "0003_outstanding_payback",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1772302084283,
+      "tag": "0004_broken_wendell_rand",
+      "breakpoints": true
     }
   ]
 }

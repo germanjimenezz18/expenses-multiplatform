@@ -1,5 +1,12 @@
 import { relations } from "drizzle-orm";
-import { integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -45,7 +52,15 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 
 export const insertCategorySchema = createInsertSchema(categories);
 
-/* transactions 
+/* transaction line items (stored as JSONB, amounts in milliunits x1000) */
+export const transactionItemSchema = z.object({
+  name: z.string(),
+  quantity: z.number().optional(),
+  unitPrice: z.number().optional(), // milliunits (x1000)
+  totalPrice: z.number(), // milliunits (x1000)
+});
+
+/* transactions
   Amount : Integers multplied by 1000 to avoid float/double problems  $10.50 = 10500
 */
 export const transactions = pgTable("transactions", {
@@ -64,6 +79,8 @@ export const transactions = pgTable("transactions", {
   categoryId: text("category_id").references(() => categories.id, {
     onDelete: "set null",
   }),
+
+  items: jsonb("items").$type<z.infer<typeof transactionItemSchema>[]>(),
 });
 
 export const transactionsRelations = relations(transactions, ({ one }) => ({
@@ -79,6 +96,7 @@ export const transactionsRelations = relations(transactions, ({ one }) => ({
 
 export const insertTransactionSchema = createInsertSchema(transactions, {
   date: z.coerce.date(),
+  items: z.array(transactionItemSchema).nullable().optional(),
 });
 
 /* account_balances

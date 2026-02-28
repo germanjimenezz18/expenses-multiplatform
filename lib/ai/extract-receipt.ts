@@ -1,6 +1,7 @@
 import type { LanguageModelV3 } from "@ai-sdk/provider";
 import { generateText } from "ai";
 import type { z } from "zod";
+import { convertAmountToMiliUnits } from "@/lib/utils/currency";
 import { GENERATION_DEFAULTS } from "./models";
 import { receiptExtractionSchema } from "./schemas";
 
@@ -82,5 +83,26 @@ export async function extractReceiptData({
     return { success: false, error: result.error.message };
   }
 
-  return { success: true, data: result.data };
+  const data = {
+    ...result.data,
+    total: convertAmountToMiliUnits(result.data.total),
+    subtotal: result.data.subtotal
+      ? convertAmountToMiliUnits(result.data.subtotal)
+      : undefined,
+    tax: result.data.tax
+      ? convertAmountToMiliUnits(result.data.tax)
+      : undefined,
+    items: result.data.items.map((item) => ({
+      ...item,
+      unitPrice: item.unitPrice
+        ? convertAmountToMiliUnits(item.unitPrice)
+        : undefined,
+      totalPrice: convertAmountToMiliUnits(item.totalPrice),
+    })),
+  };
+
+  console.log({ result });
+  console.log({ data });
+
+  return { success: true, data };
 }

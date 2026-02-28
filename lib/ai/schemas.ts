@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { transactionItemSchema } from "@/db/schema";
 
-export const receiptItemSchema = z.object({
+export const receiptItemSchema = transactionItemSchema.extend({
   name: z.string().describe("Item name or description"),
   quantity: z.number().optional().describe("Quantity purchased"),
   unitPrice: z.number().optional().describe("Price per unit"),
