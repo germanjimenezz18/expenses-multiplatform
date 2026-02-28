@@ -243,15 +243,17 @@ export default function TransactionForm({
 
             {fields.map((field, index) => (
               <div
-                className="grid grid-cols-[1fr_60px_100px_32px] items-start gap-2"
+                className="flex items-start gap-2"
                 key={field.id}
               >
                 <Input
+                  className="min-w-0 flex-1"
                   disabled={disabled}
                   placeholder="Item name"
                   {...form.register(`items.${index}.name`)}
                 />
                 <Input
+                  className="w-14 shrink-0"
                   disabled={disabled}
                   min={1}
                   placeholder="Qty"
@@ -259,7 +261,7 @@ export default function TransactionForm({
                   {...form.register(`items.${index}.quantity`)}
                 />
                 <CurrencyInput
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-24 shrink-0 rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   decimalScale={2}
                   decimalsLimit={2}
                   disabled={disabled}
