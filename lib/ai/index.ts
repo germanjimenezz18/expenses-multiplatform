@@ -1,3 +1,6 @@
+export type { ExtractReceiptResult } from "./extract-receipt";
+export { extractReceiptData } from "./extract-receipt";
+
 export {
   DEFAULT_CHAT_MODEL,
   GENERATION_DEFAULTS,
