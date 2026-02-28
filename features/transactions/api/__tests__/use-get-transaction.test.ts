@@ -38,6 +38,7 @@ describe("useGetTransaction", () => {
     expect(result.current.data).toEqual({
       ...mockData,
       amount: 9.999,
+      items: null,
     });
   });
 
