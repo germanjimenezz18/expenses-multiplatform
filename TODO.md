@@ -11,14 +11,17 @@
 - [+] Transaction import via CSV 
 - [+] Fix update transaction amount
 
-- [ ] Bulk accounts balance editing
+- [+] Bulk accounts balance editing
 
 - [ ] "/accounts/:id": add a account details page
     - [ ] Show transactions related to that account
     - [ ] Show balance evolution for that account
     - [ ] Make somethig useful depending on account type
 
-
-- [ ] Add expandable datatables filtering via dependency injection (similar to how the transactions import works)
-    - [ ] Add filters to transactions datatable (expeneses or incomes )
+- [+] Add expandable datatables filtering via dependency injection (similar to how the transactions import works)
+    - [+] Add filters to transactions datatable (expeneses or incomes )
      
+- AI
+  - [+] Add AI scan ticket reconignition for automatic transaction creation
+  - [ ] Add AI assistant to help with transaction categorization
+  - [ ] Add AI assistant to help with budgeting and financial planning

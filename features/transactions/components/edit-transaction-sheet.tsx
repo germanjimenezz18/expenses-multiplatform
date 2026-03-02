@@ -110,7 +110,7 @@ export default function EditTransactionSheet() {
     <>
       <ConfirmDialog />
       <Sheet onOpenChange={onClose} open={isOpen}>
-        <SheetContent className="space-y-4">
+        <SheetContent className="space-y-4 overflow-y-auto">
           <SheetHeader>
             <SheetTitle>Edit Transaction</SheetTitle>
             <SheetDescription>

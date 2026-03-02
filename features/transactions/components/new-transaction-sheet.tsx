@@ -164,7 +164,7 @@ export default function NewTransactionSheet() {
 
   return (
     <Sheet onOpenChange={onClose} open={isOpen}>
-      <SheetContent className="space-y-4">
+      <SheetContent className="space-y-4 overflow-y-auto">
         <SheetHeader>
           <SheetTitle>
             {scanning ? "Scanning Receipt" : "Add a new Transaction"}

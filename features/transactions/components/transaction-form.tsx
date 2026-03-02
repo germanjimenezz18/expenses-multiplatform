@@ -16,8 +16,10 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { insertTransactionSchema } from "@/db/schema";
+import { cn } from "@/lib/utils";
 import { convertAmountToMiliUnits } from "@/lib/utils/currency";
 
 const itemFormSchema = z.object({
@@ -223,10 +225,10 @@ export default function TransactionForm({
         />
 
         {showItems ? (
-          <div className="space-y-3 rounded-md border p-3">
-            <div className="flex items-center justify-between">
+          <div className="rounded-md border">
+            <div className="flex items-center justify-between p-2">
               <span className="font-medium text-sm">
-                Items ({fields.length})
+                Lines <span className="text-xs">{fields.length}</span>
               </span>
               <Button
                 className="h-auto p-1 text-muted-foreground text-xs"
@@ -237,57 +239,59 @@ export default function TransactionForm({
                 type="button"
                 variant="ghost"
               >
-                Hide
+                Remove All
               </Button>
             </div>
-
-            {fields.map((field, index) => (
-              <div
-                className="flex items-start gap-2"
-                key={field.id}
-              >
-                <Input
-                  className="min-w-0 flex-1"
-                  disabled={disabled}
-                  placeholder="Item name"
-                  {...form.register(`items.${index}.name`)}
-                />
-                <Input
-                  className="w-14 shrink-0"
-                  disabled={disabled}
-                  min={1}
-                  placeholder="Qty"
-                  type="number"
-                  {...form.register(`items.${index}.quantity`)}
-                />
-                <CurrencyInput
-                  className="flex h-10 w-24 shrink-0 rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                  decimalScale={2}
-                  decimalsLimit={2}
-                  disabled={disabled}
-                  onValueChange={(value) =>
-                    form.setValue(`items.${index}.totalPrice`, value ?? "")
-                  }
-                  placeholder="0.00"
-                  value={form.watch(`items.${index}.totalPrice`)}
-                />
-                <Button
-                  className="size-10 p-0"
-                  disabled={disabled}
-                  onClick={() => {
-                    remove(index);
-                    if (fields.length <= 1) {
-                      setShowItems(false);
-                      form.setValue("items", null);
-                    }
-                  }}
-                  type="button"
-                  variant="ghost"
+            <Separator />
+            <div className="space-y-1">
+              {fields.map((field, index) => (
+                <div
+                  className="flex items-center gap-2 border-b px-3"
+                  key={field.id}
                 >
-                  <X className="size-4" />
-                </Button>
-              </div>
-            ))}
+                  <ItemInput
+                    className="w-8 shrink-0"
+                    disabled={disabled}
+                    min={1}
+                    placeholder="1"
+                    type="number"
+                    {...form.register(`items.${index}.quantity`)}
+                  />
+                  <ItemInput
+                    className="min-w-0 flex-1"
+                    disabled={disabled}
+                    placeholder="Item name"
+                    {...form.register(`items.${index}.name`)}
+                  />
+                  <ItemCurrencyInput
+                    className="flex w-24 shrink-0 placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    decimalScale={2}
+                    decimalsLimit={2}
+                    disabled={disabled}
+                    onValueChange={(value) =>
+                      form.setValue(`items.${index}.totalPrice`, value ?? "")
+                    }
+                    placeholder="0.00"
+                    value={form.watch(`items.${index}.totalPrice`)}
+                  />
+                  <Button
+                    className="size-1 p-0"
+                    disabled={disabled}
+                    onClick={() => {
+                      remove(index);
+                      if (fields.length <= 1) {
+                        setShowItems(false);
+                        form.setValue("items", null);
+                      }
+                    }}
+                    type="button"
+                    variant="ghost"
+                  >
+                    <X className="size-1" />
+                  </Button>
+                </div>
+              ))}
+            </div>
 
             <Button
               className="w-full gap-2 text-muted-foreground"
@@ -336,5 +340,31 @@ export default function TransactionForm({
         )}
       </form>
     </Form>
+  );
+}
+
+interface ItemInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+
+function ItemInput({ className, ...props }: ItemInputProps) {
+  return (
+    <Input
+      className={cn("m-0 h-fit border-none p-0 text-xs", className)}
+      {...props}
+    />
+  );
+}
+
+function ItemCurrencyInput({
+  className,
+  ...props
+}: React.ComponentProps<typeof CurrencyInput>) {
+  return (
+    <CurrencyInput
+      className={cn("m-0 border-none p-0 text-right text-sm", className)}
+      decimalScale={2}
+      decimalsLimit={2}
+      placeholder="0.00"
+      {...props}
+    />
   );
 }
