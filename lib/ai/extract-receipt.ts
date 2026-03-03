@@ -101,8 +101,5 @@ export async function extractReceiptData({
     })),
   };
 
-  console.log({ result });
-  console.log({ data });
-
   return { success: true, data };
 }

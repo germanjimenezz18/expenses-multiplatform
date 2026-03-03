@@ -58,7 +58,7 @@ describe("extractReceiptData", () => {
     if (result.success) {
       expect(result.data.merchant).toBe("Whole Foods Market");
       expect(result.data.items).toHaveLength(2);
-      expect(result.data.total).toBe(11.85);
+      expect(result.data.total).toBe(11_850);
       expect(result.data.currency).toBe("USD");
       expect(result.data.suggestedCategory).toBe("Groceries");
       expect(result.data.date).toBe("2026-02-28T14:30:00Z");
@@ -76,7 +76,7 @@ describe("extractReceiptData", () => {
     expect(result.success).toBe(true);
     if (result.success) {
       expect(result.data.merchant).toBe("Corner Store");
-      expect(result.data.total).toBe(3.5);
+      expect(result.data.total).toBe(3500);
       expect(result.data.currency).toBe("USD");
       expect(result.data.date).toBeUndefined();
       expect(result.data.subtotal).toBeUndefined();
