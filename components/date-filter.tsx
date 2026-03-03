@@ -6,10 +6,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
+import { useFilterStore } from "@/hooks/use-filter-store";
 import {
   formatDateRange,
+  getCurrentFullYearPreset,
   getDefaultPeriod,
   getMonthPresets,
+  getYearPreset,
 } from "@/lib/utils/dates";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
@@ -23,6 +26,7 @@ import {
 export default function DateFilter() {
   const router = useRouter();
   const pathname = usePathname();
+  const { setDates } = useFilterStore();
 
   const params = useSearchParams();
   const accountId = params.get("accountId");
@@ -51,15 +55,15 @@ export default function DateFilter() {
   };
 
   const pushToUrl = (dateRange: DateRange | undefined) => {
-    const query = {
-      from: format(dateRange?.from || defaultFrom, "yyyy-MM-dd"),
-      to: format(dateRange?.to || defaultTo, "yyyy-MM-dd"),
-    };
+    const fromFormatted = format(dateRange?.from || defaultFrom, "yyyy-MM-dd");
+    const toFormatted = format(dateRange?.to || defaultTo, "yyyy-MM-dd");
+
+    setDates(fromFormatted, toFormatted);
 
     const url = qs.stringifyUrl(
       {
         url: pathname,
-        query,
+        query: { from: fromFormatted, to: toFormatted },
       },
       { skipNull: true, skipEmptyString: true }
     );
@@ -90,7 +94,11 @@ export default function DateFilter() {
             Quick Select
           </p>
           <div className="flex flex-wrap gap-1">
-            {getMonthPresets().map((preset) => (
+            {[
+              ...getMonthPresets(),
+              getYearPreset(),
+              getCurrentFullYearPreset(),
+            ].map((preset) => (
               <Button
                 className="h-7 text-xs"
                 key={preset.label}

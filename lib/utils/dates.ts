@@ -5,6 +5,7 @@ import {
   isSameDay,
   startOfMonth,
   subMonths,
+  subYears,
 } from "date-fns";
 
 /** Range used for date filters. */
@@ -50,6 +51,22 @@ export function getMonthPresets(): MonthPreset[] {
       to: endOfMonth(subMonths(now, 3)),
     },
   ];
+}
+
+/** Returns a rolling 1-year preset from today minus 1 year to today. */
+export function getYearPreset(): MonthPreset {
+  const now = new Date();
+  return { label: "Last Year", from: subYears(now, 1), to: now };
+}
+
+/** Returns a preset for the current calendar year up to today. */
+export function getCurrentFullYearPreset(): MonthPreset {
+  const now = new Date();
+  return {
+    label: "This Year",
+    from: new Date(now.getFullYear(), 0, 1),
+    to: now,
+  };
 }
 
 /**

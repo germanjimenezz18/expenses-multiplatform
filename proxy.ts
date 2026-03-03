@@ -12,6 +12,32 @@ export default clerkMiddleware(async (auth, request) => {
     return NextResponse.redirect(signInUrl);
   }
 
+  if (isProtectedRoute(request)) {
+    const { searchParams } = request.nextUrl;
+    const from = searchParams.get("from");
+    const to = searchParams.get("to");
+
+    if (!(from || to)) {
+      const savedFilter = request.cookies.get("expense-date-filter");
+      if (savedFilter) {
+        try {
+          const parsed = JSON.parse(decodeURIComponent(savedFilter.value)) as {
+            state?: { from?: string; to?: string };
+          };
+          const { from: savedFrom, to: savedTo } = parsed.state ?? {};
+          if (savedFrom && savedTo) {
+            const url = request.nextUrl.clone();
+            url.searchParams.set("from", savedFrom);
+            url.searchParams.set("to", savedTo);
+            return NextResponse.redirect(url);
+          }
+        } catch {
+          // Ignore parsing errors and proceed without redirect
+        }
+      }
+    }
+  }
+
   const headers = new Headers(request.headers);
   headers.set("x-current-path", request.nextUrl.pathname);
 
