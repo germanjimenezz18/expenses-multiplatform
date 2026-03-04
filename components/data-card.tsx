@@ -74,9 +74,6 @@ export default function DataCard({
             {dateRange}
           </CardDescription>
         </div>
-        {/* <div className={cn(boxVariant({ variant }))}>
-          <Icon className={cn(iconVariant({ variant }))} />
-        </div> */}
       </CardHeader>
 
       <CardContent>
@@ -107,7 +104,7 @@ export default function DataCard({
 
 export const DataCardLoading = () => {
   return (
-    <Card className="h-[192px] drop-shadow-sm">
+    <Card className="h-[190px] drop-shadow-sm">
       <CardHeader className="flex flex-row items-center justify-between gap-x-4">
         <div className="space-y-2">
           <Skeleton className="h-6 w-24" />

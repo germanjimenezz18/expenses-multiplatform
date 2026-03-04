@@ -34,6 +34,7 @@ export default function Dashboard() {
               <DataCardLoading />
               <DataCardLoading />
               <DataCardLoading />
+              <DataCardLoading />
             </div>
           }
         >
